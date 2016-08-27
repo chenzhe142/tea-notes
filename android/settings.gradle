@@ -1,0 +1,3 @@
+rootProject.name = 'brewMaster'
+
+include ':app'
