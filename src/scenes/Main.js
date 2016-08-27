@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   ScrollView,
   StyleSheet,
-  TouchableHighlight,
+  TouchableWithoutFeedback,
   ListView,
   Text,
   Image,
@@ -14,15 +14,41 @@ import ImageRow from '../components/ImageRow.js';
 import Button from '../components/Button.js';
 
 export default class Main extends Component {
+  constructor() {
+    super();
+    this.teas = ['Pu-erh', 'Matcha green tea', 'Black tea', 'Oolong tea'];
+    this.state = {
+      index: 1
+    };
+    this._iconOnPress = this._iconOnPress.bind(this);
+  }
+  _iconOnPress() {
+    if (this.state.index === this.teas.length - 1) {
+      this.setState({
+        index: 0
+      });
+    } else {
+      const index = this.state.index + 1;
+      this.setState({
+        index: index
+      });
+    }
+  }
   render() {
+    const teaName = this.teas[this.state.index];
+
     return (
       <View style={styles.container}>
         <StatusBar hidden={true} />
         <View>
           <View style={[styles.row, {flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around', paddingBottom: 200}]}>
-            <Image style={{width: 192, height: 150}} source={require('../../public/image/tea-leaf.png')} />
+            <TouchableWithoutFeedback onPress={this._iconOnPress}>
+              <View>
+                <Image style={{width: 192, height: 150}} source={require('../../public/image/tea-leaf.png')} />
+              </View>
+            </TouchableWithoutFeedback>
             <Text style={styles.text}>Good mood for some</Text>
-            <Text style={styles.text}>Pu-erh tea?</Text>
+            <Text style={styles.text}>{`${teaName}?`}</Text>
           </View>
         </View>
         <View>
