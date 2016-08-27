@@ -15,6 +15,25 @@ import Main from './src/scenes/Main.js';
 import TeaSelection from './src/scenes/TeaSelection.js';
 import TeaDetail from './src/scenes/TeaDetail.js';
 
+var BaseConfig = Navigator.SceneConfigs.FloatFromBottom;
+
+var CustomLeftToRightGesture = Object.assign({}, BaseConfig.gestures.pop, {
+  // Make it snap back really quickly after canceling pop
+  snapVelocity: 8,
+  // Make it so we can drag anywhere on the screen
+  // edgeHitWidth: SCREEN_WIDTH,
+});
+
+var CustomSceneConfig = Object.assign({}, BaseConfig, {
+  // A very tighly wound spring will make this transition fast
+  springTension: 100,
+  springFriction: 1,
+  // // Use our custom gesture defined above
+  // gestures: {
+  //   pop: CustomLeftToRightGesture,
+  // }
+});
+
 class brewMaster extends Component {
   constructor(props) {
     super(props);
@@ -23,6 +42,13 @@ class brewMaster extends Component {
     return (
       <Navigator
         initialRoute={{ name: 'Main', index: 0 }}
+        configureScene={(route) => {
+          if (route.name !== 'TeaSelection') {
+            return Navigator.SceneConfigs.FloatFromBottom;
+          } else {
+            return Navigator.SceneConfigs.FloatFromRight;;
+          }
+        }}
         renderScene={(route, navigator) => {
           if (route.name === 'Main') {
             return <Main
@@ -67,5 +93,7 @@ class brewMaster extends Component {
     );
   }
 }
+
+
 
 AppRegistry.registerComponent('brewMaster', () => brewMaster);
