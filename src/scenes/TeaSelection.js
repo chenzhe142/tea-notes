@@ -18,6 +18,7 @@ import {
 } from 'react-native';
 
 import ImageRow from '../components/ImageRow.js'
+import Button from '../components/Button.js'
 
 export default class TeaSelection extends Component {
   static PropTypes = {
@@ -34,13 +35,13 @@ export default class TeaSelection extends Component {
   }
   render() {
     return (
-      <ScrollView>
-        <View style={styles.container}>
-          <StatusBar hidden={true} />
+      <View style={styles.container}>
+        <StatusBar hidden={true} />
+        <ScrollView>
           <View style={styles.nameList}>
             <View style={styles.backBtn}>
               <TouchableOpacity onPress={this.props.onBack}>
-                <Text style={[styles.text, {color: 'white', fontSize: 14}]}>close</Text>
+                <Text style={[styles.text, {color: 'white', fontSize: 14}]}>back</Text>
               </TouchableOpacity>
             </View>
             <ImageRow
@@ -77,8 +78,8 @@ export default class TeaSelection extends Component {
               tea={{name:"jin jun mei black tea"}}
             />
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     );
   }
 }
@@ -113,5 +114,5 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 5,
-  }
+  },
 });

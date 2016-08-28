@@ -12,6 +12,8 @@ import {
   View
 } from 'react-native';
 
+import Button from '../components/Button.js'
+
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const COVERIMAGE_HEIGHT = SCREEN_WIDTH / 3 * 2;
@@ -27,38 +29,42 @@ export default class TeaDetail extends Component {
   render() {
     return(
       <View style={styles.container}>
-        <View style={styles.container}>
-          <View>
-            <Image source={require('../../public/image/matcha-green-tea.png')} style={styles.coverImage} />
-            <View style={styles.backBtn}>
-              <TouchableOpacity onPress={this.props.onBack}>
-                <Text style={[styles.text, {color: 'white', fontSize: 14}]}>close</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.teaCardWrapper}>
+        <ScrollView>
+          <View style={[styles.container, {backgroundColor: 'white', height: SCREEN_HEIGHT}]}>
+            <View>
+              <Image source={require('../../public/image/matcha-green-tea.png')} style={styles.coverImage} />
+              <View style={[styles.backBtn, {backgroundColor: 'rgba(0,0,0,0)'}]}>
+                <TouchableOpacity onPress={this.props.onBack}>
+                  <Text style={[styles.text, {color: 'white', fontSize: 14}]}>close</Text>
+                </TouchableOpacity>
+              </View>
               <View style={styles.teaCard}>
-                <View>
-                  <Text style={styles.teaCard_title}>Matcha Green Tea</Text>
-                </View>
-                <View>
-                  <Text style={styles.teaCard_tags}>green tea - mild - low caffeine</Text>
+                <View style={styles.teaCardContainer}>
+                  <View>
+                    <Text style={styles.teaCard_title}>Matcha Green Tea</Text>
+                  </View>
+                  <View>
+                    <Text style={styles.teaCard_tags}>green tea - mild - low caffeine</Text>
+                  </View>
                 </View>
               </View>
             </View>
-          </View>
-          <View style={{alignItems: 'center', paddingTop: 10 + CARD_OFFSET, backgroundColor: 'white'}}>
-            <Text style={[styles.text, {fontSize: 14}]}>tap to see in different units of measurements</Text>
-          </View>
-          <View>
-            <View style={[styles.row, {paddingTop: 10, paddingBottom: 10, backgroundColor: 'white'}]}>
-              <Text style={[styles.text, {fontSize: 25, color: 'black'}]}>🎚215 °</Text>
-              <Text style={[styles.text, {fontSize: 25, color: 'black'}]}>⏳3 min</Text>
+            <View style={{alignItems: 'center', marginTop: 10 + CARD_OFFSET}}>
+              <Text style={[styles.text, {fontSize: 14}]}>tap to see in different units of measurements</Text>
+            </View>
+            <View>
+              <View style={[styles.row, {marginTop: 10, marginBottom: 10, backgroundColor: 'white'}]}>
+                <Text style={[styles.text, {fontSize: 25, color: 'black'}]}>🎚215 °</Text>
+                <Text style={[styles.text, {fontSize: 25, color: 'black'}]}>⏳3 min</Text>
+              </View>
+            </View>
+            <View style={[styles.container, {borderWidth: 2}]}>
+              <Text>How to brew</Text>
             </View>
           </View>
-
-          <View style={[styles.container, {borderWidth: 2, backgroundColor: 'white'}]}>
-            <Text>How to brew</Text>
-          </View>
+        </ScrollView>
+        <View style={styles.stickyFooter}>
+          <Button btnText="lalala" style={{backgroundColor: 'rgb(148,235,95)'}} />
         </View>
       </View>
     );
@@ -84,7 +90,6 @@ const styles = StyleSheet.create({
   backBtn: {
     left: 0,
     position: 'absolute',
-    right: 0,
     top: 0,
   },
   coverImage: {
@@ -92,14 +97,14 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     width: SCREEN_WIDTH,
   },
-  teaCardWrapper: {
-    alignItems: 'center',
+  teaCard: {
+    position: 'absolute',
     bottom: -CARD_OFFSET,
     left: 0,
-    position: 'absolute',
     right: 0,
+    alignItems: 'center',
   },
-  teaCard: {
+  teaCardContainer: {
     width: SCREEN_WIDTH * 0.8,
     height: COVERIMAGE_HEIGHT * 0.6,
     backgroundColor: 'white',
@@ -109,7 +114,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
-    shadowColor: 'rgb(0, 0, 0)',
+    shadowColor: 'rgba(0, 0, 0, 1)',
     shadowOpacity: 0.5,
     borderRadius: 2,
   },
@@ -123,4 +128,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: 'rgb(102,102,102)',
   },
+  stickyFooter: {
+    position: 'absolute',
+    bottom: 0,
+    left: 20,
+    right: 20,
+  }
 });

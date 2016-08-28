@@ -1,3 +1,21 @@
+/**
+ * Button.js
+ *
+ * ## Function
+ * It defines a basic button component,with some default settings.
+ * To customize it, simply override the style code.
+ *
+ * ## Touch event
+ *  @param onPress: defines the event when user pressing the button
+ *
+ * ## PropTypes
+ *  @param btnText: 'this is a footer'
+ *  @param onForward: configure its forwarding (for navigator) scene
+ *  @param style: customized style
+ *
+ * @zchen
+ */
+
 import React, { Component, PropTypes } from 'react';
 import {
   View,
