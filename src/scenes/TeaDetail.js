@@ -27,17 +27,14 @@ export default class TeaDetail extends Component {
   render() {
     return(
       <View style={styles.container}>
-        <View style={styles.backBtnContainer}>
-          <View style={styles.backBtn}>
-            <TouchableOpacity onPress={this.props.onBack}>
-              <Text style={styles.text}>Tap me to go back</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
         <View style={styles.container}>
           <View>
             <Image source={require('../../public/image/matcha-green-tea.png')} style={styles.coverImage} />
+            <View style={styles.backBtn}>
+              <TouchableOpacity onPress={this.props.onBack}>
+                <Text style={[styles.text, {color: 'white', fontSize: 14}]}>close</Text>
+              </TouchableOpacity>
+            </View>
             <View style={styles.imageInnerContainer}>
               <View style={styles.teaCard}>
                 <View>
@@ -83,10 +80,6 @@ const styles = StyleSheet.create({
     color: 'rgb(102,102,102)',
     fontFamily: 'Open Sans',
     fontSize: 20,
-  },
-  backBtnContainer: {
-    backgroundColor: 'rgba(255,255,255,0.3)',
-    height: 20,
   },
   backBtn: {
     left: 0,
