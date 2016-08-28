@@ -1,17 +1,30 @@
+/**
+ * Main.js
+ *
+ * The main (and first) scene when opening the page.
+ * It defines navigator globally, configures navigation transition animation.
+ * Meanwhile, it stores all state, state related function in this class.
+ *
+ * @zchen
+ */
+
 import React, { Component } from 'react';
 import {
-  ScrollView,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  ListView,
-  Text,
+  Dimensions,
   Image,
+  ListView,
   StatusBar,
-  View
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
 } from 'react-native';
 
 import ImageRow from '../components/ImageRow.js';
 import Button from '../components/Button.js';
+
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 export default class Main extends Component {
   constructor() {

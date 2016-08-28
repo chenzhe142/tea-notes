@@ -1,5 +1,34 @@
+/**
+ * ImageRow.js
+ *
+ * ## Function
+ * This is used in TeaSelection scene, showing a list of teas' pictures as background,
+ * with tea's name on mid-center of the image.
+ *
+ * ## Touch event
+ * when touching the object, it will open TeaDetail scene, showing the details of
+ * this selected tea.
+ *
+ * ## PropTypes
+ *  @tea: {name, temperature,time}
+ *  @imageSource: `require(path-to-image)`
+ *  @onPressEvent
+ *
+ * @zchen
+ */
+
 import React, { Component, PropTypes } from 'react';
-import { Navigator, Text, Image, TouchableOpacity, View } from 'react-native';
+import {
+  Dimensions,
+  Image,
+  Navigator,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
+
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 export default class ImageRow extends Component {
   static propTypes = {
@@ -28,20 +57,20 @@ export default class ImageRow extends Component {
 
 const styles = {
   image: {
-    width: null,
     height: 150,
+    width: SCREEN_WIDTH,
   },
   container: {
+    alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
   },
   title: {
+    color: '#ffffff',
+    fontFamily: 'Open Sans',
     fontSize: 20,
     fontWeight: '800',
-    textAlign: 'center',
-    color: '#ffffff',
     marginBottom: 5,
-    fontFamily: 'Open Sans'
+    textAlign: 'center',
   }
 };

@@ -32,12 +32,13 @@ export default class Button extends Component {
 
 const styles = StyleSheet.create({
   button: {
-    height: 44,
-    flexDirection: 'row',
-    marginBottom: 10,
-    alignSelf: 'stretch',
-    justifyContent: 'center',
     alignItems: 'center',
+    alignSelf: 'stretch',
+    borderRadius: 2,
+    flexDirection: 'row',
+    height: 44,
+    justifyContent: 'center',
+    marginBottom: 10,
   },
   text: {
     color: 'white',

@@ -1,7 +1,7 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
+ * TeaSelection.js
+ *
+ * @zchen
  */
 
 import React, { Component, PropTypes } from 'react';
@@ -44,47 +44,45 @@ export default class TeaSelection extends Component {
         </View>
         <View style={styles.container}>
           <StatusBar hidden={true} />
-          <Image source={require('../../public/image/brewingtea-animated.gif')}>
-            <View style={styles.nameList}>
-              <ImageRow
-                imageSource={require('../../public/image/matcha-green-tea.png')}
-                tea={{name:"matcha green tea"}}
-                onPressEvent={this.props.onForward}
-              />
-              <ImageRow
-                imageSource={require('../../public/image/puer-tea.png')}
-                tea={{name:"pu-er tea"}}
-              />
-              <ImageRow
-                imageSource={require('../../public/image/tieguanyin.jpg')}
-                tea={{name:"tie guan yin"}}
-              />
-              <ImageRow
-                imageSource={require('../../public/image/jinjunmei.jpg')}
-                tea={{name:"jin jun mei black tea"}}
-              />
-              <ImageRow
-                imageSource={require('../../public/image/matcha-green-tea.png')}
-                tea={{name:"matcha green tea"}}
-              />
-              <ImageRow
-                imageSource={require('../../public/image/puer-tea.png')}
-                tea={{name:"pu-er tea"}}
-              />
-              <ImageRow
-                imageSource={require('../../public/image/tieguanyin.jpg')}
-                tea={{name:"tie guan yin"}}
-              />
-              <ImageRow
-                imageSource={require('../../public/image/jinjunmei.jpg')}
-                tea={{name:"jin jun mei black tea"}}
-              />
-              <ListView
-                dataSource={this.state.dataSource}
-                renderRow={(rowData) => <Text style={styles.instructions}>{rowData}</Text>}
-              />
-            </View>
-          </Image>
+          <View style={styles.nameList}>
+            <ImageRow
+              imageSource={require('../../public/image/matcha-green-tea.png')}
+              tea={{name:"matcha green tea"}}
+              onPressEvent={this.props.onForward}
+            />
+            <ImageRow
+              imageSource={require('../../public/image/puer-tea.png')}
+              tea={{name:"pu-er tea"}}
+            />
+            <ImageRow
+              imageSource={require('../../public/image/tieguanyin.jpg')}
+              tea={{name:"tie guan yin"}}
+            />
+            <ImageRow
+              imageSource={require('../../public/image/jinjunmei.jpg')}
+              tea={{name:"jin jun mei black tea"}}
+            />
+            <ImageRow
+              imageSource={require('../../public/image/matcha-green-tea.png')}
+              tea={{name:"matcha green tea"}}
+            />
+            <ImageRow
+              imageSource={require('../../public/image/puer-tea.png')}
+              tea={{name:"pu-er tea"}}
+            />
+            <ImageRow
+              imageSource={require('../../public/image/tieguanyin.jpg')}
+              tea={{name:"tie guan yin"}}
+            />
+            <ImageRow
+              imageSource={require('../../public/image/jinjunmei.jpg')}
+              tea={{name:"jin jun mei black tea"}}
+            />
+            <ListView
+              dataSource={this.state.dataSource}
+              renderRow={(rowData) => <Text style={styles.instructions}>{rowData}</Text>}
+            />
+          </View>
         </View>
       </ScrollView>
     );
