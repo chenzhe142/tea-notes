@@ -35,16 +35,14 @@ export default class TeaSelection extends Component {
   render() {
     return (
       <ScrollView>
-        <View style={styles.backBtnContainer}>
-          <View style={styles.backBtn}>
-            <TouchableOpacity onPress={this.props.onBack}>
-              <Text style={styles.text}>Tap me to go back</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
         <View style={styles.container}>
           <StatusBar hidden={true} />
           <View style={styles.nameList}>
+            <View style={styles.backBtn}>
+              <TouchableOpacity onPress={this.props.onBack}>
+                <Text style={[styles.text, {color: 'white', fontSize: 14}]}>close</Text>
+              </TouchableOpacity>
+            </View>
             <ImageRow
               imageSource={require('../../public/image/matcha-green-tea.png')}
               tea={{name:"matcha green tea"}}
@@ -78,10 +76,6 @@ export default class TeaSelection extends Component {
               imageSource={require('../../public/image/jinjunmei.jpg')}
               tea={{name:"jin jun mei black tea"}}
             />
-            <ListView
-              dataSource={this.state.dataSource}
-              renderRow={(rowData) => <Text style={styles.instructions}>{rowData}</Text>}
-            />
           </View>
         </View>
       </ScrollView>
@@ -113,14 +107,11 @@ const styles = StyleSheet.create({
   nameList: {
     backgroundColor: 'transparent',
   },
-  backBtnContainer: {
-    height: 20,
-    backgroundColor: 'rgba(255,255,255,0.3)',
-  },
   backBtn: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
+    zIndex: 5,
   }
 });

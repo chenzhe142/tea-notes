@@ -35,7 +35,7 @@ export default class TeaDetail extends Component {
                 <Text style={[styles.text, {color: 'white', fontSize: 14}]}>close</Text>
               </TouchableOpacity>
             </View>
-            <View style={styles.imageInnerContainer}>
+            <View style={styles.teaCardWrapper}>
               <View style={styles.teaCard}>
                 <View>
                   <Text style={styles.teaCard_title}>Matcha Green Tea</Text>
@@ -46,17 +46,17 @@ export default class TeaDetail extends Component {
               </View>
             </View>
           </View>
-          <View style={{alignItems: 'center', paddingTop: 10 + CARD_OFFSET}}>
+          <View style={{alignItems: 'center', paddingTop: 10 + CARD_OFFSET, backgroundColor: 'white'}}>
             <Text style={[styles.text, {fontSize: 14}]}>tap to see in different units of measurements</Text>
           </View>
           <View>
-            <View style={[styles.row, {paddingTop: 10, paddingBottom: 10}]}>
+            <View style={[styles.row, {paddingTop: 10, paddingBottom: 10, backgroundColor: 'white'}]}>
               <Text style={[styles.text, {fontSize: 25, color: 'black'}]}>🎚215 °</Text>
               <Text style={[styles.text, {fontSize: 25, color: 'black'}]}>⏳3 min</Text>
             </View>
           </View>
 
-          <View style={[styles.container, {borderWidth: 2}]}>
+          <View style={[styles.container, {borderWidth: 2, backgroundColor: 'white'}]}>
             <Text>How to brew</Text>
           </View>
         </View>
@@ -92,12 +92,12 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     width: SCREEN_WIDTH,
   },
-  imageInnerContainer: {
-    position: 'absolute',
+  teaCardWrapper: {
+    alignItems: 'center',
     bottom: -CARD_OFFSET,
     left: 0,
+    position: 'absolute',
     right: 0,
-    alignItems: 'center',
   },
   teaCard: {
     width: SCREEN_WIDTH * 0.8,
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
-    shadowColor: 'rgba(0, 0, 0, 1)',
+    shadowColor: 'rgb(0, 0, 0)',
     shadowOpacity: 0.5,
     borderRadius: 2,
   },
