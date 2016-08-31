@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import {
-  AppRegistry,
   ScrollView,
   StyleSheet,
   Dimensions,
@@ -20,11 +19,12 @@ const COVERIMAGE_HEIGHT = SCREEN_WIDTH / 3 * 2;
 const CARD_OFFSET = 20;
 
 export default class TeaDetail extends Component {
-  static PropTypes = {
-    onBack: PropTypes.func,
-  }
   constructor(props) {
     super(props);
+    this._onBack = this._onBack.bind(this);
+  }
+  _onBack() {
+    this.props.navigator.pop();
   }
   render() {
     return(
@@ -34,7 +34,7 @@ export default class TeaDetail extends Component {
             <View>
               <Image source={require('../../public/image/matcha-green-tea.png')} style={styles.coverImage} />
               <View style={[styles.backBtn, {backgroundColor: 'rgba(0,0,0,0)'}]}>
-                <TouchableOpacity onPress={this.props.onBack}>
+                <TouchableOpacity onPress={this._onBack}>
                   <Text style={[styles.text, {color: 'white', fontSize: 14}]}>close</Text>
                 </TouchableOpacity>
               </View>
@@ -64,7 +64,7 @@ export default class TeaDetail extends Component {
           </View>
         </ScrollView>
         <View style={styles.stickyFooter}>
-          <Button btnText="lalala" style={{backgroundColor: 'rgb(148,235,95)'}} />
+          <Button btnText="Start Brewing!" style={{backgroundColor: 'rgb(148,235,95)'}} />
         </View>
       </View>
     );

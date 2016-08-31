@@ -6,7 +6,6 @@
 
 import React, { Component, PropTypes } from 'react';
 import {
-  AppRegistry,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -21,17 +20,21 @@ import ImageRow from '../components/ImageRow.js'
 import Button from '../components/Button.js'
 
 export default class TeaSelection extends Component {
-  static PropTypes = {
-    onForward: PropTypes.func,
-  }
   constructor(props) {
     super(props);
+    this._onBack = this._onBack.bind(this);
+    this._onForward = this._onForward.bind(this);
+
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    this.state = {
-      dataSource: ds.cloneWithRows([
-        'John', 'Joel', 'James', 'Jimmy', 'Jackson', 'Jillian', 'Julie', 'Devin'
-      ])
-    };
+    this.teaLists = ds.cloneWithRows(this.props.teaLists);
+  }
+  _onBack() {
+    this.props.navigator.pop();
+  }
+  _onForward() {
+    this.props.navigator.push({
+      name: 'TeaDetail',
+    });
   }
   render() {
     return (
@@ -40,15 +43,18 @@ export default class TeaSelection extends Component {
         <ScrollView>
           <View style={styles.nameList}>
             <View style={styles.backBtn}>
-              <TouchableOpacity onPress={this.props.onBack}>
+              <TouchableOpacity onPress={this._onBack}>
                 <Text style={[styles.text, {color: 'white', fontSize: 14}]}>back</Text>
               </TouchableOpacity>
             </View>
-            <ImageRow
-              imageSource={require('../../public/image/matcha-green-tea.png')}
-              tea={{name:"matcha green tea"}}
-              onPressEvent={this.props.onForward}
-            />
+            <ListView
+              dataSource={this.teaLists}
+              renderRow={(teaObject) =>
+                <ImageRow
+                  imageSource={require('../../public/image/matcha-green-tea.png')}
+                  tea={teaObject}
+                  onPressEvent={this._onForward}
+                />} />
             <ImageRow
               imageSource={require('../../public/image/puer-tea.png')}
               tea={{name:"pu-er tea"}}
