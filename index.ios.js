@@ -23,9 +23,10 @@ class brewMaster extends Component {
   constructor(props) {
     super(props);
     this._renderScene = this._renderScene.bind(this);
+    this._updateCurrentSelectedTea = this._updateCurrentSelectedTea.bind(this);
 
     this.state = {
-      settings: {
+      setting: {
         temperature: 'celsius',
         time: 'minute',
         water: 'ml',
@@ -35,7 +36,13 @@ class brewMaster extends Component {
         temperature: 95,
         time: 180
       }],
+      currentSelectedTea: {},
     };
+  }
+  _updateCurrentSelectedTea(teaObject) {
+    this.setState({
+      currentSelectedTea: teaObject,
+    });
   }
   _renderScene(route, navigator) {
     switch (route.name) {
@@ -48,13 +55,16 @@ class brewMaster extends Component {
       case 'Setting':
         return (<Setting
           navigator={navigator}
-          settings={this.state.settings} />);
+          setting={this.state.setting} />);
       case 'TeaDetail':
         return (<TeaDetail
-          navigator={navigator} />);
+          navigator={navigator}
+          currentSelectedTea={this.state.currentSelectedTea}
+          setting={this.state.setting} />);
       case 'CreateTea':
         return (<CreateTea
-          navigator={navigator} />);
+          navigator={navigator}
+          setting={this.state.setting} />);
 
       default: return;
     }

@@ -18,20 +18,20 @@ import {
 
 export default class Setting extends Component {
   static PropTypes = {
-    settings: PropTypes.shape({
+    setting: PropTypes.shape({
       temperature: PropTypes.string,
       time: PropTypes.string,
     })
   }
   constructor(props) {
     super(props);
-    this.settings = this.props.settings;
+    this.setting = this.props.setting;
   }
   render() {
     return (
       <View>
-        <Text>{this.settings.temperature}</Text>
-        <Text>{this.settings.time}</Text>
+        <Text>{this.setting.temperature}</Text>
+        <Text>{this.setting.time}</Text>
       </View>
     );
   }

@@ -41,7 +41,7 @@ export default class TeaDetail extends Component {
               <View style={styles.teaCard}>
                 <View style={styles.teaCardContainer}>
                   <View>
-                    <Text style={styles.teaCard_title}>Matcha Green Tea</Text>
+                    <Text style={styles.teaCard_title}>{this.props.currentSelectedTea.name}</Text>
                   </View>
                   <View>
                     <Text style={styles.teaCard_tags}>green tea - mild - low caffeine</Text>
@@ -54,8 +54,8 @@ export default class TeaDetail extends Component {
             </View>
             <View>
               <View style={[styles.row, {marginTop: 10, marginBottom: 10, backgroundColor: 'white'}]}>
-                <Text style={[styles.text, {fontSize: 25, color: 'black'}]}>🎚215 °</Text>
-                <Text style={[styles.text, {fontSize: 25, color: 'black'}]}>⏳3 min</Text>
+                <Text style={[styles.text, {fontSize: 25, color: 'black'}]}>🎚{this.props.currentSelectedTea.temperature} °</Text>
+                <Text style={[styles.text, {fontSize: 25, color: 'black'}]}>⏳{this.props.currentSelectedTea.time} min</Text>
               </View>
             </View>
             <View style={[styles.container, {borderWidth: 2}]}>

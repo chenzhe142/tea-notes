@@ -32,6 +32,8 @@ export default class TeaSelection extends Component {
     this.props.navigator.pop();
   }
   _onForward() {
+    // TODO: update parent state 'currentSelectedTea'
+    // this.props.updateCurrentSelectedTea(teaObject);
     this.props.navigator.push({
       name: 'TeaDetail',
     });
