@@ -27,11 +27,12 @@ import {
   Platform
 } from 'react-native';
 
+const propTypes = {
+  btnText: PropTypes.string,
+  onForward: PropTypes.func,
+}
+
 export default class Button extends Component {
-  static PropTypes = {
-    btnText: PropTypes.string,
-    onForward: PropTypes.func,
-  }
   constructor(props) {
     super(props);
   }
@@ -47,6 +48,8 @@ export default class Button extends Component {
     );
   }
 }
+
+Button.propTypes = propTypes;
 
 const styles = StyleSheet.create({
   button: {
