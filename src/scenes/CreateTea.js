@@ -22,22 +22,27 @@ import {
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 
-import Button from '../components/Button.js'
-import WithLabel from '../components/WithLabel.js'
-import ItemPicker from '../components/ItemPicker.js'
+import Button from '../components/Button.js';
+import WithLabel from '../components/WithLabel.js';
+import ItemPicker from '../components/ItemPicker.js';
+
+import text from '../style/text.js';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const COVERIMAGE_HEIGHT = SCREEN_WIDTH / 3 * 2;
 const CARD_OFFSET = 20;
 
-
-
 export default class CreateTea extends Component {
   constructor(props) {
     super(props);
+
     this._onBack = this._onBack.bind(this);
     this._coverPhotoOnClick = this._coverPhotoOnClick.bind(this);
+    this._showTemperaturePicker = this._showTemperaturePicker.bind(this);
+    this._showTimePicker = this._showTimePicker.bind(this);
+    this._dismissPicker = this._dismissPicker.bind(this);
+
     this.state = {
       teaCoverPhoto: {
         isSelected: false,
@@ -46,6 +51,8 @@ export default class CreateTea extends Component {
       name: 'Name of Tea',
       temperature: '95',
       time: '180',
+      showTemperaturePicker: false,
+      showTimePicker: false,
     }
   };
 
@@ -90,8 +97,25 @@ export default class CreateTea extends Component {
     });
   }
 
-  _onSelecTemperature() {
+  _showTemperaturePicker() {
+    this.setState({
+      showTemperaturePicker: true,
+      showTimePicker: false,
+    });
+  }
 
+  _showTimePicker() {
+    this.setState({
+      showTemperaturePicker: false,
+      showTimePicker: true,
+    });
+  }
+
+  _dismissPicker() {
+    this.setState({
+      showTemperaturePicker: false,
+      showTimePicker: false,
+    });
   }
 
   render() {
@@ -100,6 +124,21 @@ export default class CreateTea extends Component {
       teaCoverPhoto = <Image source={this.state.teaCoverPhoto.source} style={styles.coverImage}/>;
     } else {
       teaCoverPhoto = <Image source={require('../../public/image/photo_placeholder.png')} style={styles.coverImage} />;
+    }
+
+    let footer;
+    if (this.state.showTemperaturePicker) {
+      footer = <View style={styles.picker}>
+                <ItemPicker values={['75','80','85','90','95']} dismissPicker={this._dismissPicker} textStyle={text.p} />
+              </View>;
+    } else if (this.state.showTimePicker) {
+      footer = <View style={styles.picker}>
+                <ItemPicker values={['60','70','80','90','100', '110', '120', '130']} dismissPicker={this._dismissPicker} textStyle={text.p} />
+              </View>;
+    } else {
+      footer = <View style={styles.stickyFooter}>
+                <Button btnText="Save" style={{backgroundColor: 'rgb(148,235,95)'}} />
+              </View>;
     }
 
     return(
@@ -134,27 +173,29 @@ export default class CreateTea extends Component {
                 </View>
               </View>
             </View>
+
             <View style={{alignItems: 'center', marginTop: 10 + CARD_OFFSET}}>
               <Text style={[text.p, color.gray]}>tap to see in different units of measurements</Text>
             </View>
+
             <View>
               <View style={[styles.row, {marginTop: 10, marginBottom: 10, backgroundColor: 'white'}]}>
                 <View>
-                  <WithLabel label="🎚" textStyle={text.p}>
-                    <TextInput
-                      value={this.state.temperature}
-                      style={[text.number, styles.teaCard_data, styles.inputBox]}
-                      onChangeText={(temperature) => this.setState({ temperature })}
-                    />
+                  <WithLabel label="🎚" textStyle={text.p} showPicker={this._showTemperaturePicker}>
+                    <Text
+                      style={[text.number, styles.teaCard_data]}
+                    >
+                      {this.state.temperature}
+                    </Text>
                   </WithLabel>
                 </View>
                 <View>
-                  <WithLabel label="⏳" textStyle={text.p}>
-                    <TextInput
-                      value={this.state.time}
-                      style={[text.number, styles.teaCard_data, styles.inputBox]}
-                      onChangeText={(time) => this.setState({ time })}
-                    />
+                  <WithLabel label="⏳" textStyle={text.p} showPicker={this._showTimePicker}>
+                    <Text
+                      style={[text.number, styles.teaCard_data]}
+                    >
+                      {this.state.time}
+                    </Text>
                   </WithLabel>
                 </View>
               </View>
@@ -164,36 +205,11 @@ export default class CreateTea extends Component {
             </View>
           </View>
         </ScrollView>
-        <View style={styles.picker}>
-          <ItemPicker values={['15','20','25','30','35']} />
-        </View>
-        <View style={styles.stickyFooter}>
-          <Button btnText="Save" style={{backgroundColor: 'rgb(148,235,95)'}} />
-        </View>
-
+        {footer}
       </View>
     );
   }
 }
-
-const text = StyleSheet.create({
-  p: {
-    color: 'black',
-    fontFamily: 'Open Sans',
-    fontSize: 14,
-  },
-  title: {
-    fontWeight: 'bold',
-    color: 'black',
-    fontFamily: 'Open Sans',
-    fontSize: 20,
-  },
-  number: {
-    color: 'black',
-    fontFamily: 'Open Sans',
-    fontSize: 25,
-  }
-});
 
 const color = StyleSheet.create({
   black: {
@@ -234,7 +250,7 @@ const styles = StyleSheet.create({
   },
   teaCardContainer: {
     width: SCREEN_WIDTH * 0.8,
-    height: COVERIMAGE_HEIGHT * 0.6,
+    height: COVERIMAGE_HEIGHT * 0.4,
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
@@ -256,9 +272,7 @@ const styles = StyleSheet.create({
   teaCard_data: {
     textAlign: 'left',
     width: 50,
-
-    // text input height
-    height: 25,
+    textAlignVertical: 'center',
   },
   inputBox: {
     borderWidth: 0,

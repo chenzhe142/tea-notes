@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   },
   teaCardContainer: {
     width: SCREEN_WIDTH * 0.8,
-    height: COVERIMAGE_HEIGHT * 0.6,
+    height: COVERIMAGE_HEIGHT * 0.4,
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',

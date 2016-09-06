@@ -4,8 +4,12 @@
  * ## Function
  *
  * ## Touch Event
+ * None
  *
  * ## PropTypes
+ * @param label
+ * @param textStyle
+ * @param children
  *
  * @zchen
  */
@@ -14,18 +18,21 @@ import React, { Component, PropTypes } from 'react';
 import {
  StyleSheet,
  Text,
- View
+ View,
+ TouchableWithoutFeedback,
 } from 'react-native';
 
 export default class WithLabel extends Component {
   render() {
     return (
-      <View style={styles.labelContainer}>
-        <View style={styles.label}>
-          <Text style={this.props.textStyle}>{this.props.label}</Text>
+      <TouchableWithoutFeedback onPress={this.props.showPicker}>
+        <View style={styles.labelContainer}>
+          <View style={styles.label}>
+            <Text style={this.props.textStyle}>{this.props.label}</Text>
+          </View>
+          {this.props.children}
         </View>
-        {this.props.children}
-      </View>
+      </TouchableWithoutFeedback>
     );
   }
 }
@@ -33,12 +40,12 @@ export default class WithLabel extends Component {
 const styles = StyleSheet.create({
   labelContainer: {
     flexDirection: 'row',
-    marginVertical: 2,
+    alignItems: 'center',
     flex: 1,
   },
   label: {
     width: 30,
-    alignItems: 'flex-end',
+    alignItems: 'center',
     marginRight: 5,
     paddingTop: 0,
   },
