@@ -13,10 +13,7 @@ import {
 
 import Button from '../components/Button.js'
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
-const SCREEN_HEIGHT = Dimensions.get('window').height;
-const COVERIMAGE_HEIGHT = SCREEN_WIDTH / 3 * 2;
-const CARD_OFFSET = 20;
+import { SCREEN_WIDTH, SCREEN_HEIGHT, COVERIMAGE_HEIGHT, CARD_OFFSET } from '../constants';
 
 export default class TeaDetail extends Component {
   constructor(props) {
@@ -32,7 +29,7 @@ export default class TeaDetail extends Component {
         <ScrollView>
           <View style={[styles.container, {backgroundColor: 'white', height: SCREEN_HEIGHT}]}>
             <View>
-              <Image source={require('../../public/image/matcha-green-tea.png')} style={styles.coverImage} />
+              <Image source={{uri: this.props.currentSelectedTea.coverImageUrl.uri}} style={styles.coverImage} />
               <View style={[styles.backBtn, {backgroundColor: 'rgba(0,0,0,0)'}]}>
                 <TouchableOpacity onPress={this._onBack}>
                   <Text style={[styles.text, {color: 'white', fontSize: 14}]}>close</Text>

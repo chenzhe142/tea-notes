@@ -19,6 +19,11 @@ import CreateTea from './scenes/CreateTea.js';
 import TeaSelection from './scenes/TeaSelection.js';
 import TeaDetail from './scenes/TeaDetail.js';
 
+import getFromStorage from './utils/getFromStorage';
+import saveToStorage from './utils/saveToStorage';
+
+import { DEFAULT_TEA_LIST, CUSTOMIZED_TEA_LIST_STORAGE_KEY } from './constants';
+
 const BaseConfig = Navigator.SceneConfigs.FloatFromBottom;
 
 const propTypes = {};
@@ -29,11 +34,7 @@ const defaultPropTypes = {
     time: 'minute',
     water: 'ml',
   },
-  teaLists: [{
-    name: 'Matcha Green Tea',
-    temperature: 95,
-    time: 180
-  }],
+  teaLists: DEFAULT_TEA_LIST,
   currentSelectedTea: {},
 };
 
@@ -49,18 +50,21 @@ export default class brewMaster extends Component {
         time: 'minute',
         water: 'ml',
       },
-      teaLists: [{
-        name: 'Matcha Green Tea',
-        temperature: 95,
-        time: 180
-      }],
       currentSelectedTea: {},
     };
   }
+
+  componentDidMount() {
+    const customizedTeaList = getFromStorage(CUSTOMIZED_TEA_LIST_STORAGE_KEY);
+  }
+
   _updateCurrentSelectedTea(teaObject) {
     this.setState({
       currentSelectedTea: teaObject,
     });
+  }
+  _addNewTeaToTeaLists() {
+    console.log('add new tea');
   }
   _renderScene(route, navigator) {
     switch (route.name) {
@@ -69,7 +73,7 @@ export default class brewMaster extends Component {
       case 'TeaSelection':
         return (<TeaSelection
           navigator={navigator}
-          teaLists={this.state.teaLists} />);
+          updateCurrentSelectedTea={this._updateCurrentSelectedTea} />);
       case 'Setting':
         return (<Setting
           navigator={navigator}

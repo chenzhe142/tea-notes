@@ -10,7 +10,6 @@
 
 import React, { Component } from 'react';
 import {
-  Dimensions,
   Image,
   ListView,
   StatusBar,
@@ -21,19 +20,32 @@ import {
   View,
 } from 'react-native';
 
-import ImageRow from '../components/ImageRow.js';
 import Button from '../components/Button.js';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
-const SCREEN_HEIGHT = Dimensions.get('window').height;
-
-class Tea {
-  constructor(name, temperature, time) {
-    this.name = name;
-    this.temperature = temperature;
-    this.time = time;
-  }
-}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+  },
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  text: {
+    fontFamily: 'Open Sans',
+    fontSize: 20,
+    color: 'rgb(102,102,102)',
+  },
+  backBtn: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 5,
+  },
+});
 
 export default class Main extends Component {
   constructor() {
@@ -51,13 +63,11 @@ export default class Main extends Component {
   _iconOnPress() {
     if (this.state.index === this.teas.length - 1) {
       this.setState({
-        index: 0
+        index: 0,
       });
     } else {
       const index = this.state.index + 1;
-      this.setState({
-        index: index
-      });
+      this.setState({ index });
     }
   }
   _onForward() {
@@ -115,28 +125,3 @@ export default class Main extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-  },
-  row: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  text: {
-    fontFamily: 'Open Sans',
-    fontSize: 20,
-    color: 'rgb(102,102,102)'
-  },
-  backBtn: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 5,
-  },
-});

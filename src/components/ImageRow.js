@@ -34,8 +34,8 @@ export default class ImageRow extends Component {
   static propTypes = {
     tea: PropTypes.shape({
       name: PropTypes.string,
-      temperature: PropTypes.number,
-      time: PropTypes.number,
+      temperature: PropTypes.string,
+      time: PropTypes.string,
     }),
     imageSource: PropTypes.number,
     onPressEvent: PropTypes.func,

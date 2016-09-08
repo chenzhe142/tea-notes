@@ -6,19 +6,21 @@
 
 import React, { Component, PropTypes } from 'react';
 import {
- Dimensions,
- Image,
- ImagePickerIOS,
- ListView,
- Platform,
- ScrollView,
- StatusBar,
- StyleSheet,
- Text,
- TextInput,
- TouchableOpacity,
- TouchableWithoutFeedback,
- View
+  Animated,
+  AsyncStorage,
+  Dimensions,
+  Image,
+  ImagePickerIOS,
+  ListView,
+  Platform,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 
@@ -26,12 +28,34 @@ import Button from '../components/Button.js';
 import WithLabel from '../components/WithLabel.js';
 import ItemPicker from '../components/ItemPicker.js';
 
+import saveToStorage from '../utils/saveToStorage';
+import getFromStorage from '../utils/getFromStorage';
+
+import { SCREEN_WIDTH, SCREEN_HEIGHT, COVERIMAGE_HEIGHT, CARD_OFFSET, CUSTOMIZED_TEA_LIST_STORAGE_KEY } from '../constants';
+
 import text from '../style/text.js';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
-const SCREEN_HEIGHT = Dimensions.get('window').height;
-const COVERIMAGE_HEIGHT = SCREEN_WIDTH / 3 * 2;
-const CARD_OFFSET = 20;
+class Tea {
+  constructor({name, temperature, time, coverImageUrl}) {
+    this.name = name;
+    this.temperature = temperature;
+    this.time = time;
+    this.coverImageUrl = coverImageUrl;
+  }
+  isEqual(anotherTea) {
+    if ((this.name === anotherTea.name) && (this.temperature === anotherTea.temperature) && (this.time === anotherTea.time)) {
+      return true;
+    }
+    return false;
+  }
+}
+
+const defaultTea = new Tea({
+  name: 'Name of Tea',
+  temperature: '95',
+  time: '180',
+  coverImageUrl: null,
+});
 
 export default class CreateTea extends Component {
   constructor(props) {
@@ -42,18 +66,33 @@ export default class CreateTea extends Component {
     this._showTemperaturePicker = this._showTemperaturePicker.bind(this);
     this._showTimePicker = this._showTimePicker.bind(this);
     this._dismissPicker = this._dismissPicker.bind(this);
+    this._updateTemperature = this._updateTemperature.bind(this);
+    this._updateTime = this._updateTime.bind(this);
+    this._saveTea = this._saveTea.bind(this);
 
     this.state = {
-      teaCoverPhoto: {
-        isSelected: false,
-        source: null,
-      },
-      name: 'Name of Tea',
-      temperature: '95',
-      time: '180',
+      isCoverImageSelected: false,
       showTemperaturePicker: false,
       showTimePicker: false,
-    }
+
+      tea: {
+        name: 'Name of Tea',
+        temperature: '95',
+        time: '180',
+        coverImageUrl: null,
+      },
+
+      customizedTeaList: {},
+    };
+
+    this.temperature = Array.apply(null, {length: 56}).map((element, index) => {
+      return String(index + 65);
+    });
+
+    this.time = Array.apply(null, {length: 10}).map((element, index) => {
+      return String(index + 1);
+    });
+
   };
 
   _onBack() {
@@ -64,35 +103,30 @@ export default class CreateTea extends Component {
     const options = {
       title: 'Select Tea photo',
       storageOptions: {
-        skipBackup: true,
+        skipBackup: false,
         path: 'images'
       }
     };
 
     ImagePicker.showImagePicker(options, (response) => {
-      console.log('Response = ', response);
-
       if (response.didCancel) {
         console.log('User cancelled image picker');
       }
       else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
-        // You can display the image using either data...
-        const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
-
         // or a reference to the platform specific asset location
+        let source;
         if (Platform.OS === 'ios') {
-          const source = {uri: response.uri.replace('file://', ''), isStatic: true};
+          source = {uri: response.uri.replace('file://', ''), isStatic: true};
         } else {
-          const source = {uri: response.uri, isStatic: true};
+          source = {uri: response.uri, isStatic: true};
         }
 
-        const teaCoverPhoto = Object.assign({}, this.state.teaCoverPhoto);
-        teaCoverPhoto.isSelected = true;
-        teaCoverPhoto.source = source;
+        const tea = Object.assign({}, this.state.tea);
+        tea.coverImageUrl = source;
 
-        this.setState({ teaCoverPhoto });
+        this.setState({ tea, isCoverImageSelected: true });
       }
     });
   }
@@ -118,10 +152,58 @@ export default class CreateTea extends Component {
     });
   }
 
+  _updateTemperature(temperature) {
+    const tea = Object.assign({}, this.state.tea);
+    tea.temperature = temperature;
+    this.setState({ tea });
+  }
+
+  _updateTime(time) {
+    const tea = Object.assign({}, this.state.tea);
+    tea.time = time;
+    this.setState({ tea });
+  }
+
+  _saveTea() {
+    // TODO: info validation
+
+    const tea = Object.assign({}, this.state.tea);
+
+    if (defaultTea.isEqual(tea) === false) {
+      let customizedTeaList = Object.assign({}, this.state.customizedTeaList);
+
+      if (Object.keys(customizedTeaList).length !== 0) {
+        customizedTeaList.customizedTeaList.push(tea);
+      } else {
+        customizedTeaList = {
+          customizedTeaList: [tea],
+        };
+      }
+
+      saveToStorage(CUSTOMIZED_TEA_LIST_STORAGE_KEY, JSON.stringify(customizedTeaList));
+    }
+  }
+
+  componentWillMount() {
+    this.getData().done();
+  }
+
+  async getData() {
+    try {
+      let value = await AsyncStorage.getItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY);
+      if (value !== null){
+        const customizedTeaList = JSON.parse(value);
+        this.setState({ customizedTeaList });
+      }
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
+    }
+  }
+
   render() {
     let teaCoverPhoto;
-    if (this.state.teaCoverPhoto.isSelected) {
-      teaCoverPhoto = <Image source={this.state.teaCoverPhoto.source} style={styles.coverImage}/>;
+    if (this.state.isCoverImageSelected) {
+      teaCoverPhoto = <Image source={this.state.tea.coverImageUrl} style={styles.coverImage}/>;
     } else {
       teaCoverPhoto = <Image source={require('../../public/image/photo_placeholder.png')} style={styles.coverImage} />;
     }
@@ -129,15 +211,28 @@ export default class CreateTea extends Component {
     let footer;
     if (this.state.showTemperaturePicker) {
       footer = <View style={styles.picker}>
-                <ItemPicker values={['75','80','85','90','95']} dismissPicker={this._dismissPicker} textStyle={text.p} />
+                <ItemPicker
+                  selectedValue={this.state.tea.temperature}
+                  onValueChangeEvent={this._updateTemperature}
+                  values={this.temperature}
+                  dismissPicker={this._dismissPicker}
+                  textStyle={text.p} />
               </View>;
     } else if (this.state.showTimePicker) {
       footer = <View style={styles.picker}>
-                <ItemPicker values={['60','70','80','90','100', '110', '120', '130']} dismissPicker={this._dismissPicker} textStyle={text.p} />
+                <ItemPicker
+                  selectedValue={this.state.tea.time}
+                  onValueChangeEvent={this._updateTime}
+                  values={this.time}
+                  dismissPicker={this._dismissPicker}
+                  textStyle={text.p} />
               </View>;
     } else {
       footer = <View style={styles.stickyFooter}>
-                <Button btnText="Save" style={{backgroundColor: 'rgb(148,235,95)'}} />
+                <Button
+                  onForward={this._saveTea}
+                  btnText="Save"
+                  style={{backgroundColor: 'rgb(148,235,95)'}} />
               </View>;
     }
 
@@ -160,7 +255,7 @@ export default class CreateTea extends Component {
                 <View style={styles.teaCardContainer}>
                   <View>
                     <TextInput
-                      value={this.state.name}
+                      value={this.state.tea.name}
                       style={[text.title, styles.teaCard_title, styles.inputBox]}
                       onChangeText={(name) => this.setState({ name })}
                     />
@@ -185,7 +280,7 @@ export default class CreateTea extends Component {
                     <Text
                       style={[text.number, styles.teaCard_data]}
                     >
-                      {this.state.temperature}
+                      {this.state.tea.temperature}
                     </Text>
                   </WithLabel>
                 </View>
@@ -194,7 +289,7 @@ export default class CreateTea extends Component {
                     <Text
                       style={[text.number, styles.teaCard_data]}
                     >
-                      {this.state.time}
+                      {this.state.tea.time}
                     </Text>
                   </WithLabel>
                 </View>

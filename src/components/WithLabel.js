@@ -16,10 +16,10 @@
 
 import React, { Component, PropTypes } from 'react';
 import {
- StyleSheet,
- Text,
- View,
- TouchableWithoutFeedback,
+  StyleSheet,
+  Text,
+  View,
+  TouchableWithoutFeedback,
 } from 'react-native';
 
 export default class WithLabel extends Component {
