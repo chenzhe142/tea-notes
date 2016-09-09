@@ -6,6 +6,8 @@ export const SCREEN_HEIGHT = Dimensions.get('window').height;
 export const COVERIMAGE_HEIGHT = SCREEN_WIDTH / 3 * 2;
 export const CARD_OFFSET = 20;
 
+export const SCENE_TRANSITION_FLOAT_RIGHT = ['TeaSelection', 'TeaDetail', 'TeaTimer'];
+
 export const CUSTOMIZED_TEA_LIST_STORAGE_KEY = '@TeaArrayStorageKey';
 // {
 //   'customizedTeaList': [],

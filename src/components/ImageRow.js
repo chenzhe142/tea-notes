@@ -30,16 +30,18 @@ import {
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
+const propTypes = {
+  tea: PropTypes.shape({
+    name: PropTypes.string,
+    temperature: PropTypes.string,
+    time: PropTypes.string,
+  }),
+  imageSource: PropTypes.number,
+  onPressEvent: PropTypes.func,
+};
+
 export default class ImageRow extends Component {
-  static propTypes = {
-    tea: PropTypes.shape({
-      name: PropTypes.string,
-      temperature: PropTypes.string,
-      time: PropTypes.string,
-    }),
-    imageSource: PropTypes.number,
-    onPressEvent: PropTypes.func,
-  }
+
   render() {
     return (
       <View>

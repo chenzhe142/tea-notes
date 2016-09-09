@@ -22,30 +22,9 @@ import {
 
 import Button from '../components/Button.js';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-  },
-  row: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  text: {
-    fontFamily: 'Open Sans',
-    fontSize: 20,
-    color: 'rgb(102,102,102)',
-  },
-  backBtn: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 5,
-  },
-});
+import text from '../style/text.js';
+import color from '../style/color.js';
+
 
 export default class Main extends Component {
   constructor() {
@@ -91,9 +70,9 @@ export default class Main extends Component {
     return (
       <View style={styles.container}>
         <StatusBar hidden={true} />
-        <View style={styles.backBtn}>
+        <View style={styles.settingBtn}>
           <TouchableOpacity onPress={this._onShowSetting}>
-            <Text style={[styles.text, {color: 'black', fontSize: 14}]}>settings</Text>
+            <Text style={[styles.text, {color: color.black, fontSize: 14}]}>settings</Text>
           </TouchableOpacity>
         </View>
         <View>
@@ -112,12 +91,12 @@ export default class Main extends Component {
             <Button
               onForward={this._onShowCreateTea}
               btnText="Add New Tea"
-              style={{backgroundColor: 'rgb(255,127,124)', borderWidth: 0, width: 150}}
+              style={{backgroundColor: color.pink, borderWidth: 0, width: 150}}
             />
             <Button
               onForward={this._onForward}
               btnText="Browse Tea List"
-              style={{backgroundColor: 'rgb(148,235,95)', borderWidth: 0, width: 150}}
+              style={{backgroundColor: color.green, borderWidth: 0, width: 150}}
             />
           </View>
         </View>
@@ -125,3 +104,28 @@ export default class Main extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+  },
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  text: {
+    fontFamily: 'Open Sans',
+    fontSize: 20,
+    color: 'rgb(102,102,102)',
+  },
+  settingBtn: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 5,
+  },
+});

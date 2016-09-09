@@ -11,57 +11,61 @@ import {
   View
 } from 'react-native';
 
-import Button from '../components/Button.js'
+import Button from '../components/Button.js';
+import BackBtn from '../components/BackBtn.js';
+
+import text from '../style/text.js';
+import color from '../style/color.js';
 
 import { SCREEN_WIDTH, SCREEN_HEIGHT, COVERIMAGE_HEIGHT, CARD_OFFSET } from '../constants';
 
 export default class TeaDetail extends Component {
   constructor(props) {
     super(props);
-    this._onBack = this._onBack.bind(this);
+    this._onForward = this._onForward.bind(this);
   }
-  _onBack() {
-    this.props.navigator.pop();
+  _onForward() {
+    this.props.navigator.push({
+      name: 'TeaTimer'
+    });
   }
   render() {
     return(
       <View style={styles.container}>
+
+        <BackBtn navigator={this.props.navigator} textStyle={[text.p, {color: color.white}]} text="close" />
+
         <ScrollView>
-          <View style={[styles.container, {backgroundColor: 'white', height: SCREEN_HEIGHT}]}>
+          <View style={[styles.container, {backgroundColor: color.white, height: SCREEN_HEIGHT}]}>
             <View>
               <Image source={{uri: this.props.currentSelectedTea.coverImageUrl.uri}} style={styles.coverImage} />
-              <View style={[styles.backBtn, {backgroundColor: 'rgba(0,0,0,0)'}]}>
-                <TouchableOpacity onPress={this._onBack}>
-                  <Text style={[styles.text, {color: 'white', fontSize: 14}]}>close</Text>
-                </TouchableOpacity>
-              </View>
               <View style={styles.teaCard}>
                 <View style={styles.teaCardContainer}>
                   <View>
-                    <Text style={styles.teaCard_title}>{this.props.currentSelectedTea.name}</Text>
+                    <Text style={text.title}>{this.props.currentSelectedTea.name}</Text>
                   </View>
                   <View>
-                    <Text style={styles.teaCard_tags}>green tea - mild - low caffeine</Text>
+                    <Text style={[text.p, {color: color.gray}]}>green tea - mild - low caffeine</Text>
                   </View>
                 </View>
               </View>
             </View>
             <View style={{alignItems: 'center', marginTop: 10 + CARD_OFFSET}}>
-              <Text style={[styles.text, {fontSize: 14}]}>tap to see in different units of measurements</Text>
+              <Text style={[text.p, {color: color.gray}]}>tap to see in different units of measurements</Text>
             </View>
             <View>
-              <View style={[styles.row, {marginTop: 10, marginBottom: 10, backgroundColor: 'white'}]}>
-                <Text style={[styles.text, {fontSize: 25, color: 'black'}]}>🎚{this.props.currentSelectedTea.temperature} °</Text>
-                <Text style={[styles.text, {fontSize: 25, color: 'black'}]}>⏳{this.props.currentSelectedTea.time} min</Text>
+              <View style={[styles.row, {marginTop: 10, marginBottom: 10, backgroundColor: color.white}]}>
+                <Text style={text.number}>🎚{this.props.currentSelectedTea.temperature} °</Text>
+                <Text style={text.number}>⏳{this.props.currentSelectedTea.time} min</Text>
               </View>
             </View>
-            <View style={[styles.container, {borderWidth: 2}]}>
+            <View style={styles.container}>
               <Text>How to brew</Text>
             </View>
           </View>
         </ScrollView>
         <View style={styles.stickyFooter}>
-          <Button btnText="Start Brewing!" style={{backgroundColor: 'rgb(148,235,95)'}} />
+          <Button btnText="Start Brewing!" style={{backgroundColor: color.green}} onForward={this._onForward} />
         </View>
       </View>
     );
@@ -78,16 +82,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
-  },
-  text: {
-    color: 'rgb(102,102,102)',
-    fontFamily: 'Open Sans',
-    fontSize: 20,
-  },
-  backBtn: {
-    left: 0,
-    position: 'absolute',
-    top: 0,
   },
   coverImage: {
     height: COVERIMAGE_HEIGHT,
@@ -111,19 +105,9 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
-    shadowColor: 'rgba(0, 0, 0, 1)',
+    shadowColor: color.black,
     shadowOpacity: 0.5,
     borderRadius: 2,
-  },
-  teaCard_title: {
-    fontFamily: 'Open Sans',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  teaCard_tags: {
-    fontFamily: 'Open Sans',
-    fontSize: 14,
-    color: 'rgb(102,102,102)',
   },
   stickyFooter: {
     position: 'absolute',

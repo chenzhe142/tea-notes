@@ -19,59 +19,23 @@ import {
 
 import ImageRow from '../components/ImageRow.js'
 import Button from '../components/Button.js'
+import BackBtn from '../components/BackBtn.js';
 
 import { DEFAULT_TEA_LIST, CUSTOMIZED_TEA_LIST_STORAGE_KEY } from '../constants';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-  text: {
-    color: '#333333',
-  },
-  nameList: {
-    backgroundColor: 'transparent',
-  },
-  backBtn: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 5,
-  },
-});
 
 export default class TeaSelection extends Component {
   constructor(props) {
     super(props);
-    this._onBack = this._onBack.bind(this);
     this._onForward = this._onForward.bind(this);
 
     this.defaultTeaList = DEFAULT_TEA_LIST;
     this.state = {
       customizedTeaList: [],
     };
-
-
-
   }
-  _onBack() {
-    this.props.navigator.pop();
-  }
+
   _onForward(teaObject) {
-    // TODO: update parent state 'currentSelectedTea'
+    // update parent state 'currentSelectedTea'
     this.props.updateCurrentSelectedTea(teaObject);
     this.props.navigator.push({
       name: 'TeaDetail',
@@ -96,7 +60,15 @@ export default class TeaSelection extends Component {
   _generateTeaList() {
     // 1. merge customizedTeaList and defaultTeaList
     // 2. sort based on alphabet on tea.name
-    let mergedTeaList = [...this.defaultTeaList, ...this.state.customizedTeaList];
+    // *sanity check: make sure this.state.customizedTeaList is not empty
+    let mergedTeaList;
+
+    if (this.state.customizedTeaList !== undefined) {
+      mergedTeaList = [...this.defaultTeaList, ...this.state.customizedTeaList];
+    } else {
+      mergedTeaList = Object.assign([], this.defaultTeaList);
+    }
+
     const tempList = mergedTeaList.sort((a, b) => {
       const nameA = a.name.toUpperCase();
       const nameB = b.name.toUpperCase();
@@ -118,20 +90,14 @@ export default class TeaSelection extends Component {
   }
 
   render() {
-
     const teaLists = this._generateTeaList();
-
 
     return (
       <View style={styles.container}>
         <StatusBar hidden={true} />
+        <BackBtn navigator={this.props.navigator} textStyle={[styles.text, {color: 'white', fontSize: 14}]} text="back" />
         <ScrollView>
           <View style={styles.nameList}>
-            <View style={styles.backBtn}>
-              <TouchableOpacity onPress={this._onBack}>
-                <Text style={[styles.text, {color: 'white', fontSize: 14}]}>back</Text>
-              </TouchableOpacity>
-            </View>
             <ListView
               dataSource={teaLists}
               renderRow={(teaObject) =>
@@ -174,3 +140,27 @@ export default class TeaSelection extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
+  },
+  text: {
+    color: '#333333',
+  },
+  nameList: {
+    backgroundColor: 'transparent',
+  },
+});

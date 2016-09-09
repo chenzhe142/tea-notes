@@ -8,9 +8,7 @@ import React, { Component, PropTypes } from 'react';
 import {
   Animated,
   AsyncStorage,
-  Dimensions,
   Image,
-  ImagePickerIOS,
   ListView,
   Platform,
   ScrollView,
@@ -25,6 +23,7 @@ import {
 import ImagePicker from 'react-native-image-picker';
 
 import Button from '../components/Button.js';
+import BackBtn from '../components/BackBtn.js';
 import WithLabel from '../components/WithLabel.js';
 import ItemPicker from '../components/ItemPicker.js';
 
@@ -34,6 +33,7 @@ import getFromStorage from '../utils/getFromStorage';
 import { SCREEN_WIDTH, SCREEN_HEIGHT, COVERIMAGE_HEIGHT, CARD_OFFSET, CUSTOMIZED_TEA_LIST_STORAGE_KEY } from '../constants';
 
 import text from '../style/text.js';
+import color from '../style/color.js';
 
 class Tea {
   constructor({name, temperature, time, coverImageUrl}) {
@@ -61,7 +61,6 @@ export default class CreateTea extends Component {
   constructor(props) {
     super(props);
 
-    this._onBack = this._onBack.bind(this);
     this._coverPhotoOnClick = this._coverPhotoOnClick.bind(this);
     this._showTemperaturePicker = this._showTemperaturePicker.bind(this);
     this._showTimePicker = this._showTimePicker.bind(this);
@@ -94,10 +93,6 @@ export default class CreateTea extends Component {
     });
 
   };
-
-  _onBack() {
-    this.props.navigator.pop();
-  }
 
   _coverPhotoOnClick() {
     const options = {
@@ -232,24 +227,19 @@ export default class CreateTea extends Component {
                 <Button
                   onForward={this._saveTea}
                   btnText="Save"
-                  style={{backgroundColor: 'rgb(148,235,95)'}} />
+                  style={{backgroundColor: color.green}} />
               </View>;
     }
 
     return(
       <View style={styles.container}>
+        <BackBtn navigator={this.props.navigator} textStyle={text.p} text="close" />
         <ScrollView>
-          <View style={[styles.container, {backgroundColor: 'white', height: SCREEN_HEIGHT}]}>
+          <View style={[styles.container, {backgroundColor: color.white, height: SCREEN_HEIGHT}]}>
             <View>
               <TouchableWithoutFeedback onPress={this._coverPhotoOnClick}>
                 {teaCoverPhoto}
               </TouchableWithoutFeedback>
-
-              <View style={[styles.backBtn, {backgroundColor: 'rgba(0,0,0,0)'}]}>
-                <TouchableOpacity onPress={this._onBack}>
-                  <Text style={text.p}>close</Text>
-                </TouchableOpacity>
-              </View>
 
               <View style={styles.teaCard}>
                 <View style={styles.teaCardContainer}>
@@ -262,7 +252,7 @@ export default class CreateTea extends Component {
                   </View>
 
                   <View>
-                    <Text style={[text.p, color.gray]}>green tea - mild - low caffeine</Text>
+                    <Text style={[text.p, {color: color.gray}]}>green tea - mild - low caffeine</Text>
                   </View>
 
                 </View>
@@ -270,25 +260,21 @@ export default class CreateTea extends Component {
             </View>
 
             <View style={{alignItems: 'center', marginTop: 10 + CARD_OFFSET}}>
-              <Text style={[text.p, color.gray]}>tap to see in different units of measurements</Text>
+              <Text style={[text.p, {color: color.gray}]}>tap to see in different units of measurements</Text>
             </View>
 
             <View>
-              <View style={[styles.row, {marginTop: 10, marginBottom: 10, backgroundColor: 'white'}]}>
+              <View style={[styles.row, {marginTop: 10, marginBottom: 10, backgroundColor: color.white}]}>
                 <View>
                   <WithLabel label="🎚" textStyle={text.p} showPicker={this._showTemperaturePicker}>
-                    <Text
-                      style={[text.number, styles.teaCard_data]}
-                    >
+                    <Text style={[text.number, styles.teaCard_data]}>
                       {this.state.tea.temperature}
                     </Text>
                   </WithLabel>
                 </View>
                 <View>
                   <WithLabel label="⏳" textStyle={text.p} showPicker={this._showTimePicker}>
-                    <Text
-                      style={[text.number, styles.teaCard_data]}
-                    >
+                    <Text style={[text.number, styles.teaCard_data]}>
                       {this.state.tea.time}
                     </Text>
                   </WithLabel>
@@ -306,14 +292,7 @@ export default class CreateTea extends Component {
   }
 }
 
-const color = StyleSheet.create({
-  black: {
-    color: 'black',
-  },
-  gray: {
-    color: 'rgb(102,102,102)',
-  }
-})
+
 
 const styles = StyleSheet.create({
   container: {
@@ -325,11 +304,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
-  },
-  backBtn: {
-    left: 0,
-    position: 'absolute',
-    top: 0,
   },
   coverImage: {
     height: COVERIMAGE_HEIGHT,
@@ -346,14 +320,14 @@ const styles = StyleSheet.create({
   teaCardContainer: {
     width: SCREEN_WIDTH * 0.8,
     height: COVERIMAGE_HEIGHT * 0.4,
-    backgroundColor: 'white',
+    backgroundColor: color.white,
     alignItems: 'center',
     justifyContent: 'center',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowColor: 'rgba(0, 0, 0, 1)',
+    shadowColor: color.black,
     shadowOpacity: 0.5,
     borderRadius: 2,
   },
