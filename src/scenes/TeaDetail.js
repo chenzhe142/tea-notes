@@ -16,6 +16,7 @@ import BackBtn from '../components/BackBtn.js';
 
 import text from '../style/text.js';
 import color from '../style/color.js';
+import containers from '../style/containers.js';
 
 import { SCREEN_WIDTH, SCREEN_HEIGHT, COVERIMAGE_HEIGHT, CARD_OFFSET } from '../constants';
 
@@ -31,12 +32,12 @@ export default class TeaDetail extends Component {
   }
   render() {
     return(
-      <View style={styles.container}>
+      <View style={containers.container}>
 
         <BackBtn navigator={this.props.navigator} textStyle={[text.p, {color: color.white}]} text="close" />
 
         <ScrollView>
-          <View style={[styles.container, {backgroundColor: color.white, height: SCREEN_HEIGHT}]}>
+          <View style={[containers.container, {backgroundColor: color.white, height: SCREEN_HEIGHT}]}>
             <View>
               <Image source={{uri: this.props.currentSelectedTea.coverImageUrl.uri}} style={styles.coverImage} />
               <View style={styles.teaCard}>
@@ -54,17 +55,17 @@ export default class TeaDetail extends Component {
               <Text style={[text.p, {color: color.gray}]}>tap to see in different units of measurements</Text>
             </View>
             <View>
-              <View style={[styles.row, {marginTop: 10, marginBottom: 10, backgroundColor: color.white}]}>
+              <View style={[containers.row, {marginTop: 10, marginBottom: 10, backgroundColor: color.white}]}>
                 <Text style={text.number}>🎚{this.props.currentSelectedTea.temperature} °</Text>
                 <Text style={text.number}>⏳{this.props.currentSelectedTea.time} min</Text>
               </View>
             </View>
-            <View style={styles.container}>
+            <View style={containers.container}>
               <Text>How to brew</Text>
             </View>
           </View>
         </ScrollView>
-        <View style={styles.stickyFooter}>
+        <View style={containers.stickyFooter}>
           <Button btnText="Start Brewing!" style={{backgroundColor: color.green}} onForward={this._onForward} />
         </View>
       </View>
@@ -73,16 +74,6 @@ export default class TeaDetail extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-  },
-  row: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
   coverImage: {
     height: COVERIMAGE_HEIGHT,
     resizeMode: 'cover',
@@ -108,11 +99,5 @@ const styles = StyleSheet.create({
     shadowColor: color.black,
     shadowOpacity: 0.5,
     borderRadius: 2,
-  },
-  stickyFooter: {
-    position: 'absolute',
-    bottom: 0,
-    left: 20,
-    right: 20,
   }
 });

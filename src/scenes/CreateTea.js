@@ -34,6 +34,7 @@ import { SCREEN_WIDTH, SCREEN_HEIGHT, COVERIMAGE_HEIGHT, CARD_OFFSET, CUSTOMIZED
 
 import text from '../style/text.js';
 import color from '../style/color.js';
+import containers from '../style/containers.js';
 
 class Tea {
   constructor({name, temperature, time, coverImageUrl}) {
@@ -223,7 +224,7 @@ export default class CreateTea extends Component {
                   textStyle={text.p} />
               </View>;
     } else {
-      footer = <View style={styles.stickyFooter}>
+      footer = <View style={containers.stickyFooter}>
                 <Button
                   onForward={this._saveTea}
                   btnText="Save"
@@ -232,10 +233,10 @@ export default class CreateTea extends Component {
     }
 
     return(
-      <View style={styles.container}>
+      <View style={containers.container}>
         <BackBtn navigator={this.props.navigator} textStyle={text.p} text="close" />
         <ScrollView>
-          <View style={[styles.container, {backgroundColor: color.white, height: SCREEN_HEIGHT}]}>
+          <View style={[containers.container, {backgroundColor: color.white, height: SCREEN_HEIGHT}]}>
             <View>
               <TouchableWithoutFeedback onPress={this._coverPhotoOnClick}>
                 {teaCoverPhoto}
@@ -264,7 +265,7 @@ export default class CreateTea extends Component {
             </View>
 
             <View>
-              <View style={[styles.row, {marginTop: 10, marginBottom: 10, backgroundColor: color.white}]}>
+              <View style={[containers.row, {marginTop: 10, marginBottom: 10, backgroundColor: color.white}]}>
                 <View>
                   <WithLabel label="🎚" textStyle={text.p} showPicker={this._showTemperaturePicker}>
                     <Text style={[text.number, styles.teaCard_data]}>
@@ -281,7 +282,7 @@ export default class CreateTea extends Component {
                 </View>
               </View>
             </View>
-            <View style={[styles.container]}>
+            <View style={[containers.container]}>
               <Text>How to brew</Text>
             </View>
           </View>
@@ -293,18 +294,7 @@ export default class CreateTea extends Component {
 }
 
 
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-  },
-  row: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
   coverImage: {
     height: COVERIMAGE_HEIGHT,
     resizeMode: 'cover',

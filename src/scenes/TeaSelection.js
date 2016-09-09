@@ -21,6 +21,8 @@ import ImageRow from '../components/ImageRow.js'
 import Button from '../components/Button.js'
 import BackBtn from '../components/BackBtn.js';
 
+import containers from '../style/containers.js';
+
 import { DEFAULT_TEA_LIST, CUSTOMIZED_TEA_LIST_STORAGE_KEY } from '../constants';
 
 export default class TeaSelection extends Component {
@@ -93,7 +95,7 @@ export default class TeaSelection extends Component {
     const teaLists = this._generateTeaList();
 
     return (
-      <View style={styles.container}>
+      <View style={containers.container}>
         <StatusBar hidden={true} />
         <BackBtn navigator={this.props.navigator} textStyle={[styles.text, {color: 'white', fontSize: 14}]} text="back" />
         <ScrollView>
@@ -142,21 +144,6 @@ export default class TeaSelection extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
   text: {
     color: '#333333',
   },

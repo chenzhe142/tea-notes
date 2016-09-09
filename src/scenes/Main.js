@@ -24,7 +24,7 @@ import Button from '../components/Button.js';
 
 import text from '../style/text.js';
 import color from '../style/color.js';
-
+import containers from '../style/containers.js';
 
 export default class Main extends Component {
   constructor() {
@@ -68,15 +68,15 @@ export default class Main extends Component {
     const teaName = this.teas[this.state.index];
 
     return (
-      <View style={styles.container}>
+      <View style={containers.container}>
         <StatusBar hidden={true} />
         <View style={styles.settingBtn}>
           <TouchableOpacity onPress={this._onShowSetting}>
-            <Text style={[styles.text, {color: color.black, fontSize: 14}]}>settings</Text>
+            <Text style={text.p}>settings</Text>
           </TouchableOpacity>
         </View>
         <View>
-          <View style={[styles.row, {flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around', paddingBottom: 200}]}>
+          <View style={[containers.row, {flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around', paddingBottom: 200}]}>
             <TouchableWithoutFeedback onPress={this._iconOnPress}>
               <View>
                 <Image style={{width: 192, height: 150}} source={require('../../public/image/tea-leaf.png')} />
@@ -87,7 +87,7 @@ export default class Main extends Component {
           </View>
         </View>
         <View>
-          <View style={styles.row}>
+          <View style={containers.row}>
             <Button
               onForward={this._onShowCreateTea}
               btnText="Add New Tea"
@@ -106,16 +106,6 @@ export default class Main extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-  },
-  row: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
   text: {
     fontFamily: 'Open Sans',
     fontSize: 20,
