@@ -10,6 +10,7 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   Navigator,
+  Text,
   View
 } from 'react-native';
 
@@ -23,7 +24,12 @@ import TeaTimer from './scenes/TeaTimer.js';
 import getFromStorage from './utils/getFromStorage';
 import saveToStorage from './utils/saveToStorage';
 
-import { DEFAULT_TEA_LIST, CUSTOMIZED_TEA_LIST_STORAGE_KEY, SCENE_TRANSITION_FLOAT_RIGHT } from './constants';
+import {
+  DEFAULT_TEA_LIST,
+  CUSTOMIZED_TEA_LIST_STORAGE_KEY,
+  SCENE_TRANSITION_FLOAT_RIGHT,
+  SCENE_TRANSITION_FLOAT_LEFT
+} from './constants';
 
 const BaseConfig = Navigator.SceneConfigs.FloatFromBottom;
 
@@ -64,9 +70,7 @@ export default class brewMaster extends Component {
       currentSelectedTea: teaObject,
     });
   }
-  _addNewTeaToTeaLists() {
-    console.log('add new tea');
-  }
+
   _renderScene(route, navigator) {
     switch (route.name) {
       case 'Main':
@@ -91,7 +95,8 @@ export default class brewMaster extends Component {
       case 'TeaTimer':
         return (<TeaTimer
           navigator={navigator}
-          setting={this.state.setting} />);
+          setting={this.state.setting}
+          currentSelectedTea={this.state.currentSelectedTea} />);
 
       default: return;
     }
@@ -103,11 +108,14 @@ export default class brewMaster extends Component {
         configureScene={(route) => {
           if (SCENE_TRANSITION_FLOAT_RIGHT.includes(route.name)) {
             return Navigator.SceneConfigs.FloatFromRight;
+          } else if (SCENE_TRANSITION_FLOAT_LEFT.includes(route.name)) {
+            return Navigator.SceneConfigs.FloatFromLeft;
           } else {
             return Navigator.SceneConfigs.FloatFromBottom;;
           }
         }}
-        renderScene={this._renderScene} />
+        renderScene={this._renderScene}
+      />
     );
   }
 }

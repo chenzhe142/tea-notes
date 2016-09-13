@@ -23,6 +23,9 @@ export default class BackBtn extends Component {
   }
   _onBack() {
     this.props.navigator.pop();
+    if (this.props.onPressEvent) {
+      this.props.onPressEvent();
+    }
   }
   render() {
     return (

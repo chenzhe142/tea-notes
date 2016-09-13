@@ -76,13 +76,13 @@ export default class CreateTea extends Component {
       showTimePicker: false,
 
       tea: {
-        name: 'Name of Tea',
-        temperature: '95',
-        time: '180',
+        name: '',
+        temperature: '',
+        time: '',
         coverImageUrl: null,
       },
 
-      customizedTeaList: {},
+      customizedTeaList: [],
     };
 
     this.temperature = Array.apply(null, {length: 56}).map((element, index) => {
@@ -92,6 +92,12 @@ export default class CreateTea extends Component {
     this.time = Array.apply(null, {length: 10}).map((element, index) => {
       return String(index + 1);
     });
+
+    this.placeholders = {
+      name: 'Name of Tea',
+      temperature: 'temp',
+      time: 'time'
+    };
 
   };
 
@@ -166,14 +172,11 @@ export default class CreateTea extends Component {
     const tea = Object.assign({}, this.state.tea);
 
     if (defaultTea.isEqual(tea) === false) {
-      let customizedTeaList = Object.assign({}, this.state.customizedTeaList);
-
-      if (Object.keys(customizedTeaList).length !== 0) {
-        customizedTeaList.customizedTeaList.push(tea);
+      let customizedTeaList = Object.assign([], this.state.customizedTeaList);
+      if (customizedTeaList.length > 0) {
+        customizedTeaList.push(tea);
       } else {
-        customizedTeaList = {
-          customizedTeaList: [tea],
-        };
+        customizedTeaList = [tea];
       }
 
       saveToStorage(CUSTOMIZED_TEA_LIST_STORAGE_KEY, JSON.stringify(customizedTeaList));
@@ -189,7 +192,7 @@ export default class CreateTea extends Component {
       let value = await AsyncStorage.getItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY);
       if (value !== null){
         const customizedTeaList = JSON.parse(value);
-        this.setState({ customizedTeaList });
+        this.setState({ customizedTeaList: customizedTeaList });
       }
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message);
@@ -247,8 +250,14 @@ export default class CreateTea extends Component {
                   <View>
                     <TextInput
                       value={this.state.tea.name}
+                      placeholder={this.placeholders.name}
+                      autoFocus={true}
                       style={[text.title, styles.teaCard_title, styles.inputBox]}
-                      onChangeText={(name) => this.setState({ name })}
+                      onChangeText={(name) => {
+                        const tea = Object.assign({}, this.state.tea);
+                        tea.name = name;
+                        this.setState({ tea });
+                      }}
                     />
                   </View>
 
@@ -282,7 +291,7 @@ export default class CreateTea extends Component {
                 </View>
               </View>
             </View>
-            <View style={[containers.container]}>
+            <View style={[containers.container, {justifyContent: 'flex-start'}]}>
               <Text>How to brew</Text>
             </View>
           </View>
@@ -336,12 +345,6 @@ const styles = StyleSheet.create({
   inputBox: {
     borderWidth: 0,
     textAlignVertical: 'center',
-  },
-  stickyFooter: {
-    position: 'absolute',
-    bottom: 0,
-    left: 20,
-    right: 20,
   },
   picker: {
     position: 'absolute',

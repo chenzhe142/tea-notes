@@ -16,6 +16,18 @@ const text = StyleSheet.create({
       color: 'black',
       fontFamily: 'Open Sans',
       fontSize: 25,
+    },
+    button: {
+      color: 'white',
+      fontFamily: 'Open Sans',
+      fontSize: 16,
+      fontWeight: 'bold'
+    },
+    subTitle: {
+      fontWeight: 'bold',
+      color: 'black',
+      fontFamily: 'Open Sans',
+      fontSize: 14,
     }
   });
 

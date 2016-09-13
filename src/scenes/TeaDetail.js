@@ -60,7 +60,7 @@ export default class TeaDetail extends Component {
                 <Text style={text.number}>⏳{this.props.currentSelectedTea.time} min</Text>
               </View>
             </View>
-            <View style={containers.container}>
+            <View style={[containers.container, {justifyContent: 'flex-start'}]}>
               <Text>How to brew</Text>
             </View>
           </View>

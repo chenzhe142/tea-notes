@@ -6,7 +6,30 @@ export const SCREEN_HEIGHT = Dimensions.get('window').height;
 export const COVERIMAGE_HEIGHT = SCREEN_WIDTH / 3 * 2;
 export const CARD_OFFSET = 20;
 
-export const SCENE_TRANSITION_FLOAT_RIGHT = ['TeaSelection', 'TeaDetail', 'TeaTimer'];
+export const SCENE_TRANSITION_FLOAT_RIGHT = ['TeaSelection', 'TeaDetail'];
+export const SCENE_TRANSITION_FLOAT_LEFT = ['CreateTea'];
+
+export const CUSTOMIZED_SETTINGS_STORAGE_KEY = '@SettingsStorageKey';
+export const DEFAULT_SETTINGS = {
+  temperatureOptions: [{
+    id: 0,
+    text: 'celsius',
+    isSelected: true
+  }, {
+    id: 1,
+    text: 'fahrenheit',
+    isSelected: false
+  }],
+  timeOptions: [{
+    id: 0,
+    text: 'second',
+    isSelected: true,
+  }, {
+    id: 1,
+    text: 'minute',
+    isSelected: false,
+  }]
+};
 
 export const CUSTOMIZED_TEA_LIST_STORAGE_KEY = '@TeaArrayStorageKey';
 // {

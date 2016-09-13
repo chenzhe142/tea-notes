@@ -27,10 +27,12 @@ import {
   Platform
 } from 'react-native';
 
+import text from '../style/text';
+
 const propTypes = {
   btnText: PropTypes.string,
   onForward: PropTypes.func,
-}
+};
 
 export default class Button extends Component {
   constructor(props) {
@@ -41,7 +43,7 @@ export default class Button extends Component {
       <TouchableOpacity
         style={[styles.button, this.props.style]}
         onPress={this.props.onForward}>
-        <Text style={styles.text}>
+        <Text style={[text.button, this.props.textStyle]}>
           { this.props.btnText }
         </Text>
       </TouchableOpacity>
@@ -60,11 +62,5 @@ const styles = StyleSheet.create({
     height: 44,
     justifyContent: 'center',
     marginBottom: 10,
-  },
-  text: {
-    color: 'white',
-    fontFamily: 'Open Sans',
-    fontSize: 16,
-    fontWeight: 'bold'
   }
 });

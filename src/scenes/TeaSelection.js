@@ -52,7 +52,7 @@ export default class TeaSelection extends Component {
       let value = await AsyncStorage.getItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY);
       if (value !== null){
         const customizedTeaList = JSON.parse(value);
-        this.setState({ customizedTeaList: customizedTeaList.customizedTeaList });
+        this.setState({ customizedTeaList: customizedTeaList });
       }
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message);
