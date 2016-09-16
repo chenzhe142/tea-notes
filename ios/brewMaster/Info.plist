@@ -40,6 +40,8 @@
 	<string></string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Ionicons.ttf</string>
+		<string>EvilIcons.ttf</string>
 		<string>OpenSans-Bold.ttf</string>
 		<string>OpenSans-ExtraBold.ttf</string>
 		<string>OpenSans-BoldItalic.ttf</string>

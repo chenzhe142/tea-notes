@@ -35,6 +35,9 @@
 		EA065FA11D6EB472002EE3BF /* OpenSans-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EA065F971D6EB472002EE3BF /* OpenSans-SemiboldItalic.ttf */; };
 		EA065FAE1D7E82FE002EE3BF /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA065FAD1D7E82B7002EE3BF /* libRCTCameraRoll.a */; };
 		EA065FB51D7E8C0A002EE3BF /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA065FB41D7E8BFA002EE3BF /* libRNImagePicker.a */; };
+		EA45D0F01D8907B100F63782 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EA45D0EF1D8907B100F63782 /* EvilIcons.ttf */; };
+		EA45D1031D890DE100F63782 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA45D1021D890DCD00F63782 /* libRNVectorIcons.a */; };
+		EA45D1051D8916DA00F63782 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EA45D1041D8916DA00F63782 /* Ionicons.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +132,13 @@
 			remoteGlobalIDString = 014A3B5C1C6CF33500B6D375;
 			remoteInfo = RNImagePicker;
 		};
+		EA45D1011D890DCD00F63782 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA45D0FD1D890DCD00F63782 /* RNVectorIcons.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5DBEB1501B18CEA900B34395;
+			remoteInfo = RNVectorIcons;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -165,6 +175,9 @@
 		EA065F971D6EB472002EE3BF /* OpenSans-SemiboldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiboldItalic.ttf"; sourceTree = "<group>"; };
 		EA065FA81D7E82B7002EE3BF /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		EA065FAF1D7E8BFA002EE3BF /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
+		EA45D0EF1D8907B100F63782 /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
+		EA45D0FD1D890DCD00F63782 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
+		EA45D1041D8916DA00F63782 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +204,7 @@
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
+				EA45D1031D890DE100F63782 /* libRNVectorIcons.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -304,6 +318,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				EA45D0FD1D890DCD00F63782 /* RNVectorIcons.xcodeproj */,
 				EA065FAF1D7E8BFA002EE3BF /* RNImagePicker.xcodeproj */,
 				EA065FA81D7E82B7002EE3BF /* RCTCameraRoll.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -337,6 +352,8 @@
 				EA065F911D6EB472002EE3BF /* OpenSans-ExtraBoldItalic.ttf */,
 				EA065F921D6EB472002EE3BF /* OpenSans-Italic.ttf */,
 				EA065F931D6EB472002EE3BF /* OpenSans-Light.ttf */,
+				EA45D0EF1D8907B100F63782 /* EvilIcons.ttf */,
+				EA45D1041D8916DA00F63782 /* Ionicons.ttf */,
 				EA065F941D6EB472002EE3BF /* OpenSans-LightItalic.ttf */,
 				EA065F951D6EB472002EE3BF /* OpenSans-Regular.ttf */,
 				EA065F961D6EB472002EE3BF /* OpenSans-Semibold.ttf */,
@@ -371,6 +388,14 @@
 			isa = PBXGroup;
 			children = (
 				EA065FB41D7E8BFA002EE3BF /* libRNImagePicker.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EA45D0FE1D890DCD00F63782 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EA45D1021D890DCD00F63782 /* libRNVectorIcons.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -489,6 +514,10 @@
 					ProductGroup = EA065FB01D7E8BFA002EE3BF /* Products */;
 					ProjectRef = EA065FAF1D7E8BFA002EE3BF /* RNImagePicker.xcodeproj */;
 				},
+				{
+					ProductGroup = EA45D0FE1D890DCD00F63782 /* Products */;
+					ProjectRef = EA45D0FD1D890DCD00F63782 /* RNVectorIcons.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -583,6 +612,13 @@
 			remoteRef = EA065FB31D7E8BFA002EE3BF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		EA45D1021D890DCD00F63782 /* libRNVectorIcons.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNVectorIcons.a;
+			remoteRef = EA45D1011D890DCD00F63782 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -604,8 +640,10 @@
 				EA065FA11D6EB472002EE3BF /* OpenSans-SemiboldItalic.ttf in Resources */,
 				EA065F9D1D6EB472002EE3BF /* OpenSans-Light.ttf in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				EA45D0F01D8907B100F63782 /* EvilIcons.ttf in Resources */,
 				EA065F991D6EB472002EE3BF /* OpenSans-BoldItalic.ttf in Resources */,
 				EA065F981D6EB472002EE3BF /* OpenSans-Bold.ttf in Resources */,
+				EA45D1051D8916DA00F63782 /* Ionicons.ttf in Resources */,
 				EA065F9A1D6EB472002EE3BF /* OpenSans-ExtraBold.ttf in Resources */,
 				EA065F9C1D6EB472002EE3BF /* OpenSans-Italic.ttf in Resources */,
 				EA065F9E1D6EB472002EE3BF /* OpenSans-LightItalic.ttf in Resources */,

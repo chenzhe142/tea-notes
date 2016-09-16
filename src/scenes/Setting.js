@@ -105,12 +105,8 @@ export default class Setting extends Component {
       <View style={[containers.container, {justifyContent: 'flex-start', backgroundColor: color.white}]}>
         <StatusBar hidden={true} />
         <View style={{height: 48, backgroundColor: color.navbarGray}}>
-          <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
-            <TouchableOpacity onPress={() => this.props.navigator.pop()}>
-              <Text>close</Text>
-            </TouchableOpacity>
+          <View style={[containers.row, {justifyContent: 'center', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
             <Text style={[text.title, {fontSize: 17}]}>Settings</Text>
-            <Text style={{color: 'rgba(0,0,0,0)'}}>close</Text>
           </View>
         </View>
         <View style={containers.container, {justifyContent: 'flex-start'}}>

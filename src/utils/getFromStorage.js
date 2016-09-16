@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native';
 
-export default async function getFromStorage(storage_key, res) {
+export default async function getFromStorage(storage_key) {
   try {
     let value = await AsyncStorage.getItem(storage_key);
     if (value !== null){

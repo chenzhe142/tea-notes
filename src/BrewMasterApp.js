@@ -11,7 +11,8 @@ import {
   AppRegistry,
   Navigator,
   Text,
-  View
+  View,
+  TabBarIOS
 } from 'react-native';
 
 import Main from './scenes/Main.js';
@@ -24,9 +25,14 @@ import TeaTimer from './scenes/TeaTimer.js';
 import getFromStorage from './utils/getFromStorage';
 import saveToStorage from './utils/saveToStorage';
 
+import StorageUnit from './utils/StorageUnit';
+
+import BrewMasterTabsView from './BrewMasterTabsView';
+
 import {
   DEFAULT_TEA_LIST,
   CUSTOMIZED_TEA_LIST_STORAGE_KEY,
+  CUSTOMIZED_SETTINGS_STORAGE_KEY,
   SCENE_TRANSITION_FLOAT_RIGHT,
   SCENE_TRANSITION_FLOAT_LEFT
 } from './constants';
@@ -58,6 +64,8 @@ export default class brewMaster extends Component {
         water: 'ml',
       },
       currentSelectedTea: {},
+      selectedTab: 'Main',
+      storageUnit: new StorageUnit([CUSTOMIZED_TEA_LIST_STORAGE_KEY, CUSTOMIZED_SETTINGS_STORAGE_KEY]),
     };
   }
 
@@ -73,49 +81,55 @@ export default class brewMaster extends Component {
 
   _renderScene(route, navigator) {
     switch (route.name) {
-      case 'Main':
-        return (<Main navigator={navigator} />);
       case 'TeaSelection':
         return (<TeaSelection
+          {...route}
           navigator={navigator}
+          storageUnit={this.state.storageUnit}
           updateCurrentSelectedTea={this._updateCurrentSelectedTea} />);
       case 'Setting':
         return (<Setting
+          {...route}
           navigator={navigator}
           setting={this.state.setting} />);
       case 'TeaDetail':
         return (<TeaDetail
+          {...route}
           navigator={navigator}
           currentSelectedTea={this.state.currentSelectedTea}
           setting={this.state.setting} />);
       case 'CreateTea':
         return (<CreateTea
+          {...route}
           navigator={navigator}
+          storageUnit={this.state.storageUnit}
           setting={this.state.setting} />);
       case 'TeaTimer':
         return (<TeaTimer
+          {...route}
           navigator={navigator}
           setting={this.state.setting}
           currentSelectedTea={this.state.currentSelectedTea} />);
-
-      default: return;
+      default:
+        return (
+          <BrewMasterTabsView
+            {...route}
+            navigator={navigator}
+            storageUnit={this.state.storageUnit}
+            updateCurrentSelectedTea={this._updateCurrentSelectedTea} />
+        );
     }
   }
   render() {
     return (
       <Navigator
-        initialRoute={{ name: 'Main', index: 0 }}
+        initialRoute={{ }}
         configureScene={(route) => {
-          if (SCENE_TRANSITION_FLOAT_RIGHT.includes(route.name)) {
-            return Navigator.SceneConfigs.FloatFromRight;
-          } else if (SCENE_TRANSITION_FLOAT_LEFT.includes(route.name)) {
-            return Navigator.SceneConfigs.FloatFromLeft;
-          } else {
-            return Navigator.SceneConfigs.FloatFromBottom;;
-          }
+          return Navigator.SceneConfigs.FloatFromBottom;;
         }}
         renderScene={this._renderScene}
       />
+
     );
   }
 }

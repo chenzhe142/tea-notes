@@ -1,3 +1,9 @@
+/**
+ * SlideSwitch.js
+ *
+ * @zchen
+ */
+
 import React, { Component, PropTypes } from 'react';
 import {
   View,

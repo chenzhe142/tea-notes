@@ -32,7 +32,7 @@ export default class TeaSelection extends Component {
 
     this.defaultTeaList = DEFAULT_TEA_LIST;
     this.state = {
-      customizedTeaList: [],
+      customizedTeaList: []
     };
   }
 
@@ -43,8 +43,13 @@ export default class TeaSelection extends Component {
       name: 'TeaDetail',
     });
   }
+
   componentWillMount() {
-    this.getData().done();
+    setTimeout(() => {
+      this.setState({
+        customizedTeaList: this.props.storageUnit.getItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY)
+      });
+    }, 500);
   }
 
   async getData() {
@@ -97,7 +102,6 @@ export default class TeaSelection extends Component {
     return (
       <View style={containers.container}>
         <StatusBar hidden={true} />
-        <BackBtn navigator={this.props.navigator} textStyle={[styles.text, {color: 'white', fontSize: 14}]} text="back" />
         <ScrollView>
           <View style={styles.nameList}>
             <ListView

@@ -179,7 +179,8 @@ export default class CreateTea extends Component {
         customizedTeaList = [tea];
       }
 
-      saveToStorage(CUSTOMIZED_TEA_LIST_STORAGE_KEY, JSON.stringify(customizedTeaList));
+      this.props.storageUnit.saveItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY, JSON.stringify(customizedTeaList));
+      // saveToStorage(CUSTOMIZED_TEA_LIST_STORAGE_KEY, JSON.stringify(customizedTeaList));
     }
   }
 

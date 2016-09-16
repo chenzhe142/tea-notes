@@ -33,9 +33,7 @@ export default class TeaDetail extends Component {
   render() {
     return(
       <View style={containers.container}>
-
         <BackBtn navigator={this.props.navigator} textStyle={[text.p, {color: color.white}]} text="close" />
-
         <ScrollView>
           <View style={[containers.container, {backgroundColor: color.white, height: SCREEN_HEIGHT}]}>
             <View>
