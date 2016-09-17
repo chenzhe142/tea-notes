@@ -7,16 +7,13 @@
 import React, { Component, PropTypes } from 'react';
 import {
   Animated,
-  AsyncStorage,
   Image,
-  ListView,
   Platform,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
@@ -26,9 +23,6 @@ import Button from '../components/Button.js';
 import BackBtn from '../components/BackBtn.js';
 import WithLabel from '../components/WithLabel.js';
 import ItemPicker from '../components/ItemPicker.js';
-
-import saveToStorage from '../utils/saveToStorage';
-import getFromStorage from '../utils/getFromStorage';
 
 import { SCREEN_WIDTH, SCREEN_HEIGHT, COVERIMAGE_HEIGHT, CARD_OFFSET, CUSTOMIZED_TEA_LIST_STORAGE_KEY } from '../constants';
 

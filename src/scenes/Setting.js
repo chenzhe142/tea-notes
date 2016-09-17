@@ -7,8 +7,6 @@
 import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
-  TouchableOpacity,
-  AsyncStorage,
   Text,
   StatusBar,
   View
@@ -18,19 +16,15 @@ import BackBtn from '../components/BackBtn';
 import Button from '../components/Button';
 import SlideSwitch from '../components/SlideSwitch';
 
-import getFromStorage from '../utils/getFromStorage';
-import saveToStorage from '../utils/saveToStorage';
-
 import text from '../style/text';
 import color from '../style/color';
 import containers from '../style/containers';
 
-import { SCREEN_WIDTH, CUSTOMIZED_SETTINGS_STORAGE_KEY, DEFAULT_SETTINGS } from '../constants';
+import { CUSTOMIZED_SETTINGS_STORAGE_KEY, DEFAULT_SETTINGS } from '../constants';
 
 export default class Setting extends Component {
   constructor(props) {
     super(props);
-
     this._selectTemperature = this._selectTemperature.bind(this);
     this._selectTime = this._selectTime.bind(this);
 
@@ -41,21 +35,14 @@ export default class Setting extends Component {
   }
 
   componentWillMount() {
-    this.getData().done();
-  }
-
-  async getData() {
-    try {
-      let value = await AsyncStorage.getItem(CUSTOMIZED_SETTINGS_STORAGE_KEY);
-      if (value !== null){
-        const customizedSettings = JSON.parse(value);
+    if (this.props.storage !== undefined) {
+      if (this.props.storage[CUSTOMIZED_SETTINGS_STORAGE_KEY].content !== undefined) {
+        const settings = this.props.storage[CUSTOMIZED_SETTINGS_STORAGE_KEY].content;
         this.setState({
-          temperatureOptions: customizedSettings.temperatureOptions,
-          timeOptions: customizedSettings.timeOptions,
+          temperatureOptions: settings.temperatureOptions,
+          timeOptions: settings.timeOptions
         });
       }
-    } catch (error) {
-      console.log('AsyncStorage error: ' + error.message);
     }
   }
 
@@ -71,12 +58,12 @@ export default class Setting extends Component {
     }
 
     this.setState({ temperatureOptions });
-
     const customizedSettings = {
       temperatureOptions: temperatureOptions,
       timeOptions: this.state.timeOptions
     };
-    saveToStorage(CUSTOMIZED_SETTINGS_STORAGE_KEY, JSON.stringify(customizedSettings));
+
+    this.props.storageUnit.saveItem(CUSTOMIZED_SETTINGS_STORAGE_KEY, JSON.stringify(customizedSettings));
   }
 
   _selectTime(id) {
@@ -91,16 +78,15 @@ export default class Setting extends Component {
     }
 
     this.setState({ timeOptions });
-
     const customizedSettings = {
       temperatureOptions: this.state.temperatureOptions,
       timeOptions: timeOptions
     };
-    saveToStorage(CUSTOMIZED_SETTINGS_STORAGE_KEY, JSON.stringify(customizedSettings));
+
+    this.props.storageUnit.saveItem(CUSTOMIZED_SETTINGS_STORAGE_KEY, JSON.stringify(customizedSettings));
   }
 
   render() {
-
     return (
       <View style={[containers.container, {justifyContent: 'flex-start', backgroundColor: color.white}]}>
         <StatusBar hidden={true} />

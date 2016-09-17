@@ -8,12 +8,8 @@ import React, { Component, PropTypes } from 'react';
 import {
   ScrollView,
   StyleSheet,
-  TouchableOpacity,
   ListView,
-  Text,
-  Image,
   StatusBar,
-  AsyncStorage,
   View
 } from 'react-native';
 
@@ -58,15 +54,12 @@ export default class TeaSelection extends Component {
     const tempList = mergedTeaList.sort((a, b) => {
       const nameA = a.name.toUpperCase();
       const nameB = b.name.toUpperCase();
-
       if (nameA < nameB) {
         return -1;
       }
-
       if (nameA > nameB) {
         return 1;
       }
-
       return 0;
     }).slice();
 
@@ -106,18 +99,6 @@ export default class TeaSelection extends Component {
             <ImageRow
               imageSource={require('../../public/image/matcha-green-tea.png')}
               tea={{name:"matcha green tea"}}
-            />
-            <ImageRow
-              imageSource={require('../../public/image/puer-tea.png')}
-              tea={{name:"pu-er tea"}}
-            />
-            <ImageRow
-              imageSource={require('../../public/image/tieguanyin.jpg')}
-              tea={{name:"tie guan yin"}}
-            />
-            <ImageRow
-              imageSource={require('../../public/image/jinjunmei.jpg')}
-              tea={{name:"jin jun mei black tea"}}
             />
           </View>
         </ScrollView>

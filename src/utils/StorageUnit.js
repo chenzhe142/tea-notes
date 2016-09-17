@@ -27,6 +27,10 @@ export default class StorageUnit {
         });
       }
     });
+
+    this.fetchData.then((storage) => {
+      this.updateStorage_function(storage);
+    });
   }
 
   getItem(storage_key) {

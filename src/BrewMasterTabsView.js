@@ -110,7 +110,10 @@ export default class BrewMasterTabsView extends Component {
           selected={this.state.selectedTab === 'Setting'}
           onPress={() => this.onTabSelect('Setting')}
         >
-          <Setting />
+          <Setting
+            storage={this.props.storage}
+            storageUnit={this.props.storageUnit}
+            />
         </Icon.TabBarItemIOS>
       </TabBarIOS>
 

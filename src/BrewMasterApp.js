@@ -6,13 +6,10 @@
  * @zchen
  */
 
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
   AppRegistry,
-  Navigator,
-  Text,
-  View,
-  TabBarIOS
+  Navigator
 } from 'react-native';
 
 import Main from './scenes/Main.js';
@@ -21,9 +18,6 @@ import CreateTea from './scenes/CreateTea.js';
 import TeaSelection from './scenes/TeaSelection.js';
 import TeaDetail from './scenes/TeaDetail.js';
 import TeaTimer from './scenes/TeaTimer.js';
-
-import getFromStorage from './utils/getFromStorage';
-import saveToStorage from './utils/saveToStorage';
 
 import StorageUnit from './utils/StorageUnit';
 
@@ -36,10 +30,6 @@ import {
   SCENE_TRANSITION_FLOAT_RIGHT,
   SCENE_TRANSITION_FLOAT_LEFT
 } from './constants';
-
-const BaseConfig = Navigator.SceneConfigs.FloatFromBottom;
-
-const propTypes = {};
 
 const defaultPropTypes = {
   setting: {
@@ -69,11 +59,6 @@ export default class brewMaster extends Component {
       currentSelectedTea: {},
       selectedTab: 'Main'
     };
-
-    this.storageUnit.fetchData.then((storage) => {
-      this.setState({ storage });
-      console.log(this.state.storage);
-    });
   }
 
   _updateCurrentSelectedTea(teaObject) {
@@ -98,6 +83,8 @@ export default class brewMaster extends Component {
         return (<Setting
           {...route}
           navigator={navigator}
+          storage={this.state.storage}
+          storageUnit={this.storageUnit}
           setting={this.state.setting} />);
       case 'TeaDetail':
         return (<TeaDetail
@@ -124,6 +111,7 @@ export default class brewMaster extends Component {
             {...route}
             navigator={navigator}
             storage={this.state.storage}
+            storageUnit={this.storageUnit}
             updateCurrentSelectedTea={this._updateCurrentSelectedTea} />
         );
     }

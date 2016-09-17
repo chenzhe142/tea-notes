@@ -2,8 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import {
   ScrollView,
   StyleSheet,
-  Dimensions,
-  TouchableOpacity,
   ListView,
   Text,
   Image,
