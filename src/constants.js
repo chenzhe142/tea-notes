@@ -6,6 +6,11 @@ export const SCREEN_HEIGHT = Dimensions.get('window').height;
 export const COVERIMAGE_HEIGHT = SCREEN_WIDTH / 3 * 2;
 export const CARD_OFFSET = 20;
 
+export const SYMBOL_CELSIUS = '℃';
+export const SYMBOL_FAHRENHEIT = '℉';
+export const SYMBOL_SECOND = 'Sec';
+export const SYMBOL_MINUTE = 'Min';
+
 export const SCENE_TRANSITION_FLOAT_RIGHT = ['TeaSelection', 'TeaDetail'];
 export const SCENE_TRANSITION_FLOAT_LEFT = ['CreateTea'];
 
@@ -32,14 +37,14 @@ export const DEFAULT_SETTINGS = {
 };
 
 export const CUSTOMIZED_TEA_LIST_STORAGE_KEY = '@TeaArrayStorageKey';
-// {
-//   'customizedTeaList': [],
-// }
 
+// default
+//   temperature: celsius
+//   time: second
 export const DEFAULT_TEA_LIST = [{
   name: 'Matcha Green Tea',
   temperature: 95,
-  time: 180,
+  time: 3,
   coverImageUrl: {
     uri: 'https://facebook.github.io/react/img/logo_og.png'
   }

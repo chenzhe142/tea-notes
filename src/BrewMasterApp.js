@@ -90,6 +90,7 @@ export default class brewMaster extends Component {
         return (<TeaDetail
           {...route}
           navigator={navigator}
+          storage={this.state.storage}
           currentSelectedTea={this.state.currentSelectedTea}
           setting={this.state.setting} />);
       case 'CreateTea':
@@ -104,6 +105,7 @@ export default class brewMaster extends Component {
           {...route}
           navigator={navigator}
           setting={this.state.setting}
+          storage={this.state.storage}
           currentSelectedTea={this.state.currentSelectedTea} />);
       default:
         return (

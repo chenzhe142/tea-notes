@@ -10,8 +10,8 @@
 
 import React, { Component } from 'react';
 import {
+  Alert,
   Image,
-  ListView,
   StatusBar,
   StyleSheet,
   Text,
@@ -62,11 +62,29 @@ export default class TeaTimer extends Component {
 
       const that = this;
       this.intervalId = setInterval(() => {
-        if ((that.state.remainTime > 0) && (this.state.isTimerStarted === true)) {
-          const remainTime = that.state.remainTime - 1;
-          that.setState({
-            remainTime: remainTime,
-          });
+        if (this.state.isTimerStarted === true) {
+          if (that.state.remainTime > 1) {
+            const remainTime = that.state.remainTime - 1;
+            that.setState({
+              remainTime: remainTime,
+            });
+          } else {
+            //alert
+            Alert.alert(
+              'Brew Master',
+              `${this.props.currentSelectedTea.name} is ready!`,
+              [{
+                text: 'OK', onPress: () => {
+                  this.setState({
+                    isTimerStarted: false,
+                    remainTime: this.props.currentSelectedTea.time,
+                    timerBtnText: 'Brew!'
+                  });
+                }
+              }]
+            );
+            this._resetTimer();
+          }
         }
       }, 1000);
 

@@ -16,19 +16,98 @@ import text from '../style/text.js';
 import color from '../style/color.js';
 import containers from '../style/containers.js';
 
-import { SCREEN_WIDTH, SCREEN_HEIGHT, COVERIMAGE_HEIGHT, CARD_OFFSET } from '../constants';
+import celsiusToFahrenheit from '../utils/celsiusToFahrenheit';
+import secondToMinute from '../utils/secondToMinute';
+
+import {
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  COVERIMAGE_HEIGHT,
+  CARD_OFFSET,
+  CUSTOMIZED_SETTINGS_STORAGE_KEY,
+  DEFAULT_SETTINGS,
+  SYMBOL_CELSIUS,
+  SYMBOL_FAHRENHEIT,
+  SYMBOL_SECOND,
+  SYMBOL_MINUTE
+} from '../constants';
 
 export default class TeaDetail extends Component {
   constructor(props) {
     super(props);
     this._onForward = this._onForward.bind(this);
+
+    this.settings = DEFAULT_SETTINGS;
+    if (this.props.storage) {
+      if (this.props.storage[CUSTOMIZED_SETTINGS_STORAGE_KEY].content) {
+        this.settings = this.props.storage[CUSTOMIZED_SETTINGS_STORAGE_KEY].content;
+      }
+    }
   }
+
   _onForward() {
     this.props.navigator.push({
       name: 'TeaTimer'
     });
   }
+
+  _findSelectedOption(options) {
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].isSelected === true) {
+        return options[i].text;
+      }
+    }
+  }
+
   render() {
+    const temperatureOption = this._findSelectedOption(this.settings.temperatureOptions);
+    const timeOption = this._findSelectedOption(this.settings.timeOptions);
+
+    let temperature;
+    let time;
+
+    if (temperatureOption === "celsius") {
+      temperature = `${this.props.currentSelectedTea.temperature} ${SYMBOL_CELSIUS}`;
+    } else {
+      temperature = `${celsiusToFahrenheit(this.props.currentSelectedTea.temperature)} ${SYMBOL_FAHRENHEIT}`;
+    }
+
+    if (timeOption === 'second') {
+      time = `${this.props.currentSelectedTea.time} ${SYMBOL_SECOND}`;
+    } else {
+      covertedTime = secondToMinute(this.props.currentSelectedTea.time);
+
+      let minutePart = {
+        text: '',
+        isAvailable: false
+      };
+      if (covertedTime.minute > 0) {
+        minutePart = {
+          text: `${covertedTime.minute} ${SYMBOL_MINUTE}`,
+          isAvailable: true
+        };
+      }
+
+      let secondPart = {
+        text: '',
+        isAvailable: false
+      };
+
+      if (covertedTime.second > 0) {
+        secondPart = {
+          text: `${covertedTime.second} ${SYMBOL_SECOND}`,
+          isAvailable: true
+        };
+      }
+
+      let space = '';
+      if (minutePart.isAvailable && secondPart.isAvailable) {
+        space = ' ';
+      }
+
+      time = `${minutePart.text}${space}${secondPart.text}`;
+    }
+
     return(
       <View style={containers.container}>
         <BackBtn navigator={this.props.navigator} textStyle={[text.p, {color: color.white}]} text="close" />
@@ -52,8 +131,8 @@ export default class TeaDetail extends Component {
             </View>
             <View>
               <View style={[containers.row, {marginTop: 10, marginBottom: 10, backgroundColor: color.white}]}>
-                <Text style={text.number}>🎚{this.props.currentSelectedTea.temperature} °</Text>
-                <Text style={text.number}>⏳{this.props.currentSelectedTea.time} min</Text>
+                <Text style={text.number}>🎚{temperature}</Text>
+                <Text style={text.number}>⏳{time}</Text>
               </View>
             </View>
             <View style={[containers.container, {justifyContent: 'flex-start'}]}>
