@@ -22,21 +22,11 @@ export default class StorageUnit {
           self.count++;
           if (i === self.storage_key_array.length - 1) {
             self.initialized = true;
-
             resolve(self.storage);
           }
         });
       }
     });
-
-    // this.fetchData.then((storage) => {
-    //   console.log('initialize success!');
-    //   this.updateStorage_function(storage);
-    // }).catch((error) => {
-    //   console.log('initialize failed!');
-    //   console.log(error);
-    // });
-
   }
 
   getItem(storage_key) {
@@ -49,7 +39,6 @@ export default class StorageUnit {
         }
       }
     }
-
     return;
   }
 
@@ -79,15 +68,7 @@ export default class StorageUnit {
     // add to storage cache
     this.saveToAsyncStorage(storage_key, item).done(() => {
       this.getFromAsyncStorage(storage_key).done((response) => {
-        // delete entry from this.storage, with save storage key
         // update this.storage
-        let oldEntry;
-        for (let i = 0; i < this.storage_key_array.length; i++) {
-          if (this.storage[storage_key]) {
-            oldEntry = this.storage[storage_key];
-          }
-        }
-
         this.storage[storage_key] = {
           storageKey: storage_key,
           content: response
@@ -95,6 +76,15 @@ export default class StorageUnit {
         this.updateStorage_function(this.storage);
         console.log('StorageUnit: save item success');
       });
+    });
+  }
+
+  addItem(storage_key, item) {
+    this.getFromAsyncStorage(storage_key).done((response) => {
+      const entry = Object.assign({}, response);
+      entry.content.push(item);
+      this.storage[storage_key] = entry;
+      this.saveToStorage(storage_key, item);
     });
   }
 

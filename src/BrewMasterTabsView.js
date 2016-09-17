@@ -48,7 +48,6 @@ const defaultPropTypes = {
 };
 
 
-
 export default class BrewMasterTabsView extends Component {
   constructor(props) {
     super(props);
@@ -57,8 +56,6 @@ export default class BrewMasterTabsView extends Component {
     this.state = {
       selectedTab: 'TeaSelection',
     };
-    console.log('tab view');
-    console.log(this.props.storage);
   }
 
   onTabSelect(tab) {

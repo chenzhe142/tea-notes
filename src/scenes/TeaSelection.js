@@ -31,15 +31,6 @@ export default class TeaSelection extends Component {
     this._onForward = this._onForward.bind(this);
 
     this.defaultTeaList = DEFAULT_TEA_LIST;
-
-    this.customizedTeaList = [];
-    if (this.props.storage) {
-      this.customizedTeaList = this.props.storage[CUSTOMIZED_TEA_LIST_STORAGE_KEY];
-    }
-
-    // this.state = {
-    //   customizedTeaList: []
-    // };
   }
 
   _onForward(teaObject) {
@@ -56,8 +47,10 @@ export default class TeaSelection extends Component {
     // *sanity check: make sure this.state.customizedTeaList is not empty
     let mergedTeaList;
 
-    if (this.customizedTeaList !== undefined) {
-      mergedTeaList = [...this.defaultTeaList, ...this.customizedTeaList];
+    if (this.props.storage !== undefined) {
+      if (this.props.storage[CUSTOMIZED_TEA_LIST_STORAGE_KEY].content !== undefined) {
+        mergedTeaList = [...this.defaultTeaList, ...this.props.storage[CUSTOMIZED_TEA_LIST_STORAGE_KEY].content];
+      }
     } else {
       mergedTeaList = Object.assign([], this.defaultTeaList);
     }
@@ -83,25 +76,13 @@ export default class TeaSelection extends Component {
   }
 
   render() {
-    // const teaLists = this._generateTeaList();
-    let customizedTeaList;
-    let teaLists;
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    let tempList = this.defaultTeaList;
-
-    if (this.props.storage !== undefined) {
-      if (this.props.storage[CUSTOMIZED_TEA_LIST_STORAGE_KEY].content !== undefined) {
-        tempList = this.props.storage[CUSTOMIZED_TEA_LIST_STORAGE_KEY].content;
-      }
-    }
-
-    teaLists = ds.cloneWithRows(tempList);
+    const teaLists = this._generateTeaList();
 
     return (
       <View style={containers.container}>
         <StatusBar hidden={true} />
         <ScrollView>
-          <View style={styles.nameList}>
+          <View>
             <ListView
               dataSource={teaLists}
               renderRow={(teaObject) =>
@@ -144,12 +125,3 @@ export default class TeaSelection extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  text: {
-    color: '#333333',
-  },
-  nameList: {
-    backgroundColor: 'transparent',
-  },
-});

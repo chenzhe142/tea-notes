@@ -82,7 +82,7 @@ export default class CreateTea extends Component {
         coverImageUrl: null,
       },
 
-      customizedTeaList: this.props.storage,
+      customizedTeaList: this.props.storage[CUSTOMIZED_TEA_LIST_STORAGE_KEY],
     };
 
     this.temperature = Array.apply(null, {length: 56}).map((element, index) => {
@@ -172,33 +172,21 @@ export default class CreateTea extends Component {
     const tea = Object.assign({}, this.state.tea);
 
     if (defaultTea.isEqual(tea) === false) {
-      let customizedTeaList = Object.assign([], this.state.customizedTeaList);
-      if (customizedTeaList.length > 0) {
+      // customizedTeaList: {storageKey: "", content: []}
+      let existingList = Object.assign({}, this.state.customizedTeaList);
+      console.log('create tea');
+      console.log(existingList);
+      let customizedTeaList;
+      if (existingList.content !== undefined) {
+        customizedTeaList = Object.assign([], existingList.content);
         customizedTeaList.push(tea);
       } else {
         customizedTeaList = [tea];
       }
 
       this.props.storageUnit.saveItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY, JSON.stringify(customizedTeaList));
-      // saveToStorage(CUSTOMIZED_TEA_LIST_STORAGE_KEY, JSON.stringify(customizedTeaList));
     }
   }
-
-  // componentWillMount() {
-  //   this.getData().done();
-  // }
-  //
-  // async getData() {
-  //   try {
-  //     let value = await AsyncStorage.getItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY);
-  //     if (value !== null){
-  //       const customizedTeaList = JSON.parse(value);
-  //       this.setState({ customizedTeaList: customizedTeaList });
-  //     }
-  //   } catch (error) {
-  //     console.log('AsyncStorage error: ' + error.message);
-  //   }
-  // }
 
   render() {
     let teaCoverPhoto;

@@ -110,6 +110,7 @@ export default class brewMaster extends Component {
           {...route}
           navigator={navigator}
           storageUnit={this.storageUnit}
+          storage={this.state.storage}
           setting={this.state.setting} />);
       case 'TeaTimer':
         return (<TeaTimer
