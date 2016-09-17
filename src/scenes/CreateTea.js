@@ -82,7 +82,7 @@ export default class CreateTea extends Component {
         coverImageUrl: null,
       },
 
-      customizedTeaList: [],
+      customizedTeaList: this.props.storage,
     };
 
     this.temperature = Array.apply(null, {length: 56}).map((element, index) => {
@@ -184,21 +184,21 @@ export default class CreateTea extends Component {
     }
   }
 
-  componentWillMount() {
-    this.getData().done();
-  }
-
-  async getData() {
-    try {
-      let value = await AsyncStorage.getItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY);
-      if (value !== null){
-        const customizedTeaList = JSON.parse(value);
-        this.setState({ customizedTeaList: customizedTeaList });
-      }
-    } catch (error) {
-      console.log('AsyncStorage error: ' + error.message);
-    }
-  }
+  // componentWillMount() {
+  //   this.getData().done();
+  // }
+  //
+  // async getData() {
+  //   try {
+  //     let value = await AsyncStorage.getItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY);
+  //     if (value !== null){
+  //       const customizedTeaList = JSON.parse(value);
+  //       this.setState({ customizedTeaList: customizedTeaList });
+  //     }
+  //   } catch (error) {
+  //     console.log('AsyncStorage error: ' + error.message);
+  //   }
+  // }
 
   render() {
     let teaCoverPhoto;

@@ -31,9 +31,15 @@ export default class TeaSelection extends Component {
     this._onForward = this._onForward.bind(this);
 
     this.defaultTeaList = DEFAULT_TEA_LIST;
-    this.state = {
-      customizedTeaList: []
-    };
+
+    this.customizedTeaList = [];
+    if (this.props.storage) {
+      this.customizedTeaList = this.props.storage[CUSTOMIZED_TEA_LIST_STORAGE_KEY];
+    }
+
+    // this.state = {
+    //   customizedTeaList: []
+    // };
   }
 
   _onForward(teaObject) {
@@ -44,34 +50,14 @@ export default class TeaSelection extends Component {
     });
   }
 
-  componentWillMount() {
-    setTimeout(() => {
-      this.setState({
-        customizedTeaList: this.props.storageUnit.getItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY)
-      });
-    }, 500);
-  }
-
-  async getData() {
-    try {
-      let value = await AsyncStorage.getItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY);
-      if (value !== null){
-        const customizedTeaList = JSON.parse(value);
-        this.setState({ customizedTeaList: customizedTeaList });
-      }
-    } catch (error) {
-      console.log('AsyncStorage error: ' + error.message);
-    }
-  }
-
   _generateTeaList() {
     // 1. merge customizedTeaList and defaultTeaList
     // 2. sort based on alphabet on tea.name
     // *sanity check: make sure this.state.customizedTeaList is not empty
     let mergedTeaList;
 
-    if (this.state.customizedTeaList !== undefined) {
-      mergedTeaList = [...this.defaultTeaList, ...this.state.customizedTeaList];
+    if (this.customizedTeaList !== undefined) {
+      mergedTeaList = [...this.defaultTeaList, ...this.customizedTeaList];
     } else {
       mergedTeaList = Object.assign([], this.defaultTeaList);
     }
@@ -97,7 +83,19 @@ export default class TeaSelection extends Component {
   }
 
   render() {
-    const teaLists = this._generateTeaList();
+    // const teaLists = this._generateTeaList();
+    let customizedTeaList;
+    let teaLists;
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    let tempList = this.defaultTeaList;
+
+    if (this.props.storage !== undefined) {
+      if (this.props.storage[CUSTOMIZED_TEA_LIST_STORAGE_KEY].content !== undefined) {
+        tempList = this.props.storage[CUSTOMIZED_TEA_LIST_STORAGE_KEY].content;
+      }
+    }
+
+    teaLists = ds.cloneWithRows(tempList);
 
     return (
       <View style={containers.container}>

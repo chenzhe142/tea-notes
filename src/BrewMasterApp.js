@@ -56,6 +56,9 @@ export default class brewMaster extends Component {
     super(props);
     this._renderScene = this._renderScene.bind(this);
     this._updateCurrentSelectedTea = this._updateCurrentSelectedTea.bind(this);
+    this._updateStorage = this._updateStorage.bind(this);
+
+    this.storageUnit = new StorageUnit([CUSTOMIZED_TEA_LIST_STORAGE_KEY, CUSTOMIZED_SETTINGS_STORAGE_KEY], this._updateStorage);
 
     this.state = {
       setting: {
@@ -64,13 +67,13 @@ export default class brewMaster extends Component {
         water: 'ml',
       },
       currentSelectedTea: {},
-      selectedTab: 'Main',
-      storageUnit: new StorageUnit([CUSTOMIZED_TEA_LIST_STORAGE_KEY, CUSTOMIZED_SETTINGS_STORAGE_KEY]),
+      selectedTab: 'Main'
     };
-  }
 
-  componentDidMount() {
-    const customizedTeaList = getFromStorage(CUSTOMIZED_TEA_LIST_STORAGE_KEY);
+    this.storageUnit.fetchData.then((storage) => {
+      this.setState({ storage });
+      console.log(this.state.storage);
+    });
   }
 
   _updateCurrentSelectedTea(teaObject) {
@@ -79,13 +82,17 @@ export default class brewMaster extends Component {
     });
   }
 
+  _updateStorage(storage) {
+    this.setState({ storage });
+  }
+
   _renderScene(route, navigator) {
     switch (route.name) {
       case 'TeaSelection':
         return (<TeaSelection
           {...route}
           navigator={navigator}
-          storageUnit={this.state.storageUnit}
+          storage={this.state.storage}
           updateCurrentSelectedTea={this._updateCurrentSelectedTea} />);
       case 'Setting':
         return (<Setting
@@ -102,7 +109,7 @@ export default class brewMaster extends Component {
         return (<CreateTea
           {...route}
           navigator={navigator}
-          storageUnit={this.state.storageUnit}
+          storageUnit={this.storageUnit}
           setting={this.state.setting} />);
       case 'TeaTimer':
         return (<TeaTimer
@@ -115,7 +122,7 @@ export default class brewMaster extends Component {
           <BrewMasterTabsView
             {...route}
             navigator={navigator}
-            storageUnit={this.state.storageUnit}
+            storage={this.state.storage}
             updateCurrentSelectedTea={this._updateCurrentSelectedTea} />
         );
     }

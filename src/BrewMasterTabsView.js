@@ -26,9 +26,6 @@ import TeaTimer from './scenes/TeaTimer.js';
 
 import color from './style/color';
 
-import getFromStorage from './utils/getFromStorage';
-import saveToStorage from './utils/saveToStorage';
-
 import {
   DEFAULT_TEA_LIST,
   CUSTOMIZED_TEA_LIST_STORAGE_KEY,
@@ -57,10 +54,11 @@ export default class BrewMasterTabsView extends Component {
     super(props);
 
     this.onTabSelect = this.onTabSelect.bind(this);
-
     this.state = {
       selectedTab: 'TeaSelection',
     };
+    console.log('tab view');
+    console.log(this.props.storage);
   }
 
   onTabSelect(tab) {
@@ -86,7 +84,7 @@ export default class BrewMasterTabsView extends Component {
         >
           <TeaSelection
             navigator={this.props.navigator}
-            storageUnit={this.props.storageUnit}
+            storage={this.props.storage}
             updateCurrentSelectedTea={this.props.updateCurrentSelectedTea} />
         </Icon.TabBarItemIOS>
         <Icon.TabBarItemIOS

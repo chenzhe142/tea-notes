@@ -1,37 +1,51 @@
 import { AsyncStorage } from 'react-native';
 
 export default class StorageUnit {
-  constructor(storage_key_array) {
+  constructor(storage_key_array, updateStorage_function) {
     this.storage_key_array = storage_key_array;
+    this.updateStorage_function = updateStorage_function;
     this.initialized = false;
+    this.storage = {};
 
-    this.storage = [];
-    this.initialize();
-  }
+    const self = this;
+    // fetchData promise will make sure the async
+    this.fetchData = new Promise((resolve, reject) => {
+      // init storage when launching
+      // *call get from storage function
+      self.count = 0;
+      for (let i = 0; i < self.storage_key_array.length; i++) {
+        self.getFromAsyncStorage(self.storage_key_array[i]).done((response) => {
+          self.storage[self.storage_key_array[i]] = {
+            storageKey: self.storage_key_array[i],
+            content: response
+          };
+          self.count++;
+          if (i === self.storage_key_array.length - 1) {
+            self.initialized = true;
 
-  initialize() {
-    // init storage when launching
-    // *call get from storage function
-
-    for (let i = 0; i < this.storage_key_array.length; i++) {
-      this.getFromAsyncStorage(this.storage_key_array[i]).done((response) => {
-        this.storage.push({
-          storageKey: this.storage_key_array[i],
-          content: response
+            resolve(self.storage);
+          }
         });
-        this.initialized = true;
-      })
-    }
+      }
+    });
 
-    // console.log(this.storage);
+    // this.fetchData.then((storage) => {
+    //   console.log('initialize success!');
+    //   this.updateStorage_function(storage);
+    // }).catch((error) => {
+    //   console.log('initialize failed!');
+    //   console.log(error);
+    // });
+
   }
 
   getItem(storage_key) {
     if (this.initialized === true) {
       for (let i = 0; i < this.storage_key_array.length; i++) {
-        if (this.storage[i].storageKey === storage_key) {
-          console.log(this.storage[i].content);
-          return this.storage[i].content;
+        if (this.storage[storage_key]) {
+          console.log(this.storage[storage_key]);
+          console.log('StorageUnit: get item success');
+          return this.storage[storage_key].content;
         }
       }
     }
@@ -66,20 +80,20 @@ export default class StorageUnit {
     this.saveToAsyncStorage(storage_key, item).done(() => {
       this.getFromAsyncStorage(storage_key).done((response) => {
         // delete entry from this.storage, with save storage key
-        // push it to this.storage
+        // update this.storage
         let oldEntry;
         for (let i = 0; i < this.storage_key_array.length; i++) {
-          if (this.storage[i].storageKey === storage_key) {
-            oldEntry = this.storage[i];
+          if (this.storage[storage_key]) {
+            oldEntry = this.storage[storage_key];
           }
         }
 
-        this.storage.splice(oldEntry, 1);
-
-        this.storage.push({
+        this.storage[storage_key] = {
           storageKey: storage_key,
           content: response
-        });
+        };
+        this.updateStorage_function(this.storage);
+        console.log('StorageUnit: save item success');
       });
     });
   }
