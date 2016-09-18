@@ -17,7 +17,6 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import Main from './scenes/Main.js';
 import Setting from './scenes/Setting.js';
 import CreateTea from './scenes/CreateTea.js';
 import TeaSelection from './scenes/TeaSelection.js';

@@ -12,7 +12,6 @@ import {
   Navigator
 } from 'react-native';
 
-import Main from './scenes/Main.js';
 import Setting from './scenes/Setting.js';
 import CreateTea from './scenes/CreateTea.js';
 import TeaSelection from './scenes/TeaSelection.js';
@@ -55,7 +54,6 @@ export default class brewMaster extends Component {
         water: 'ml',
       },
       currentSelectedTea: {},
-      selectedTab: 'Main'
     };
 
     this.storageUnit = new StorageUnit([CUSTOMIZED_TEA_LIST_STORAGE_KEY, CUSTOMIZED_SETTINGS_STORAGE_KEY], this._updateStorage);
@@ -114,21 +112,14 @@ export default class brewMaster extends Component {
           storage={this.state.storage}
           currentSelectedTea={this.state.currentSelectedTea} />);
       default:
-        return (
-          <BrewMasterTabsView
-            {...route}
-            navigator={navigator}
-            storage={this.state.storage}
-            storageUnit={this.storageUnit}
-            updateCurrentSelectedTea={this._updateCurrentSelectedTea} />
-        );
+        return;
     }
   }
-  
+
   render() {
     return (
       <Navigator
-        initialRoute={{ }}
+        initialRoute={{ name: 'TeaSelection' }}
         configureScene={(route) => {
           return Navigator.SceneConfigs.FloatFromBottom;;
         }}

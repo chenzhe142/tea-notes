@@ -15,11 +15,10 @@ import {
 } from 'react-native';
 
 import ImageRow from '../components/ImageRow.js'
-import Button from '../components/Button.js'
+import IconButton from '../components/IconButton.js'
 import BackBtn from '../components/BackBtn.js';
 
 import containers from '../style/containers.js';
-
 import color from '../style/color';
 import text from '../style/text';
 
@@ -79,7 +78,45 @@ export default class TeaSelection extends Component {
 
     return (
       <View style={containers.container}>
-        <StatusBar hidden={true} />
+        <StatusBar hidden={false} />
+        <View style={{height: 10, backgroundColor: color.navbarGray}}>
+        </View>
+        <View style={{height: 48, backgroundColor: color.navbarGray}}>
+          <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
+            <View style={[containers.row, {justifyContent: 'flex-start'}]}>
+              <IconButton
+                iconName="ios-settings-outline"
+                size={20}
+                onForward={() => {
+                  this.props.navigator.push({
+                    name: 'Setting',
+                  });
+                }} />
+            </View>
+            <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+              <Text style={text.title}>Tea Notes</Text>
+            </View>
+            <View style={[containers.row, {justifyContent: 'flex-end'}]}>
+              <IconButton
+                iconName="ios-search-outline"
+                size={20}
+                onForward={() => {
+                  this.props.navigator.push({
+                    name: 'Setting',
+                  });
+                }} />
+                <IconButton
+                  iconName="ios-time-outline"
+                  size={20}
+                  style={{marginLeft: 20}}
+                  onForward={() => {
+                    this.props.navigator.push({
+                      name: 'Setting',
+                    });
+                  }} />
+            </View>
+          </View>
+        </View>
         <ScrollView>
           <View>
             <ListView
@@ -108,6 +145,16 @@ export default class TeaSelection extends Component {
             />
           </View>
         </ScrollView>
+        <View style={[containers.stickyFooter, {backgroundColor: color.green}]}>
+          <IconButton
+            iconName="ios-add-circle-outline"
+            size={40}
+            onForward={() => {
+              this.props.navigator.push({
+                name: 'CreateTea',
+              });
+            }} />
+        </View>
       </View>
     );
   }
