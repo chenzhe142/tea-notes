@@ -8,7 +8,7 @@ export default class StorageUnit {
     this.storage = {};
 
     const self = this;
-    
+
     // fetchData promise will make sure the async
     this.fetchData = new Promise((resolve, reject) => {
       // init storage when launching
@@ -28,10 +28,10 @@ export default class StorageUnit {
         });
       }
     });
-
-    this.fetchData.then((storage) => {
-      this.updateStorage_function(storage);
-    });
+    // 
+    // this.fetchData.then((storage) => {
+    //   this.updateStorage_function(storage);
+    // });
   }
 
   getItem(storage_key) {

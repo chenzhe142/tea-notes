@@ -48,8 +48,6 @@ export default class brewMaster extends Component {
     this._updateCurrentSelectedTea = this._updateCurrentSelectedTea.bind(this);
     this._updateStorage = this._updateStorage.bind(this);
 
-    this.storageUnit = new StorageUnit([CUSTOMIZED_TEA_LIST_STORAGE_KEY, CUSTOMIZED_SETTINGS_STORAGE_KEY], this._updateStorage);
-
     this.state = {
       setting: {
         temperature: 'celsius',
@@ -59,6 +57,14 @@ export default class brewMaster extends Component {
       currentSelectedTea: {},
       selectedTab: 'Main'
     };
+
+    this.storageUnit = new StorageUnit([CUSTOMIZED_TEA_LIST_STORAGE_KEY, CUSTOMIZED_SETTINGS_STORAGE_KEY], this._updateStorage);
+    this.storageUnit.fetchData.then((storage) => {
+      this.setState({ storage });
+      console.log('lalala');
+      console.log(storage);
+    });
+
   }
 
   _updateCurrentSelectedTea(teaObject) {
@@ -118,6 +124,7 @@ export default class brewMaster extends Component {
         );
     }
   }
+  
   render() {
     return (
       <Navigator

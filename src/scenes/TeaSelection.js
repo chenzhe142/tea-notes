@@ -10,6 +10,7 @@ import {
   StyleSheet,
   ListView,
   StatusBar,
+  Text,
   View
 } from 'react-native';
 
@@ -18,6 +19,9 @@ import Button from '../components/Button.js'
 import BackBtn from '../components/BackBtn.js';
 
 import containers from '../style/containers.js';
+
+import color from '../style/color';
+import text from '../style/text';
 
 import { DEFAULT_TEA_LIST, CUSTOMIZED_TEA_LIST_STORAGE_KEY } from '../constants';
 
@@ -46,6 +50,8 @@ export default class TeaSelection extends Component {
     if (this.props.storage !== undefined) {
       if (this.props.storage[CUSTOMIZED_TEA_LIST_STORAGE_KEY].content !== undefined) {
         mergedTeaList = [...this.defaultTeaList, ...this.props.storage[CUSTOMIZED_TEA_LIST_STORAGE_KEY].content];
+      } else {
+        mergedTeaList = Object.assign([], this.defaultTeaList);
       }
     } else {
       mergedTeaList = Object.assign([], this.defaultTeaList);
