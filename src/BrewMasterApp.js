@@ -17,10 +17,9 @@ import CreateTea from './scenes/CreateTea.js';
 import TeaSelection from './scenes/TeaSelection.js';
 import TeaDetail from './scenes/TeaDetail.js';
 import TeaTimer from './scenes/TeaTimer.js';
+import UserFavorite from './scenes/UserFavorite.js';
 
 import StorageUnit from './utils/StorageUnit';
-
-import BrewMasterTabsView from './BrewMasterTabsView';
 
 import {
   DEFAULT_TEA_LIST,
@@ -111,6 +110,10 @@ export default class brewMaster extends Component {
           setting={this.state.setting}
           storage={this.state.storage}
           currentSelectedTea={this.state.currentSelectedTea} />);
+      case 'UserFavorite':
+        return (<UserFavorite
+          navigator={navigator}
+          storage={this.state.storage} />);
       default:
         return;
     }

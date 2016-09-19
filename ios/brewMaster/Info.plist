@@ -41,9 +41,8 @@
 	<string>Your photos will not be shared, and are only been used in your phone.</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Ionicons.ttf</string>
 		<string>FontAwesome.ttf</string>
-		<string>EvilIcons.ttf</string>
+		<string>Ionicons.ttf</string>
 		<string>OpenSans-Bold.ttf</string>
 		<string>OpenSans-ExtraBold.ttf</string>
 		<string>OpenSans-BoldItalic.ttf</string>

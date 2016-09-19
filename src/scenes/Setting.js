@@ -20,7 +20,7 @@ import text from '../style/text';
 import color from '../style/color';
 import containers from '../style/containers';
 
-import { CUSTOMIZED_SETTINGS_STORAGE_KEY, DEFAULT_SETTINGS } from '../constants';
+import { CUSTOMIZED_SETTINGS_STORAGE_KEY, DEFAULT_SETTINGS, STATUS_BAR_HEIGHT_IOS } from '../constants';
 
 export default class Setting extends Component {
   constructor(props) {
@@ -89,13 +89,15 @@ export default class Setting extends Component {
   render() {
     return (
       <View style={[containers.container, {justifyContent: 'flex-start', backgroundColor: color.white}]}>
-        <StatusBar hidden={true} />
+        <StatusBar hidden={false} />
+        <View style={{height: STATUS_BAR_HEIGHT_IOS, backgroundColor: color.pink}}></View>
         <View style={{height: 48, backgroundColor: color.pink}}>
           <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
             <View style={[containers.row, {justifyContent: 'flex-start'}]}>
               <IconButton
                 iconName="times"
                 size={20}
+                color={color.white}
                 onForward={() => {
                   this.props.navigator.pop();
                 }} />

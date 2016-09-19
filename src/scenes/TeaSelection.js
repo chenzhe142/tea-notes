@@ -6,13 +6,13 @@
 
 import React, { Component, PropTypes } from 'react';
 import {
-  ScrollView,
-  StyleSheet,
   ListView,
+  ScrollView,
   StatusBar,
+  StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -20,6 +20,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import ImageRow from '../components/ImageRow.js'
 import IconButton from '../components/IconButton.js'
 import BackBtn from '../components/BackBtn.js';
+import TeaSelectionHeader from '../components/TeaSelectionHeader.js';
 
 import containers from '../style/containers.js';
 import color from '../style/color';
@@ -34,8 +35,12 @@ export default class TeaSelection extends Component {
     this._onScroll = this._onScroll.bind(this);
 
     this.offset = 0;
-
     this.defaultTeaList = DEFAULT_TEA_LIST;
+
+    this.state = {
+      searchBarStatus: 'show',
+      searchIconStatus: 'hide',
+    };
   }
 
   _onForward(teaObject) {
@@ -48,9 +53,18 @@ export default class TeaSelection extends Component {
 
   _onScroll(event) {
     const currentOffset = event.nativeEvent.contentOffset.y;
-    const direction = currentOffset > this.offset ? 'down' : 'up';
-    this.offset = currentOffset;
-    console.log(direction);
+    let searchBarStatus;
+    let searchIconStatus
+
+    if (currentOffset >= 20) {
+      searchBarStatus = 'hide';
+      searchIconStatus = 'show';
+    } else {
+      searchBarStatus = 'show';
+      searchIconStatus = 'hide';
+    }
+
+    this.setState({ searchBarStatus, searchIconStatus });
   }
 
   _generateTeaList() {
@@ -93,47 +107,16 @@ export default class TeaSelection extends Component {
       <View style={containers.container}>
         <StatusBar hidden={false} />
         <View style={{height: STATUS_BAR_HEIGHT_IOS, backgroundColor: color.pink}}></View>
-        <View style={{height: 40, backgroundColor: color.pink}}>
-          <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
-            <View style={[containers.row, {justifyContent: 'flex-start'}]}>
-              <IconButton
-                iconName="cog"
-                size={20}
-                color={color.white}
-                onForward={() => {
-                  this.props.navigator.push({
-                    name: 'Setting',
-                  });
-                }} />
-            </View>
-            <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
-              <Text style={[text.title, {color: color.white}]}>Tea Notes</Text>
-            </View>
-            <View style={[containers.row, {justifyContent: 'flex-end'}]}>
-              <IconButton
-                iconName="search"
-                size={20}
-                color={color.white}
-                onForward={() => {
-                  this.props.navigator.push({
-                    name: 'Setting',
-                  });
-                }} />
-                <IconButton
-                  iconName="star"
-                  size={20}
-                  color={color.white}
-                  style={{marginLeft: 20}}
-                  onForward={() => {
-                    this.props.navigator.push({
-                      name: 'Setting',
-                    });
-                  }} />
-            </View>
-          </View>
-        </View>
-        <ScrollView onScroll={this._onScroll} scrollEventThrottle={16}>
+        <TeaSelectionHeader
+          navigator={this.props.navigator}
+          searchIconStatus={this.state.searchIconStatus}
+        />
+
+        <ScrollView onScroll={this._onScroll} scrollEventThrottle={100} bounces={true}>
           <View>
+            <View style={{height: 20, backgroundColor: color.pink}}>
+              <Text>lalala</Text>
+            </View>
             <ListView
               dataSource={teaLists}
               renderRow={(teaObject) =>

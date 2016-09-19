@@ -36,9 +36,8 @@
 		EA065FAE1D7E82FE002EE3BF /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA065FAD1D7E82B7002EE3BF /* libRCTCameraRoll.a */; };
 		EA065FB51D7E8C0A002EE3BF /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA065FB41D7E8BFA002EE3BF /* libRNImagePicker.a */; };
 		EA11F0451D8F5F8300C22AEB /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EA11F0441D8F5F8300C22AEB /* FontAwesome.ttf */; };
-		EA45D0F01D8907B100F63782 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EA45D0EF1D8907B100F63782 /* EvilIcons.ttf */; };
+		EA11F0471D8F92EE00C22AEB /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EA11F0461D8F92EE00C22AEB /* Ionicons.ttf */; };
 		EA45D1031D890DE100F63782 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA45D1021D890DCD00F63782 /* libRNVectorIcons.a */; };
-		EA45D1051D8916DA00F63782 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EA45D1041D8916DA00F63782 /* Ionicons.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -178,9 +177,8 @@
 		EA065FAF1D7E8BFA002EE3BF /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		EA11F0431D8D538800C22AEB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		EA11F0441D8F5F8300C22AEB /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
-		EA45D0EF1D8907B100F63782 /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
+		EA11F0461D8F92EE00C22AEB /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
 		EA45D0FD1D890DCD00F63782 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
-		EA45D1041D8916DA00F63782 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -356,8 +354,7 @@
 				EA065F921D6EB472002EE3BF /* OpenSans-Italic.ttf */,
 				EA065F931D6EB472002EE3BF /* OpenSans-Light.ttf */,
 				EA11F0441D8F5F8300C22AEB /* FontAwesome.ttf */,
-				EA45D0EF1D8907B100F63782 /* EvilIcons.ttf */,
-				EA45D1041D8916DA00F63782 /* Ionicons.ttf */,
+				EA11F0461D8F92EE00C22AEB /* Ionicons.ttf */,
 				EA065F941D6EB472002EE3BF /* OpenSans-LightItalic.ttf */,
 				EA065F951D6EB472002EE3BF /* OpenSans-Regular.ttf */,
 				EA065F961D6EB472002EE3BF /* OpenSans-Semibold.ttf */,
@@ -648,11 +645,10 @@
 				EA065FA11D6EB472002EE3BF /* OpenSans-SemiboldItalic.ttf in Resources */,
 				EA065F9D1D6EB472002EE3BF /* OpenSans-Light.ttf in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				EA45D0F01D8907B100F63782 /* EvilIcons.ttf in Resources */,
 				EA065F991D6EB472002EE3BF /* OpenSans-BoldItalic.ttf in Resources */,
 				EA065F981D6EB472002EE3BF /* OpenSans-Bold.ttf in Resources */,
-				EA45D1051D8916DA00F63782 /* Ionicons.ttf in Resources */,
 				EA11F0451D8F5F8300C22AEB /* FontAwesome.ttf in Resources */,
+				EA11F0471D8F92EE00C22AEB /* Ionicons.ttf in Resources */,
 				EA065F9A1D6EB472002EE3BF /* OpenSans-ExtraBold.ttf in Resources */,
 				EA065F9C1D6EB472002EE3BF /* OpenSans-Italic.ttf in Resources */,
 				EA065F9E1D6EB472002EE3BF /* OpenSans-LightItalic.ttf in Resources */,
@@ -772,7 +768,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhechen.teanotes;
-				PRODUCT_NAME = brewMaster;
+				PRODUCT_NAME = "Tea Notes";
 			};
 			name = Debug;
 		};
@@ -794,7 +790,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhechen.teanotes;
-				PRODUCT_NAME = brewMaster;
+				PRODUCT_NAME = "Tea Notes";
 			};
 			name = Release;
 		};

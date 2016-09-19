@@ -9,7 +9,8 @@ import {
   View
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/Ionicons';
+import IoniconsIcon from 'react-native-vector-icons/Ionicons';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 import Button from '../components/Button.js';
 import BackBtn from '../components/BackBtn.js';
@@ -133,12 +134,12 @@ export default class TeaDetail extends Component {
             <View>
               <View style={[containers.row, containers.card]}>
                 <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
-                  <Icon name="ios-thermometer" size={25} />
-                  <Text style={[text.number, {marginLeft: 5}]}>{temperature}</Text>
+                  <IoniconsIcon name="ios-thermometer" size={20} color={color.pink} />
+                  <Text style={[text.number, {marginLeft: 10}]}>{temperature}</Text>
                 </View>
                 <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
-                  <Icon name="ios-timer" size={25} />
-                  <Text style={[text.number, {marginLeft: 5}]}>{time}</Text>
+                  <IoniconsIcon name="ios-time" size={20} color={color.pink} />
+                  <Text style={[text.number, {marginLeft: 10}]}>{time}</Text>
                 </View>
               </View>
             </View>
