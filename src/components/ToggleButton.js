@@ -21,7 +21,7 @@ export default class ToggleButton extends Component {
 
     if (this.props.isSelected) {
       backgroundColorStyle = {
-        backgroundColor: color.pink
+        backgroundColor: color.green
       };
     } else {
       backgroundColorStyle = {

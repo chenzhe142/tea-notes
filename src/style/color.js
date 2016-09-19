@@ -8,7 +8,9 @@ const color = {
   navbarGray: 'rgb(246,246,246)',
   pink: 'rgb(255,127,124)',
   green: 'rgb(148,235,95)',
-  white: '#ffffff'
+  flora: 'rgb(102,255,102)',
+  white: '#ffffff',
+  yellow: 'rgb(255,204,102)',
 };
 
 export default color;

@@ -5,6 +5,7 @@ export const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 export const COVERIMAGE_HEIGHT = SCREEN_WIDTH / 3 * 2;
 export const CARD_OFFSET = 20;
+export const STATUS_BAR_HEIGHT_IOS = 20;
 
 export const SYMBOL_CELSIUS = '℃';
 export const SYMBOL_FAHRENHEIT = '℉';

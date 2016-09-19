@@ -99,7 +99,7 @@ export default class TeaTimer extends Component {
     return (
       <View style={[containers.container, {justifyContent: 'flex-start'}]}>
         <StatusBar hidden={true} />
-        <BackBtn navigator={this.props.navigator} textStyle={text.p} text="back" onPressEvent={this._resetTimer} />
+        <BackBtn navigator={this.props.navigator} onPressEvent={this._resetTimer} />
         <View>
           <View style={[containers.row, {flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around', paddingTop: 200}]}>
             <Image style={{width: 192, height: 150}} source={require('../../public/image/tea-leaf.png')} />

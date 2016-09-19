@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 
 import BackBtn from '../components/BackBtn';
-import Button from '../components/Button';
+import IconButton from '../components/IconButton';
 import SlideSwitch from '../components/SlideSwitch';
 
 import text from '../style/text';
@@ -90,9 +90,21 @@ export default class Setting extends Component {
     return (
       <View style={[containers.container, {justifyContent: 'flex-start', backgroundColor: color.white}]}>
         <StatusBar hidden={true} />
-        <View style={{height: 48, backgroundColor: color.navbarGray}}>
-          <View style={[containers.row, {justifyContent: 'center', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
-            <Text style={[text.title, {fontSize: 17}]}>Settings</Text>
+        <View style={{height: 48, backgroundColor: color.pink}}>
+          <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
+            <View style={[containers.row, {justifyContent: 'flex-start'}]}>
+              <IconButton
+                iconName="times"
+                size={20}
+                onForward={() => {
+                  this.props.navigator.pop();
+                }} />
+            </View>
+            <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+              <Text style={[text.title, {color: color.white}]}>Settings</Text>
+            </View>
+            <View style={[containers.row, {justifyContent: 'flex-end'}]}>
+            </View>
           </View>
         </View>
         <View style={containers.container, {justifyContent: 'flex-start'}}>

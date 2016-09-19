@@ -220,9 +220,9 @@ export default class CreateTea extends Component {
 
     return(
       <View style={containers.container}>
-        <BackBtn navigator={this.props.navigator} textStyle={text.p} text="close" />
+        <BackBtn navigator={this.props.navigator} />
         <ScrollView>
-          <View style={[containers.container, {backgroundColor: color.white, height: SCREEN_HEIGHT}]}>
+          <View style={[containers.container, {backgroundColor: color.lightGray, height: SCREEN_HEIGHT}]}>
             <View>
               <TouchableWithoutFeedback onPress={this._coverPhotoOnClick}>
                 {teaCoverPhoto}
@@ -293,24 +293,14 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
   },
   teaCard: {
-    position: 'absolute',
-    bottom: -CARD_OFFSET,
-    left: 0,
-    right: 0,
     alignItems: 'center',
   },
   teaCardContainer: {
-    width: SCREEN_WIDTH * 0.8,
-    height: COVERIMAGE_HEIGHT * 0.4,
+    width: SCREEN_WIDTH,
+    height: COVERIMAGE_HEIGHT * 0.5,
     backgroundColor: color.white,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowColor: color.black,
-    shadowOpacity: 0.5,
     borderRadius: 2,
   },
   teaCard_title: {

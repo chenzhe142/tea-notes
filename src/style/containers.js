@@ -16,6 +16,11 @@ const containers = StyleSheet.create({
     bottom: 0,
     left: 20,
     right: 20,
+  },
+  card: {
+    marginTop: 15,
+    padding: 15,
+    backgroundColor: '#ffffff'
   }
 });
 

@@ -25,7 +25,9 @@ import {
 
 import Button from './Button';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
+import color from '../style/color';
+
+import { SCREEN_WIDTH } from '../constants';
 
 const propTypes = {
   values: PropTypes.array,
@@ -42,10 +44,10 @@ export default class ItemPicker extends Component {
           <Button
             onForward={this.props.dismissPicker}
             btnText="Done"
-            style={{backgroundColor: 'rgb(255,127,124)', borderWidth: 0, width: SCREEN_WIDTH}}
+            style={{backgroundColor: color.pink, marginBottom: 0, borderWidth: 0, width: SCREEN_WIDTH}}
           />
         </View>
-        <View>
+        <View style={{backgroundColor: color.white}}>
           <PickerIOS
             itemStyle={{height:180}}
             selectedValue={this.props.selectedValue}
@@ -59,15 +61,6 @@ export default class ItemPicker extends Component {
     );
   }
 }
-
-const color = StyleSheet.create({
-  black: {
-    color: 'black',
-  },
-  gray: {
-    color: 'rgb(102,102,102)',
-  }
-})
 
 const styles = {
   bar: {

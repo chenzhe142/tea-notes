@@ -11,8 +11,11 @@ import {
   ListView,
   StatusBar,
   Text,
+  TouchableOpacity,
   View
 } from 'react-native';
+
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import ImageRow from '../components/ImageRow.js'
 import IconButton from '../components/IconButton.js'
@@ -22,12 +25,15 @@ import containers from '../style/containers.js';
 import color from '../style/color';
 import text from '../style/text';
 
-import { DEFAULT_TEA_LIST, CUSTOMIZED_TEA_LIST_STORAGE_KEY } from '../constants';
+import { DEFAULT_TEA_LIST, CUSTOMIZED_TEA_LIST_STORAGE_KEY, STATUS_BAR_HEIGHT_IOS } from '../constants';
 
 export default class TeaSelection extends Component {
   constructor(props) {
     super(props);
     this._onForward = this._onForward.bind(this);
+    this._onScroll = this._onScroll.bind(this);
+
+    this.offset = 0;
 
     this.defaultTeaList = DEFAULT_TEA_LIST;
   }
@@ -38,6 +44,13 @@ export default class TeaSelection extends Component {
     this.props.navigator.push({
       name: 'TeaDetail',
     });
+  }
+
+  _onScroll(event) {
+    const currentOffset = event.nativeEvent.contentOffset.y;
+    const direction = currentOffset > this.offset ? 'down' : 'up';
+    this.offset = currentOffset;
+    console.log(direction);
   }
 
   _generateTeaList() {
@@ -79,14 +92,14 @@ export default class TeaSelection extends Component {
     return (
       <View style={containers.container}>
         <StatusBar hidden={false} />
-        <View style={{height: 10, backgroundColor: color.navbarGray}}>
-        </View>
-        <View style={{height: 48, backgroundColor: color.navbarGray}}>
+        <View style={{height: STATUS_BAR_HEIGHT_IOS, backgroundColor: color.pink}}></View>
+        <View style={{height: 40, backgroundColor: color.pink}}>
           <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
             <View style={[containers.row, {justifyContent: 'flex-start'}]}>
               <IconButton
-                iconName="ios-settings-outline"
+                iconName="cog"
                 size={20}
+                color={color.white}
                 onForward={() => {
                   this.props.navigator.push({
                     name: 'Setting',
@@ -94,20 +107,22 @@ export default class TeaSelection extends Component {
                 }} />
             </View>
             <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
-              <Text style={text.title}>Tea Notes</Text>
+              <Text style={[text.title, {color: color.white}]}>Tea Notes</Text>
             </View>
             <View style={[containers.row, {justifyContent: 'flex-end'}]}>
               <IconButton
-                iconName="ios-search-outline"
+                iconName="search"
                 size={20}
+                color={color.white}
                 onForward={() => {
                   this.props.navigator.push({
                     name: 'Setting',
                   });
                 }} />
                 <IconButton
-                  iconName="ios-time-outline"
+                  iconName="star"
                   size={20}
+                  color={color.white}
                   style={{marginLeft: 20}}
                   onForward={() => {
                     this.props.navigator.push({
@@ -117,7 +132,7 @@ export default class TeaSelection extends Component {
             </View>
           </View>
         </View>
-        <ScrollView>
+        <ScrollView onScroll={this._onScroll} scrollEventThrottle={16}>
           <View>
             <ListView
               dataSource={teaLists}
@@ -145,15 +160,15 @@ export default class TeaSelection extends Component {
             />
           </View>
         </ScrollView>
-        <View style={[containers.stickyFooter, {backgroundColor: color.green}]}>
-          <IconButton
-            iconName="ios-add-circle-outline"
-            size={40}
-            onForward={() => {
+        <View style={[containers.stickyFooter, {alignItems: 'center'}]}>
+          <TouchableOpacity
+            onPress={() => {
               this.props.navigator.push({
                 name: 'CreateTea',
               });
-            }} />
+            }}>
+            <Icon name="plus-circle" size={40} color={color.green} backgroundColor={color.white} />
+          </TouchableOpacity>
         </View>
       </View>
     );

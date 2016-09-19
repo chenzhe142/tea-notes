@@ -23,14 +23,14 @@ import {
   StyleSheet
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import text from '../style/text';
 
 const propTypes = {
   iconName: PropTypes.string,
   size: PropTypes.number,
-  color: PropTypes.object,
+  color: PropTypes.string,
   onForward: PropTypes.func,
 };
 

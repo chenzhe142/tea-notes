@@ -9,6 +9,8 @@ import {
   View
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/Ionicons';
+
 import Button from '../components/Button.js';
 import BackBtn from '../components/BackBtn.js';
 
@@ -23,7 +25,6 @@ import {
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
   COVERIMAGE_HEIGHT,
-  CARD_OFFSET,
   CUSTOMIZED_SETTINGS_STORAGE_KEY,
   DEFAULT_SETTINGS,
   SYMBOL_CELSIUS,
@@ -110,9 +111,9 @@ export default class TeaDetail extends Component {
 
     return(
       <View style={containers.container}>
-        <BackBtn navigator={this.props.navigator} textStyle={[text.p, {color: color.white}]} text="close" />
+        <BackBtn navigator={this.props.navigator} />
         <ScrollView>
-          <View style={[containers.container, {backgroundColor: color.white, height: SCREEN_HEIGHT}]}>
+          <View style={[containers.container, {backgroundColor: color.lightGray, height: SCREEN_HEIGHT}]}>
             <View>
               <Image source={{uri: this.props.currentSelectedTea.coverImageUrl.uri}} style={styles.coverImage} />
               <View style={styles.teaCard}>
@@ -123,16 +124,22 @@ export default class TeaDetail extends Component {
                   <View>
                     <Text style={[text.p, {color: color.gray}]}>green tea - mild - low caffeine</Text>
                   </View>
+                  <View>
+                    <Text style={[text.p, {color: color.yellow, fontSize: 18}]}>★★★★☆</Text>
+                  </View>
                 </View>
               </View>
             </View>
-            <View style={{alignItems: 'center', marginTop: 10 + CARD_OFFSET}}>
-              <Text style={[text.p, {color: color.gray}]}>tap to see in different units of measurements</Text>
-            </View>
             <View>
-              <View style={[containers.row, {marginTop: 10, marginBottom: 10, backgroundColor: color.white}]}>
-                <Text style={text.number}>🎚{temperature}</Text>
-                <Text style={text.number}>⏳{time}</Text>
+              <View style={[containers.row, containers.card]}>
+                <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+                  <Icon name="ios-thermometer" size={25} />
+                  <Text style={[text.number, {marginLeft: 5}]}>{temperature}</Text>
+                </View>
+                <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+                  <Icon name="ios-timer" size={25} />
+                  <Text style={[text.number, {marginLeft: 5}]}>{time}</Text>
+                </View>
               </View>
             </View>
             <View style={[containers.container, {justifyContent: 'flex-start'}]}>
@@ -155,24 +162,14 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
   },
   teaCard: {
-    position: 'absolute',
-    bottom: -CARD_OFFSET,
-    left: 0,
-    right: 0,
     alignItems: 'center',
   },
   teaCardContainer: {
-    width: SCREEN_WIDTH * 0.8,
-    height: COVERIMAGE_HEIGHT * 0.4,
+    width: SCREEN_WIDTH,
+    height: COVERIMAGE_HEIGHT * 0.5,
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowColor: color.black,
-    shadowOpacity: 0.5,
     borderRadius: 2,
   }
 });
