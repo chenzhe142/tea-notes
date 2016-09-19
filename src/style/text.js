@@ -7,7 +7,6 @@ const text = StyleSheet.create({
       fontSize: 14,
     },
     title: {
-      fontWeight: 'bold',
       color: 'black',
       fontFamily: 'Open Sans',
       fontSize: 20,
@@ -24,7 +23,6 @@ const text = StyleSheet.create({
       fontWeight: 'bold'
     },
     subTitle: {
-      fontWeight: 'bold',
       color: 'black',
       fontFamily: 'Open Sans',
       fontSize: 14,

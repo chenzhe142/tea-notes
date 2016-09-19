@@ -19,16 +19,15 @@
 
 import React, { Component, PropTypes } from 'react';
 import {
-  Dimensions,
   Image,
-  Navigator,
   Text,
   TouchableOpacity,
   View
 } from 'react-native';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
-const SCREEN_HEIGHT = Dimensions.get('window').height;
+import color from '../style/color';
+
+import { SCREEN_WIDTH, SCREEN_HEIGHT } from '../constants';
 
 const propTypes = {
   tea: PropTypes.shape({
@@ -47,8 +46,8 @@ export default class ImageRow extends Component {
       <View>
         <TouchableOpacity onPress={this.props.onPressEvent}>
           <Image style={styles.image} source={this.props.imageSource}>
-            <View style={styles.container}>
-              <Text style={styles.title}>{this.props.tea.name.toUpperCase()}</Text>
+            <View style={[styles.container]}>
+              <Text style={styles.title}>{this.props.tea.name}</Text>
             </View>
           </Image>
         </TouchableOpacity>
@@ -74,5 +73,6 @@ const styles = {
     fontWeight: '800',
     marginBottom: 5,
     textAlign: 'center',
+    backgroundColor: 'rgba(0,0,0,0)'
   }
 };

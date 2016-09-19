@@ -11,6 +11,7 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -26,13 +27,23 @@ import containers from '../style/containers.js';
 import color from '../style/color';
 import text from '../style/text';
 
-import { DEFAULT_TEA_LIST, CUSTOMIZED_TEA_LIST_STORAGE_KEY, STATUS_BAR_HEIGHT_IOS } from '../constants';
+import {
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  COVERIMAGE_HEIGHT,
+  DEFAULT_TEA_LIST,
+  CUSTOMIZED_TEA_LIST_STORAGE_KEY,
+  STATUS_BAR_HEIGHT_IOS
+} from '../constants';
+
+const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 export default class TeaSelection extends Component {
   constructor(props) {
     super(props);
     this._onForward = this._onForward.bind(this);
     this._onScroll = this._onScroll.bind(this);
+    this._filterTeaList = this._filterTeaList.bind(this);
 
     this.offset = 0;
     this.defaultTeaList = DEFAULT_TEA_LIST;
@@ -40,7 +51,13 @@ export default class TeaSelection extends Component {
     this.state = {
       searchBarStatus: 'show',
       searchIconStatus: 'hide',
+      teaLists: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2,}),
     };
+  }
+
+  componetWillMount() {
+    const teaLists = this._generateTeaList();
+    this.setState({ teaLists });
   }
 
   _onForward(teaObject) {
@@ -95,14 +112,49 @@ export default class TeaSelection extends Component {
       return 0;
     }).slice();
 
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     const teaLists = ds.cloneWithRows(tempList);
     return teaLists;
   }
 
-  render() {
-    const teaLists = this._generateTeaList();
+  _filterTeaList(searchText) {
+    if (searchText.length <= 0) {
+      const teaLists = this._generateTeaList();
+      this.setState({ teaLists });
+      return;
+    }
 
+    let mergedTeaList;
+
+    if (this.props.storage !== undefined) {
+      if (this.props.storage[CUSTOMIZED_TEA_LIST_STORAGE_KEY].content !== undefined) {
+        mergedTeaList = [...this.defaultTeaList, ...this.props.storage[CUSTOMIZED_TEA_LIST_STORAGE_KEY].content];
+      } else {
+        mergedTeaList = Object.assign([], this.defaultTeaList);
+      }
+    } else {
+      mergedTeaList = Object.assign([], this.defaultTeaList);
+    }
+
+
+    // TODO: filter function needs to be improved!
+    // 这个filter的check条件不对
+    const tempList = mergedTeaList.filter((tea) => {
+      let containsAllChar = true;
+      for (let char of searchText) {
+        if (tea.name.includes(char) !== true) {
+          containsAllChar = false;
+        }
+      }
+      if (containsAllChar) {
+        return tea;
+      }
+    }).slice();
+
+    const teaLists = ds.cloneWithRows(tempList);
+    this.setState({ teaLists });
+  }
+
+  render() {
     return (
       <View style={containers.container}>
         <StatusBar hidden={false} />
@@ -111,36 +163,34 @@ export default class TeaSelection extends Component {
           navigator={this.props.navigator}
           searchIconStatus={this.state.searchIconStatus}
         />
-
         <ScrollView onScroll={this._onScroll} scrollEventThrottle={100} bounces={true}>
           <View>
-            <View style={{height: 20, backgroundColor: color.pink}}>
-              <Text>lalala</Text>
+            <View>
+              <View style={styles.searchBar}>
+                <View>
+                  <TextInput
+                    value={this.tea}
+                    placeholder='search tea'
+                    onFocus={() => {
+
+                    }}
+                    style={[text.title, styles.inputBox, {fontSize: 15, fontWeight: '100'}]}
+                    onChangeText={(text) => {
+                      this._filterTeaList(text);
+                    }}
+                  />
+                </View>
+              </View>
             </View>
             <ListView
-              dataSource={teaLists}
+              dataSource={this.state.teaLists}
               renderRow={(teaObject) =>
                 <ImageRow
                   imageSource={{uri: teaObject.coverImageUrl.uri}}
                   tea={teaObject}
                   onPressEvent={() => this._onForward(teaObject)}
                 />} />
-            <ImageRow
-              imageSource={require('../../public/image/puer-tea.png')}
-              tea={{name:"pu-er tea"}}
-            />
-            <ImageRow
-              imageSource={require('../../public/image/tieguanyin.jpg')}
-              tea={{name:"tie guan yin"}}
-            />
-            <ImageRow
-              imageSource={require('../../public/image/jinjunmei.jpg')}
-              tea={{name:"jin jun mei black tea"}}
-            />
-            <ImageRow
-              imageSource={require('../../public/image/matcha-green-tea.png')}
-              tea={{name:"matcha green tea"}}
-            />
+
           </View>
         </ScrollView>
         <View style={[containers.stickyFooter, {alignItems: 'center'}]}>
@@ -157,3 +207,22 @@ export default class TeaSelection extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  searchBar: {
+    width: SCREEN_WIDTH,
+    height: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 2,
+  },
+  inputBox: {
+    width: SCREEN_WIDTH * 0.8,
+    // textAlign: 'center',
+    height: 25,
+    margin: 5,
+    borderWidth: 0,
+    textAlignVertical: 'center',
+    backgroundColor: color.lightGray,
+  }
+});
