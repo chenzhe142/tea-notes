@@ -1,23 +1,27 @@
 import React, { Component, PropTypes } from 'react';
 import {
-  ScrollView,
-  StyleSheet,
-  ListView,
-  Text,
+  ActionSheetIOS,
   Image,
+  ListView,
+  ScrollView,
   StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
   View
 } from 'react-native';
 
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
-import Button from '../components/Button.js';
-import BackBtn from '../components/BackBtn.js';
+import Button from '../components/Button';
+import BackBtn from '../components/BackBtn';
+import TopBtn from '../components/TopBtn';
 
-import text from '../style/text.js';
-import color from '../style/color.js';
-import containers from '../style/containers.js';
+import text from '../style/text';
+import color from '../style/color';
+import containers from '../style/containers';
+import position from '../style/position';
 
 import celsiusToFahrenheit from '../utils/celsiusToFahrenheit';
 import secondToMinute from '../utils/secondToMinute';
@@ -38,6 +42,11 @@ export default class TeaDetail extends Component {
   constructor(props) {
     super(props);
     this._onForward = this._onForward.bind(this);
+    this._showShareActionSheet = this._showShareActionSheet.bind(this);
+
+    this.state = {
+      isLiked: false
+    };
 
     this.settings = DEFAULT_SETTINGS;
     if (this.props.storage) {
@@ -59,6 +68,29 @@ export default class TeaDetail extends Component {
         return options[i].text;
       }
     }
+  }
+
+  _showShareActionSheet() {
+    //url needs to be a real one, which can be opened in browser!
+    ActionSheetIOS.showShareActionSheetWithOptions({
+      url: 'http://react-review.leanapp.cn',
+      message: 'message to go with the shared url',
+      subject: 'a subject to go in the email heading',
+      excludedActivityTypes: [
+        'com.apple.UIKit.activity.PostToTwitter'
+      ]
+    },
+    (error) => {
+      console.log(error);
+    } ,
+    (success, method) => {
+      var text;
+      if (success) {
+        text = `Shared via ${method}`;
+      } else {
+        text = 'You didn\'t share';
+      }
+    });
   }
 
   render() {
@@ -110,11 +142,45 @@ export default class TeaDetail extends Component {
       time = `${minutePart.text}${space}${secondPart.text}`;
     }
 
+    //top icons
+    let likeIconName = 'heart-o';
+    if (this.state.isLiked) {
+      likeIconName = 'heart';
+    }
+
     return(
       <View style={containers.container}>
-        <BackBtn navigator={this.props.navigator} />
+        <TopBtn
+          iconName="pencil-square-o"
+          style={position.topRight}
+          onPressEvent={() => {
+            this.props.updateEditingStatus(true);
+            this.props.navigator.push({
+              name: 'CreateTea'
+            });
+          }} />
+
+        <TopBtn
+          iconName={likeIconName}
+          style={[position.topRight, {right: 50}]}
+          onPressEvent={() => {
+            const isLiked = this.state.isLiked;
+            this.setState({
+              isLiked: !isLiked
+            });
+          }} />
+
+        <TopBtn
+          iconName="share-square-o"
+          style={[position.topRight, {right: 90}]}
+          onPressEvent={this._showShareActionSheet} />
         <ScrollView>
           <View style={[containers.container, {backgroundColor: color.lightGray, height: SCREEN_HEIGHT}]}>
+            <BackBtn
+              navigator={this.props.navigator}
+              onPressEvent={() => {
+                this.props.updateEditingStatus(false);
+              }} />
             <View>
               <Image source={{uri: this.props.currentSelectedTea.coverImageUrl.uri}} style={styles.coverImage} />
               <View style={styles.teaCard}>

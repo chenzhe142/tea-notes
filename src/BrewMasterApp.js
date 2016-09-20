@@ -44,6 +44,7 @@ export default class brewMaster extends Component {
     super(props);
     this._renderScene = this._renderScene.bind(this);
     this._updateCurrentSelectedTea = this._updateCurrentSelectedTea.bind(this);
+    this._updateEditingStatus = this._updateEditingStatus.bind(this);
     this._updateStorage = this._updateStorage.bind(this);
 
     this.state = {
@@ -53,6 +54,7 @@ export default class brewMaster extends Component {
         water: 'ml',
       },
       currentSelectedTea: {},
+      isEditing: false,
     };
 
     this.storageUnit = new StorageUnit([CUSTOMIZED_TEA_LIST_STORAGE_KEY, CUSTOMIZED_SETTINGS_STORAGE_KEY], this._updateStorage);
@@ -72,6 +74,10 @@ export default class brewMaster extends Component {
 
   _updateStorage(storage) {
     this.setState({ storage });
+  }
+
+  _updateEditingStatus(editingStatus) {
+    this.setState({ isEditing: editingStatus });
   }
 
   _renderScene(route, navigator) {
@@ -95,11 +101,14 @@ export default class brewMaster extends Component {
           navigator={navigator}
           storage={this.state.storage}
           currentSelectedTea={this.state.currentSelectedTea}
+          updateEditingStatus={this._updateEditingStatus}
           setting={this.state.setting} />);
       case 'CreateTea':
         return (<CreateTea
           {...route}
           navigator={navigator}
+          isEditing={this.state.isEditing}
+          currentSelectedTea={this.state.currentSelectedTea}
           storageUnit={this.storageUnit}
           storage={this.state.storage}
           setting={this.state.setting} />);

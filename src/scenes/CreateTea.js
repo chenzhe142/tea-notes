@@ -95,6 +95,14 @@ export default class CreateTea extends Component {
 
   };
 
+  componentDidMount() {
+    if (this.props.isEditing) {
+      this.setState({
+        tea: this.props.currentSelectedTea
+      });
+    }
+  }
+
   _coverPhotoOnClick() {
     const options = {
       title: 'Select Tea photo',

@@ -28,7 +28,7 @@ export default class StorageUnit {
         });
       }
     });
-    // 
+    //
     // this.fetchData.then((storage) => {
     //   this.updateStorage_function(storage);
     // });
@@ -83,13 +83,11 @@ export default class StorageUnit {
     });
   }
 
-  addItem(storage_key, item) {
-    this.getFromAsyncStorage(storage_key).done((response) => {
-      const entry = Object.assign({}, response);
-      entry.content.push(item);
-      this.storage[storage_key] = entry;
-      this.saveToStorage(storage_key, item);
-    });
+  // update an item
+  // TODO: each item should have an unique id, so that we can figure out which
+  //       one to be updated
+  updateItem(storage_key, item) {
+    let items = this.storage[storage_key];
   }
 
   // deleteItem(storage_key, item) {
