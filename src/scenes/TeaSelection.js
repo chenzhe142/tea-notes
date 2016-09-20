@@ -52,6 +52,8 @@ export default class TeaSelection extends Component {
       searchBarStatus: 'show',
       searchIconStatus: 'hide',
       teaLists: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2,}),
+      filterEnabled: false,
+      filterText: '',
     };
   }
 
@@ -73,7 +75,7 @@ export default class TeaSelection extends Component {
     let searchBarStatus;
     let searchIconStatus
 
-    if (currentOffset >= 20) {
+    if (currentOffset >= 35) {
       searchBarStatus = 'hide';
       searchIconStatus = 'show';
     } else {
@@ -81,6 +83,7 @@ export default class TeaSelection extends Component {
       searchIconStatus = 'hide';
     }
 
+    console.log(currentOffset);
     this.setState({ searchBarStatus, searchIconStatus });
   }
 
@@ -137,24 +140,45 @@ export default class TeaSelection extends Component {
 
 
     // TODO: filter function needs to be improved!
-    // 这个filter的check条件不对
+    // 1. ignore whitespace
     const tempList = mergedTeaList.filter((tea) => {
-      let containsAllChar = true;
-      for (let char of searchText) {
-        if (tea.name.includes(char) !== true) {
-          containsAllChar = false;
+      let teaMap = new Map();
+      let searchMap = new Map();
+
+      for (let char of tea.name) {
+        if (teaMap.get(char) === undefined) {
+          teaMap.set(char.toUpperCase(), true);
+        } else {
+          const count = teaMap.get(char);
+          teaMap.set(char.toUpperCase(), count + 1);
         }
       }
-      if (containsAllChar) {
-        return tea;
+
+      for (let char of searchText) {
+
       }
+
+      for (let char of searchText) {
+        if ((teaMap.get(char.toUpperCase()) === undefined) || (teaMap.get(char.toUpperCase() > map.get()))) {
+          return;
+        }
+      }
+      return tea;
     }).slice();
 
     const teaLists = ds.cloneWithRows(tempList);
-    this.setState({ teaLists });
+    return teaLists;
   }
 
   render() {
+    let teaLists;
+    if (this.state.filterText.length === 0) {
+      teaLists = this._generateTeaList();
+    } else {
+      filterText = this.state.filterText;
+      teaLists = this._filterTeaList(filterText);
+    }
+
     return (
       <View style={containers.container}>
         <StatusBar hidden={false} />
@@ -163,7 +187,7 @@ export default class TeaSelection extends Component {
           navigator={this.props.navigator}
           searchIconStatus={this.state.searchIconStatus}
         />
-        <ScrollView onScroll={this._onScroll} scrollEventThrottle={100} bounces={true}>
+        <ScrollView onScroll={this._onScroll} scrollEventThrottle={16} bounces={true}>
           <View>
             <View>
               <View style={styles.searchBar}>
@@ -176,14 +200,14 @@ export default class TeaSelection extends Component {
                     }}
                     style={[text.title, styles.inputBox, {fontSize: 15, fontWeight: '100'}]}
                     onChangeText={(text) => {
-                      this._filterTeaList(text);
+                      this.setState({ filterText: text });
                     }}
                   />
                 </View>
               </View>
             </View>
             <ListView
-              dataSource={this.state.teaLists}
+              dataSource={teaLists}
               renderRow={(teaObject) =>
                 <ImageRow
                   imageSource={{uri: teaObject.coverImageUrl.uri}}
