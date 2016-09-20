@@ -39,6 +39,8 @@
 	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Your photos will not be shared, and are only been used in your phone.</string>
+  <key>NSCameraUsageDescription</key>
+  <string>Your photos will not be shared, and are only been used in your phone.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>FontAwesome.ttf</string>

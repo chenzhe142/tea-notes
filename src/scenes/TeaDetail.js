@@ -74,7 +74,7 @@ export default class TeaDetail extends Component {
     //url needs to be a real one, which can be opened in browser!
     ActionSheetIOS.showShareActionSheetWithOptions({
       url: 'http://react-review.leanapp.cn',
-      message: 'message to go with the shared url',
+      message: 'Share an awesome tea note to you!',
       subject: 'a subject to go in the email heading',
       excludedActivityTypes: [
         'com.apple.UIKit.activity.PostToTwitter'

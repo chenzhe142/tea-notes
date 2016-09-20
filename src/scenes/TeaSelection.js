@@ -159,7 +159,7 @@ export default class TeaSelection extends Component {
       }
 
       for (let char of searchText) {
-        if ((teaMap.get(char.toUpperCase()) === undefined) || (teaMap.get(char.toUpperCase() > map.get()))) {
+        if ((teaMap.get(char.toUpperCase()) === undefined) || (teaMap.get(char.toUpperCase() > searchMap.get()))) {
           return;
         }
       }
