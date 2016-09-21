@@ -63,6 +63,7 @@ export default class CreateTea extends Component {
     this._updateTemperature = this._updateTemperature.bind(this);
     this._updateTime = this._updateTime.bind(this);
     this._saveTea = this._saveTea.bind(this);
+    this._updateTea = this._updateTea.bind(this);
 
     this.state = {
       isCoverImageSelected: false,
@@ -70,6 +71,7 @@ export default class CreateTea extends Component {
       showTimePicker: false,
 
       tea: {
+        id: 0,
         name: '',
         temperature: '',
         time: '',
@@ -171,18 +173,19 @@ export default class CreateTea extends Component {
   _saveTea() {
     // TODO: info validation
 
-    const tea = Object.assign({}, this.state.tea);
+    let tea = Object.assign({}, this.state.tea);
 
     if (defaultTea.isEqual(tea) === false) {
       // customizedTeaList: {storageKey: "", content: []}
       let existingList = Object.assign({}, this.state.customizedTeaList);
-      console.log('create tea');
-      console.log(existingList);
+
       let customizedTeaList;
       if (existingList.content !== undefined) {
         customizedTeaList = Object.assign([], existingList.content);
+        tea.id = customizedTeaList.length;
         customizedTeaList.push(tea);
       } else {
+        tea.id = 0;
         customizedTeaList = [tea];
       }
 
@@ -190,9 +193,15 @@ export default class CreateTea extends Component {
     }
   }
 
+  _updateTea() {
+    const tea = Object.assign({}, this.state.tea);
+    this.props.storageUnit.updateItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY, tea);
+    this.props.updateCurrentSelectedTea(tea);
+  }
+
   render() {
     let teaCoverPhoto;
-    if (this.state.isCoverImageSelected) {
+    if ((this.state.isCoverImageSelected) || (this.props.isEditing)) {
       teaCoverPhoto = <Image source={this.state.tea.coverImageUrl} style={styles.coverImage}/>;
     } else {
       teaCoverPhoto = <Image source={require('../../public/image/photo_placeholder.png')} style={styles.coverImage} />;
@@ -218,9 +227,14 @@ export default class CreateTea extends Component {
                   textStyle={text.p} />
               </View>;
     } else {
+      let footerOnPressEvent = this._saveTea;
+      if (this.props.isEditing) {
+        footerOnPressEvent = this._updateTea;
+      }
+
       footer = <View style={containers.stickyFooter}>
                 <Button
-                  onForward={this._saveTea}
+                  onForward={footerOnPressEvent}
                   btnText="Save"
                   style={{backgroundColor: color.green}} />
               </View>;

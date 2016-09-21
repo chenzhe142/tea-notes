@@ -109,6 +109,7 @@ export default class brewMaster extends Component {
           navigator={navigator}
           isEditing={this.state.isEditing}
           currentSelectedTea={this.state.currentSelectedTea}
+          updateCurrentSelectedTea={this._updateCurrentSelectedTea}
           storageUnit={this.storageUnit}
           storage={this.state.storage}
           setting={this.state.setting} />);
