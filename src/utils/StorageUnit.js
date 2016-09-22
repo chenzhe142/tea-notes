@@ -1,7 +1,7 @@
 /**
  * StorageUnit.js
  *
- * - a simple AsyncStorage wrapper, doing get, save, update.
+ * - a simple AsyncStorage wrapper, doing get, save, update, and delete(in the future)
  */
 
 import { AsyncStorage } from 'react-native';
@@ -92,7 +92,7 @@ export default class StorageUnit {
   }
 
   // update an item
-  // TODO: each item should have an unique id, so that we can figure out which
+  // each item should have an unique id, so that we can figure out which
   //       one to be updated
   // update this.storage first, then update AsyncStorage
   updateItem(storage_key, singleObj) {

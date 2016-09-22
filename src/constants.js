@@ -71,3 +71,33 @@ export const DEFAULT_TEA_LIST = [{
     uri: 'https://facebook.github.io/react/img/logo_og.png'
   }
 }];
+
+export const DEFAULT_TEA_TYPES = [
+  "green",
+  "black",
+  "white",
+  "oolong",
+  "herbal",
+  "fruity",
+  "iced",
+];
+
+export const DEFAULT_TEA_FLAVORS = [
+  "pure-traditional",
+  "blooming",
+  "mint",
+  "light",
+  "mild",
+  "rich",
+  "fruity",
+  "berry",
+  "chai"
+];
+
+export const DEFAULT_TEA_CAFFEINE_LEVEL = [
+  "caffeine free",
+  "low",
+  "medium",
+  "high",
+  "highest"
+];

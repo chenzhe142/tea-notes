@@ -39,9 +39,14 @@ export default class Button extends Component {
     super(props);
   }
   render() {
+    let btnStyle;
+    if (this.props.enableButtonStyle) {
+      btnStyle = styles.button;
+    }
+
     return (
       <TouchableOpacity
-        style={[styles.button, this.props.style]}
+        style={[btnStyle, this.props.style]}
         onPress={this.props.onForward}>
         <Text style={[text.button, this.props.textStyle]}>
           { this.props.btnText }

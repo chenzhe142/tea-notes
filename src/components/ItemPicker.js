@@ -44,6 +44,7 @@ export default class ItemPicker extends Component {
           <Button
             onForward={this.props.dismissPicker}
             btnText="Done"
+            enableButtonStyle={true}
             style={{backgroundColor: color.pink, marginBottom: 0, borderWidth: 0, width: SCREEN_WIDTH}}
           />
         </View>

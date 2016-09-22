@@ -109,7 +109,7 @@ export default class TeaTimer extends Component {
           </View>
         </View>
         <View style={styles.controlBtn}>
-          <Button btnText={this.state.timerBtnText} style={{backgroundColor: color.green}} onForward={this._toggleTimer} />
+          <Button enableButtonStyle={true} btnText={this.state.timerBtnText} style={{backgroundColor: color.green}} onForward={this._toggleTimer} />
         </View>
       </View>
     );

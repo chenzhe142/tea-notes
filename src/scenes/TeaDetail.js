@@ -215,7 +215,7 @@ export default class TeaDetail extends Component {
           </View>
         </ScrollView>
         <View style={containers.stickyFooter}>
-          <Button btnText="Start Brewing!" style={{backgroundColor: color.green}} onForward={this._onForward} />
+          <Button enableButtonStyle={true} btnText="Start Brewing!" style={{backgroundColor: color.green}} onForward={this._onForward} />
         </View>
       </View>
     );

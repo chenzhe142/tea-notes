@@ -23,8 +23,9 @@ import Button from '../components/Button.js';
 import BackBtn from '../components/BackBtn.js';
 import WithLabel from '../components/WithLabel.js';
 import ItemPicker from '../components/ItemPicker.js';
+import IconButton from '../components/IconButton';
 
-import { SCREEN_WIDTH, SCREEN_HEIGHT, COVERIMAGE_HEIGHT, CARD_OFFSET, CUSTOMIZED_TEA_LIST_STORAGE_KEY } from '../constants';
+import { SCREEN_WIDTH, SCREEN_HEIGHT, COVERIMAGE_HEIGHT, CARD_OFFSET, CUSTOMIZED_TEA_LIST_STORAGE_KEY, STATUS_BAR_HEIGHT_IOS } from '../constants';
 
 import text from '../style/text.js';
 import color from '../style/color.js';
@@ -227,22 +228,45 @@ export default class CreateTea extends Component {
                   textStyle={text.p} />
               </View>;
     } else {
-      let footerOnPressEvent = this._saveTea;
-      if (this.props.isEditing) {
-        footerOnPressEvent = this._updateTea;
+      if (this.props.isEditing === false) {
+        footer = <View style={containers.stickyFooter}>
+                  <Button
+                    enableButtonStyle={true}
+                    onForward={this._saveTea}
+                    btnText="Save"
+                    style={{backgroundColor: color.green}} />
+                </View>;
       }
 
-      footer = <View style={containers.stickyFooter}>
-                <Button
-                  onForward={footerOnPressEvent}
-                  btnText="Save"
-                  style={{backgroundColor: color.green}} />
-              </View>;
+    }
+
+    let saveBtn;
+    if (this.props.isEditing) {
+      saveBtn = <Button enableButtonStyle={false} btnText="save" onForward={this._updateTea} />
     }
 
     return(
       <View style={containers.container}>
-        <BackBtn navigator={this.props.navigator} />
+        <View style={{height: STATUS_BAR_HEIGHT_IOS, backgroundColor: color.pink}}></View>
+        <View style={{height: 40, backgroundColor: color.pink}}>
+          <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
+            <View style={[containers.row, {justifyContent: 'flex-start'}]}>
+              <IconButton
+                iconName="times"
+                size={20}
+                color={color.white}
+                onForward={() => {
+                  this.props.navigator.pop();
+                }} />
+            </View>
+            <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+              <Text style={[text.title, {color: color.white}]}>Edit note</Text>
+            </View>
+            <View style={[containers.row, {justifyContent: 'flex-end'}]}>
+              {saveBtn}
+            </View>
+          </View>
+        </View>
         <ScrollView>
           <View style={[containers.container, {backgroundColor: color.lightGray, height: SCREEN_HEIGHT}]}>
             <View>
