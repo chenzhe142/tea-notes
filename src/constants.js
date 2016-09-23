@@ -48,28 +48,32 @@ export const DEFAULT_TEA_LIST = [{
   time: 3,
   coverImageUrl: {
     uri: 'https://facebook.github.io/react/img/logo_og.png'
-  }
+  },
+  isLiked: false
 }, {
   name: 'Pu-er Tea',
   temperature: 95,
   time: 180,
   coverImageUrl: {
     uri: 'https://facebook.github.io/react/img/logo_og.png'
-  }
+  },
+  isLiked: false
 }, {
   name: 'jin jun mei black tea',
   temperature: 95,
   time: 180,
   coverImageUrl: {
     uri: 'https://facebook.github.io/react/img/logo_og.png'
-  }
+  },
+  isLiked: false
 }, {
   name: 'tie guan yin',
   temperature: 95,
   time: 180,
   coverImageUrl: {
     uri: 'https://facebook.github.io/react/img/logo_og.png'
-  }
+  },
+  isLiked: false
 }];
 
 export const DEFAULT_TEA_TYPES = [

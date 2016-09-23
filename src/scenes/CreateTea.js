@@ -37,6 +37,7 @@ class Tea {
     this.temperature = temperature;
     this.time = time;
     this.coverImageUrl = coverImageUrl;
+    this.isLiked = false;
   }
   isEqual(anotherTea) {
     if ((this.name === anotherTea.name) && (this.temperature === anotherTea.temperature) && (this.time === anotherTea.time)) {

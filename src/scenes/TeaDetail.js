@@ -31,6 +31,7 @@ import {
   SCREEN_HEIGHT,
   COVERIMAGE_HEIGHT,
   CUSTOMIZED_SETTINGS_STORAGE_KEY,
+  CUSTOMIZED_TEA_LIST_STORAGE_KEY,
   DEFAULT_SETTINGS,
   SYMBOL_CELSIUS,
   SYMBOL_FAHRENHEIT,
@@ -43,10 +44,7 @@ export default class TeaDetail extends Component {
     super(props);
     this._onForward = this._onForward.bind(this);
     this._showShareActionSheet = this._showShareActionSheet.bind(this);
-
-    this.state = {
-      isLiked: false
-    };
+    this._toggleLike = this._toggleLike.bind(this);
 
     this.settings = DEFAULT_SETTINGS;
     if (this.props.storage) {
@@ -91,6 +89,13 @@ export default class TeaDetail extends Component {
         text = 'You didn\'t share';
       }
     });
+  }
+
+  _toggleLike() {
+    let tea = Object.assign({}, this.props.currentSelectedTea);
+    tea.isLiked = !tea.isLiked;
+    this.props.storageUnit.updateItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY, tea);
+    this.props.updateCurrentSelectedTea(tea);
   }
 
   render() {
@@ -144,7 +149,7 @@ export default class TeaDetail extends Component {
 
     //top icons
     let likeIconName = 'heart-o';
-    if (this.state.isLiked) {
+    if (this.props.currentSelectedTea.isLiked) {
       likeIconName = 'heart';
     }
 
@@ -163,12 +168,7 @@ export default class TeaDetail extends Component {
         <TopBtn
           iconName={likeIconName}
           style={[position.topRight, {right: 50}]}
-          onPressEvent={() => {
-            const isLiked = this.state.isLiked;
-            this.setState({
-              isLiked: !isLiked
-            });
-          }} />
+          onPressEvent={this._toggleLike} />
 
         <TopBtn
           iconName="share-square-o"

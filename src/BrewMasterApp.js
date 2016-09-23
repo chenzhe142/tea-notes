@@ -60,8 +60,6 @@ export default class brewMaster extends Component {
     this.storageUnit = new StorageUnit([CUSTOMIZED_TEA_LIST_STORAGE_KEY, CUSTOMIZED_SETTINGS_STORAGE_KEY], this._updateStorage);
     this.storageUnit.fetchData.then((storage) => {
       this.setState({ storage });
-      console.log('lalala');
-      console.log(storage);
     });
 
   }
@@ -100,7 +98,9 @@ export default class brewMaster extends Component {
           {...route}
           navigator={navigator}
           storage={this.state.storage}
+          storageUnit={this.storageUnit}
           currentSelectedTea={this.state.currentSelectedTea}
+          updateCurrentSelectedTea={this._updateCurrentSelectedTea}
           updateEditingStatus={this._updateEditingStatus}
           setting={this.state.setting} />);
       case 'CreateTea':
@@ -123,6 +123,7 @@ export default class brewMaster extends Component {
       case 'UserFavorite':
         return (<UserFavorite
           navigator={navigator}
+          updateCurrentSelectedTea={this._updateCurrentSelectedTea}
           storage={this.state.storage} />);
       default:
         return;

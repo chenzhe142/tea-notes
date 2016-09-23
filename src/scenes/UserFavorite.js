@@ -6,28 +6,60 @@
 
 import React, { Component, PropTypes } from 'react';
 import {
+  ListView,
+  StatusBar,
   StyleSheet,
   Text,
-  StatusBar,
   View
 } from 'react-native';
 
 import BackBtn from '../components/BackBtn';
 import IconButton from '../components/IconButton';
 import SlideSwitch from '../components/SlideSwitch';
+import ImageRow from '../components/ImageRow';
 
 import text from '../style/text';
 import color from '../style/color';
 import containers from '../style/containers';
 
-import { STATUS_BAR_HEIGHT_IOS } from '../constants';
+import { STATUS_BAR_HEIGHT_IOS, CUSTOMIZED_TEA_LIST_STORAGE_KEY } from '../constants';
+
+const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 export default class UserFavorite extends Component {
   constructor(props) {
     super(props);
+    this._getFavoriteTeaList = this._getFavoriteTeaList.bind(this);
+  }
+
+  _onForward(teaObject) {
+    // update parent state 'currentSelectedTea'
+    this.props.updateCurrentSelectedTea(teaObject);
+    this.props.navigator.push({
+      name: 'TeaDetail',
+    });
+  }
+
+  _getFavoriteTeaList() {
+    let favoriteTealist = [];
+
+    if (this.props.storage[CUSTOMIZED_TEA_LIST_STORAGE_KEY]) {
+      if (this.props.storage[CUSTOMIZED_TEA_LIST_STORAGE_KEY].content) {
+        const customizedTeaList = this.props.storage[CUSTOMIZED_TEA_LIST_STORAGE_KEY].content;
+        for (let i = 0; i < customizedTeaList.length; i++) {
+          if (customizedTeaList[i].isLiked) {
+            favoriteTealist.push(customizedTeaList[i]);
+          }
+        }
+      }
+    }
+
+    return ds.cloneWithRows(favoriteTealist);
   }
 
   render() {
+    const favoriteTealist = this._getFavoriteTeaList();
+
     return (
       <View style={[containers.container, {justifyContent: 'flex-start', backgroundColor: color.white}]}>
         <StatusBar hidden={false} />
@@ -51,7 +83,14 @@ export default class UserFavorite extends Component {
           </View>
         </View>
         <View style={containers.container, {justifyContent: 'flex-start'}}>
-
+          <ListView
+            dataSource={favoriteTealist}
+            renderRow={(teaObject) =>
+              <ImageRow
+                imageSource={{uri: teaObject.coverImageUrl.uri}}
+                tea={teaObject}
+                onPressEvent={() => this._onForward(teaObject)}
+              />} />
         </View>
       </View>
     );
