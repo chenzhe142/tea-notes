@@ -7,7 +7,7 @@
  * None
  *
  * ## PropTypes
- * @param label
+ * @param iconName
  * @param textStyle
  * @param children
  *
@@ -22,13 +22,17 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 
+import IoniconsIcon from 'react-native-vector-icons/Ionicons';
+
+import color from '../style/color';
+
 export default class WithLabel extends Component {
   render() {
     return (
       <TouchableWithoutFeedback onPress={this.props.showPicker}>
         <View style={styles.labelContainer}>
           <View style={styles.label}>
-            <Text style={this.props.textStyle}>{this.props.label}</Text>
+            <IoniconsIcon name={this.props.iconName} size={20} color={color.pink} />
           </View>
           {this.props.children}
         </View>

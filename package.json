@@ -11,7 +11,6 @@
     "react-native": "^0.31.0",
     "react-native-image-picker": "^0.22.1",
     "react-native-vector-icons": "^2.1.0",
-    "react-redux": "^4.4.5",
-    "redux": "^3.6.0"
+    "react-redux": "^4.4.5"
   }
 }

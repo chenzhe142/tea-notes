@@ -26,6 +26,12 @@ const text = StyleSheet.create({
       color: 'black',
       fontFamily: 'Open Sans',
       fontSize: 14,
+    },
+    sectionTitle: {
+      color: 'black',
+      fontFamily: 'Open Sans',
+      fontSize: 16,
+      fontWeight: '700',
     }
   });
 

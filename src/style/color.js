@@ -11,6 +11,7 @@ const color = {
   flora: 'rgb(102,255,102)',
   white: '#ffffff',
   yellow: 'rgb(255,204,102)',
+  aqua: 'rgb(102,153,255)',
 };
 
 export default color;

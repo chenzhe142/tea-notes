@@ -113,8 +113,30 @@ export default class StorageUnit {
     }
   }
 
-  // deleteItem(storage_key, item) {
-  //   delete item from async storage
-  //   update storage cache
-  // }
+  deleteItem(storage_key, singleObj) {
+    // delete item from async storage
+    // update storage cache
+    let items = this.storage[storage_key].content;
+    const position = items.indexOf(singleObj);
+    try {
+      if ((position >= 0) || (position < items.length)) {
+        items.splice(position, 1);
+        this.saveToAsyncStorage(storage_key, JSON.stringify(items)).done(() => {
+          this.getFromAsyncStorage(storage_key).done((response) => {
+            // update this.storage
+            this.storage[storage_key] = {
+              storageKey: storage_key,
+              content: response
+            };
+            this.updateStorage_function(this.storage);
+            console.log('StorageUnit: delete item success');
+          })
+        })
+      }
+    } catch (e) {
+      console.log('StorageUnit: delete item failed');
+      console.log(e);
+    }
+
+  }
 }

@@ -15,9 +15,11 @@ import {
   Text,
   TextInput,
   TouchableWithoutFeedback,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 import Button from '../components/Button.js';
 import BackBtn from '../components/BackBtn.js';
@@ -81,6 +83,8 @@ export default class CreateTea extends Component {
       },
 
       customizedTeaList: this.props.storage[CUSTOMIZED_TEA_LIST_STORAGE_KEY],
+
+      screenOffset: 0,
     };
 
     this.temperature = Array.apply(null, {length: 56}).map((element, index) => {
@@ -182,9 +186,9 @@ export default class CreateTea extends Component {
       let existingList = Object.assign({}, this.state.customizedTeaList);
 
       let customizedTeaList;
-      if (existingList.content !== undefined) {
+      if ((existingList.content !== undefined) && (existingList.content.length > 0)) {
         customizedTeaList = Object.assign([], existingList.content);
-        tea.id = customizedTeaList.length;
+        tea.id = customizedTeaList[customizedTeaList.length-1].id + 1;
         customizedTeaList.push(tea);
       } else {
         tea.id = 0;
@@ -228,22 +232,16 @@ export default class CreateTea extends Component {
                   dismissPicker={this._dismissPicker}
                   textStyle={text.p} />
               </View>;
-    } else {
-      if (this.props.isEditing === false) {
-        footer = <View style={containers.stickyFooter}>
-                  <Button
-                    enableButtonStyle={true}
-                    onForward={this._saveTea}
-                    btnText="Save"
-                    style={{backgroundColor: color.green}} />
-                </View>;
-      }
-
     }
 
-    let saveBtn;
+    let saveBtnOnPressEvent;
+    let navbarTitle;
     if (this.props.isEditing) {
-      saveBtn = <Button enableButtonStyle={false} btnText="save" onForward={this._updateTea} />
+      saveBtnOnPressEvent = this._updateTea;
+      navbarTitle = 'Edit note';
+    } else {
+      saveBtnOnPressEvent = this._saveTea;
+      navbarTitle = 'Create note';
     }
 
     return(
@@ -261,15 +259,15 @@ export default class CreateTea extends Component {
                 }} />
             </View>
             <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
-              <Text style={[text.title, {color: color.white}]}>Edit note</Text>
+              <Text style={[text.title, {color: color.white}]}>{navbarTitle}</Text>
             </View>
             <View style={[containers.row, {justifyContent: 'flex-end'}]}>
-              {saveBtn}
+              <Button enableButtonStyle={false} btnText="save" onForward={saveBtnOnPressEvent} />
             </View>
           </View>
         </View>
         <ScrollView>
-          <View style={[containers.container, {backgroundColor: color.lightGray, height: SCREEN_HEIGHT}]}>
+          <View style={[containers.container, {backgroundColor: color.lightGray, paddingBottom: 60}]}>
             <View>
               <TouchableWithoutFeedback onPress={this._coverPhotoOnClick}>
                 {teaCoverPhoto}
@@ -299,21 +297,17 @@ export default class CreateTea extends Component {
               </View>
             </View>
 
-            <View style={{alignItems: 'center', marginTop: 10 + CARD_OFFSET}}>
-              <Text style={[text.p, {color: color.gray}]}>tap to see in different units of measurements</Text>
-            </View>
-
             <View>
-              <View style={[containers.row, {marginTop: 10, marginBottom: 10, backgroundColor: color.white}]}>
+              <View style={[containers.row, {marginTop: 15, paddingTop: 10, paddingBottom: 10, backgroundColor: color.white}]}>
                 <View>
-                  <WithLabel label="🎚" textStyle={text.p} showPicker={this._showTemperaturePicker}>
+                  <WithLabel iconName="ios-thermometer" textStyle={text.p} showPicker={this._showTemperaturePicker}>
                     <Text style={[text.number, styles.teaCard_data]}>
                       {this.state.tea.temperature}
                     </Text>
                   </WithLabel>
                 </View>
                 <View>
-                  <WithLabel label="⏳" textStyle={text.p} showPicker={this._showTimePicker}>
+                  <WithLabel iconName="ios-time" textStyle={text.p} showPicker={this._showTimePicker}>
                     <Text style={[text.number, styles.teaCard_data]}>
                       {this.state.tea.time}
                     </Text>
@@ -321,8 +315,36 @@ export default class CreateTea extends Component {
                 </View>
               </View>
             </View>
-            <View style={[containers.container, {justifyContent: 'flex-start'}]}>
-              <Text>How to brew</Text>
+
+            <View>
+              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 15, backgroundColor: color.white, height: 100}]}>
+                <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>
+                  <Text style={text.sectionTitle}>How to brew</Text>
+                </View>
+                <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
+                  <TouchableOpacity>
+                    <Text style={[text.p, {color: color.aqua}]}>+ add a new step</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 15, backgroundColor: color.white, height: 100}]}>
+                <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>
+                  <Text style={text.sectionTitle}>Notes</Text>
+                </View>
+                <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
+                  <TouchableOpacity>
+                    <Text style={[text.p, {color: color.aqua}]}>+ add your note</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={{paddingTop: 0, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
+                  <TextInput
+                    placeholder="type something"
+                    style={{height: 40, borderWidth: 1, borderColor: 'black'}}
+                    />
+                </View>
+              </View>
             </View>
           </View>
         </ScrollView>

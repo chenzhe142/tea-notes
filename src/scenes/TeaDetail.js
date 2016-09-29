@@ -17,6 +17,7 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import Button from '../components/Button';
 import BackBtn from '../components/BackBtn';
 import TopBtn from '../components/TopBtn';
+import IconButton from '../components/IconButton';
 
 import text from '../style/text';
 import color from '../style/color';
@@ -147,7 +148,7 @@ export default class TeaDetail extends Component {
       time = `${minutePart.text}${space}${secondPart.text}`;
     }
 
-    //top icons
+    //like icons
     let likeIconName = 'heart-o';
     if (this.props.currentSelectedTea.isLiked) {
       likeIconName = 'heart';
@@ -155,27 +156,8 @@ export default class TeaDetail extends Component {
 
     return(
       <View style={containers.container}>
-        <TopBtn
-          iconName="pencil-square-o"
-          style={position.topRight}
-          onPressEvent={() => {
-            this.props.updateEditingStatus(true);
-            this.props.navigator.push({
-              name: 'CreateTea'
-            });
-          }} />
-
-        <TopBtn
-          iconName={likeIconName}
-          style={[position.topRight, {right: 50}]}
-          onPressEvent={this._toggleLike} />
-
-        <TopBtn
-          iconName="share-square-o"
-          style={[position.topRight, {right: 90}]}
-          onPressEvent={this._showShareActionSheet} />
         <ScrollView>
-          <View style={[containers.container, {backgroundColor: color.lightGray, height: SCREEN_HEIGHT}]}>
+          <View style={[containers.container, {backgroundColor: color.lightGray, paddingBottom: 80, justifyContent: 'flex-start'}]}>
             <BackBtn
               navigator={this.props.navigator}
               onPressEvent={() => {
@@ -209,13 +191,80 @@ export default class TeaDetail extends Component {
                 </View>
               </View>
             </View>
-            <View style={[containers.container, {justifyContent: 'flex-start'}]}>
-              <Text>How to brew</Text>
+            <View>
+              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 15, backgroundColor: color.white, height: 100}]}>
+                <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>
+                  <Text style={text.sectionTitle}>How to brew</Text>
+                </View>
+                <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
+                  <Text style={text.p}>
+                    This is content
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 15, backgroundColor: color.white, height: 100}]}>
+                <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>
+                  <Text style={text.sectionTitle}>Notes</Text>
+                </View>
+                <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
+                  <Text style={text.p}>
+                    This is your note
+                  </Text>
+                </View>
+              </View>
             </View>
           </View>
         </ScrollView>
-        <View style={containers.stickyFooter}>
-          <Button enableButtonStyle={true} btnText="Start Brewing!" style={{backgroundColor: color.green}} onForward={this._onForward} />
+        <View style={[containers.stickyFooter, {left: 0, right: 0}]}>
+          <View style={{height: 40, backgroundColor: color.pink}}>
+            <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
+              <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+                <IconButton
+                  iconName={likeIconName}
+                  size={20}
+                  color={color.white}
+                  onForward={this._toggleLike} />
+              </View>
+              <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+                <IconButton
+                  iconName="share-square-o"
+                  size={20}
+                  color={color.white}
+                  onForward={this._showShareActionSheet} />
+              </View>
+              <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+                <IconButton
+                  iconName="coffee"
+                  size={20}
+                  color={color.white}
+                  onForward={this._onForward} />
+              </View>
+              <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+                <IconButton
+                  iconName="pencil-square-o"
+                  size={20}
+                  color={color.white}
+                  onForward={() => {
+                    this.props.updateEditingStatus(true);
+                    this.props.navigator.push({
+                      name: 'CreateTea'
+                    });
+                  }} />
+              </View>
+              <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+                <IconButton
+                  iconName="trash-o"
+                  size={20}
+                  color={color.white}
+                  onForward={() => {
+                    this.props.storageUnit.deleteItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY, this.props.currentSelectedTea);
+                    this.props.navigator.pop();
+                  }} />
+              </View>
+            </View>
+          </View>
         </View>
       </View>
     );
