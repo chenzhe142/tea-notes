@@ -74,7 +74,14 @@ export default class AddNote extends Component {
               <Text style={[text.title, {color: color.white}]}>Edit note</Text>
             </View>
             <View style={[containers.row, {justifyContent: 'flex-end'}]}>
-              <Button enableButtonStyle={false} btnText="save" textStyle={{fontWeight: 'normal'}} onForward={this._saveNote} />
+              <Button
+                enableButtonStyle={false}
+                btnText="save"
+                textStyle={{fontWeight: 'normal'}}
+                onForward={() => {
+                  this._saveNote();
+                  this.props.navigator.pop();
+                }} />
             </View>
           </View>
         </View>
@@ -82,7 +89,7 @@ export default class AddNote extends Component {
           <View style={[containers.container, {justifyContent: 'flex-start', height: SCREEN_HEIGHT - 40 - STATUS_BAR_HEIGHT_IOS, backgroundColor: color.white, paddingBottom: 60}]}>
             <View style={{paddingTop: 0, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
               <TextInput
-                placeholder="type something"
+                placeholder="your note starts from here..."
                 multiline={true}
                 value={this.state.userInput}
                 onChangeText={(userInput) => {

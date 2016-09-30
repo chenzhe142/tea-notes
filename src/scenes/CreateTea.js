@@ -244,12 +244,12 @@ export default class CreateTea extends Component {
 
     if (this.props.isEditing) {
       saveBtnOnPressEvent = this._updateTea;
-      navbarTitle = 'Edit note';
+      navbarTitle = 'Edit tea note';
       brewSteps = this.state.tea.brewSteps;
       userNotes = this.state.tea.userNotes;
     } else {
       saveBtnOnPressEvent = this._saveTea;
-      navbarTitle = 'Create note';
+      navbarTitle = 'Create tea note';
       brewSteps = this.props.brewSteps;
       userNotes = this.props.userNotes;
     }
