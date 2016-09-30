@@ -48,7 +48,7 @@ export default class ImageRow extends Component {
         <TouchableOpacity onPress={this.props.onPressEvent}>
           <Image style={styles.image} source={this.props.imageSource}>
             <View style={[styles.container]}>
-              <Text style={[styles.title, {shadowOffset: {width: 1, height: 1},shadowColor: 'black', shadowOpacity: 1}]}>{this.props.tea.name}</Text>
+              <Text style={[styles.title, text.shadow]}>{this.props.tea.name}</Text>
             </View>
           </Image>
         </TouchableOpacity>
@@ -71,7 +71,7 @@ const styles = {
     color: '#ffffff',
     fontFamily: 'Open Sans',
     fontSize: 20,
-    fontWeight: '800',
+    fontWeight: '600',
     marginBottom: 5,
     textAlign: 'center',
     backgroundColor: 'rgba(0,0,0,0)'

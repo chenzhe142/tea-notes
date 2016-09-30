@@ -231,6 +231,8 @@ export default class CreateTea extends Component {
       }
 
       this.props.storageUnit.saveItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY, JSON.stringify(customizedTeaList));
+      //TODO: add notification: "create success!"
+      this.props.navigator.pop();
     }
   }
 
@@ -238,6 +240,8 @@ export default class CreateTea extends Component {
     const tea = Object.assign({}, this.state.tea);
     this.props.storageUnit.updateItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY, tea);
     this.props.updateCurrentSelectedTea(tea);
+    //TODO: add notification: "update success!"
+    this.props.navigator.pop();
   }
 
   render() {
@@ -329,6 +333,44 @@ export default class CreateTea extends Component {
 
                   <View>
                     <Text style={[text.p, {color: color.gray}]}>green tea - mild - low caffeine</Text>
+                  </View>
+
+                  <View style={[containers.row]}>
+                    <IconButton
+                      iconName="star"
+                      size={20}
+                      color={color.yellow}
+                      onForward={() => {
+                        console.log('star clicked');
+                      }} />
+                    <IconButton
+                      iconName="star"
+                      size={20}
+                      color={color.yellow}
+                      onForward={() => {
+                        console.log('star clicked');
+                      }} />
+                    <IconButton
+                      iconName="star"
+                      size={20}
+                      color={color.yellow}
+                      onForward={() => {
+                        console.log('star clicked');
+                      }} />
+                    <IconButton
+                      iconName="star"
+                      size={20}
+                      color={color.yellow}
+                      onForward={() => {
+                        console.log('star clicked');
+                      }} />
+                    <IconButton
+                      iconName="star-o"
+                      size={20}
+                      color={color.yellow}
+                      onForward={() => {
+                        console.log('star clicked');
+                      }} />
                   </View>
 
                 </View>

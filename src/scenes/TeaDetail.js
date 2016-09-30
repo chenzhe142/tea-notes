@@ -170,12 +170,19 @@ export default class TeaDetail extends Component {
                   <View>
                     <Text style={text.title}>{this.props.currentSelectedTea.name}</Text>
                   </View>
+
                   <View>
                     <Text style={[text.p, {color: color.gray}]}>green tea - mild - low caffeine</Text>
                   </View>
-                  <View>
-                    <Text style={[text.p, {color: color.yellow, fontSize: 18}]}>★★★★☆</Text>
+
+                  <View style={[containers.row, {alignItems: 'center', justifyContent: 'space-around', height: 50}]}>
+                    <FontAwesomeIcon name="star" size={20} color={color.yellow} />
+                    <FontAwesomeIcon name="star" size={20} color={color.yellow} />
+                    <FontAwesomeIcon name="star" size={20} color={color.yellow} />
+                    <FontAwesomeIcon name="star" size={20} color={color.yellow} />
+                    <FontAwesomeIcon name="star-o" size={20} color={color.yellow} />
                   </View>
+
                 </View>
               </View>
             </View>
@@ -283,7 +290,7 @@ const styles = StyleSheet.create({
   teaCardContainer: {
     width: SCREEN_WIDTH,
     height: COVERIMAGE_HEIGHT * 0.5,
-    backgroundColor: 'white',
+    backgroundColor: color.white,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 2,

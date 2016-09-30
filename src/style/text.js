@@ -32,6 +32,14 @@ const text = StyleSheet.create({
       fontFamily: 'Open Sans',
       fontSize: 16,
       fontWeight: '700',
+    },
+    shadow: {
+      shadowOffset: {
+        width: 1,
+        height: 1
+      },
+      shadowColor: 'black',
+      shadowOpacity: 1
     }
   });
 
