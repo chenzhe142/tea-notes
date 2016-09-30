@@ -26,6 +26,7 @@ import {
 } from 'react-native';
 
 import color from '../style/color';
+import text from '../style/text';
 
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from '../constants';
 
@@ -47,7 +48,7 @@ export default class ImageRow extends Component {
         <TouchableOpacity onPress={this.props.onPressEvent}>
           <Image style={styles.image} source={this.props.imageSource}>
             <View style={[styles.container]}>
-              <Text style={styles.title}>{this.props.tea.name}</Text>
+              <Text style={[styles.title, {shadowOffset: {width: 1, height: 1},shadowColor: 'black', shadowOpacity: 1}]}>{this.props.tea.name}</Text>
             </View>
           </Image>
         </TouchableOpacity>
