@@ -37,25 +37,40 @@ export default class AddNote extends Component {
     super(props);
     this._saveNote = this._saveNote.bind(this);
     this.state = {
-      userInput: '',
+      brewSteps: '',
+      userNotes: '',
     };
+  }
+
+  componentDidMount() {
+    this.setState({
+      brewSteps: this.props.brewSteps,
+      userNotes: this.props.userNotes
+    });
   }
 
   _saveNote() {
     // TODO: validate user input?
 
-    const text = this.state.userInput;
-
-    if (text !== '') {
-      if (this.props.noteType === 'brewSteps') {
-        this.props.updateBrewSteps(text);
-      } else if (this.props.noteType === 'userNotes') {
-        this.props.updateUserNotes(text);
+    if (this.props.noteType === 'brewSteps') {
+      if (this.state.brewSteps !== '') {
+        this.props.updateBrewSteps(this.state.brewSteps);
+      }
+    } else if (this.props.noteType === 'userNotes') {
+      if (this.state.userNotes !== '') {
+        this.props.updateUserNotes(this.state.userNotes);
       }
     }
   }
 
   render() {
+    let userInput;
+    if (this.props.noteType === 'brewSteps') {
+      userInput = this.state.brewSteps;
+    } else if (this.props.noteType === 'userNotes') {
+      userInput = this.state.userNotes;
+    }
+
     return (
       <View style={containers.container}>
         <View style={{height: STATUS_BAR_HEIGHT_IOS, backgroundColor: color.pink}}></View>
@@ -91,9 +106,13 @@ export default class AddNote extends Component {
               <TextInput
                 placeholder="your note starts from here..."
                 multiline={true}
-                value={this.state.userInput}
+                value={userInput}
                 onChangeText={(userInput) => {
-                  this.setState({ userInput });
+                  if (this.props.noteType === 'brewSteps') {
+                    this.setState({ brewSteps: userInput });
+                  } else if (this.props.noteType === 'userNotes') {
+                    this.setState({ userNotes: userInput });
+                  }
                 }}
                 style={[text.p, {height: SCREEN_HEIGHT/2}]}
                 />

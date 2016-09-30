@@ -132,6 +132,8 @@ export default class brewMaster extends Component {
           updateEditingNoteType={this._updateEditingNoteType}
           brewSteps={this.state.brewSteps}
           userNotes={this.state.userNotes}
+          updateBrewSteps={this._updateBrewSteps}
+          updateUserNotes={this._updateUserNotes}
           storageUnit={this.storageUnit}
           storage={this.state.storage}
           setting={this.state.setting} />);
@@ -153,6 +155,8 @@ export default class brewMaster extends Component {
           updateCurrentSelectedTea={this._updateCurrentSelectedTea}
           updateBrewSteps={this._updateBrewSteps}
           updateUserNotes={this._updateUserNotes}
+          brewSteps={this.state.brewSteps}
+          userNotes={this.state.userNotes}
           noteType={this.state.noteType}
           storage={this.state.storage} />);
       default:

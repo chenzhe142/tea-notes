@@ -192,7 +192,7 @@ export default class TeaDetail extends Component {
               </View>
             </View>
             <View>
-              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 15, backgroundColor: color.white, height: 100}]}>
+              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 15, backgroundColor: color.white}]}>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>
                   <Text style={text.sectionTitle}>How to brew</Text>
                 </View>
@@ -204,7 +204,7 @@ export default class TeaDetail extends Component {
               </View>
             </View>
             <View>
-              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 15, backgroundColor: color.white, height: 100}]}>
+              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 15, backgroundColor: color.white}]}>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>
                   <Text style={text.sectionTitle}>Notes</Text>
                 </View>

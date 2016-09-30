@@ -67,6 +67,10 @@ export default class CreateTea extends Component {
     this._updateTime = this._updateTime.bind(this);
     this._saveTea = this._saveTea.bind(this);
     this._updateTea = this._updateTea.bind(this);
+    this._openBrewStepsCreatingView = this._openBrewStepsCreatingView.bind(this);
+    this._openBrewStepsEditingView = this._openBrewStepsEditingView.bind(this);
+    this._openUserNotesCreatingView = this._openUserNotesCreatingView.bind(this);
+    this._openUserNotesEditingView = this._openUserNotesCreatingView.bind(this);
 
     this.state = {
       isCoverImageSelected: false,
@@ -104,12 +108,22 @@ export default class CreateTea extends Component {
 
   };
 
-  componentDidMount() {
+  componentWillMount() {
     if (this.props.isEditing) {
       this.setState({
         tea: this.props.currentSelectedTea
       });
+      this.props.updateBrewSteps(this.props.currentSelectedTea.brewSteps);
+      this.props.updateUserNotes(this.props.currentSelectedTea.userNotes);
     }
+  }
+
+  // works like magic!
+  componentWillReceiveProps(nextProps) {
+    const tea = Object.assign({}, this.state.tea);
+    tea.brewSteps = nextProps.brewSteps;
+    tea.userNotes = nextProps.userNotes;
+    this.setState({ tea });
   }
 
   _coverPhotoOnClick() {
@@ -165,6 +179,26 @@ export default class CreateTea extends Component {
     });
   }
 
+  _openBrewStepsCreatingView() {
+    this.props.navigator.push({ name: 'AddNote' });
+    this.props.updateEditingNoteType('brewSteps');
+  }
+
+  _openBrewStepsEditingView() {
+    this.props.navigator.push({ name: 'AddNote' });
+    this.props.updateEditingNoteType('brewSteps');
+  }
+
+  _openUserNotesCreatingView() {
+    this.props.navigator.push({ name: 'AddNote' });
+    this.props.updateEditingNoteType('userNotes');
+  }
+
+  _openUserNotesEditingView() {
+    this.props.navigator.push({ name: 'AddNote' });
+    this.props.updateEditingNoteType('userNotes');
+  }
+
   _updateTemperature(temperature) {
     const tea = Object.assign({}, this.state.tea);
     tea.temperature = temperature;
@@ -181,8 +215,6 @@ export default class CreateTea extends Component {
     // TODO: info validation
 
     let tea = Object.assign({}, this.state.tea);
-    tea.brewSteps = this.props.brewSteps;
-    tea.userNotes = this.props.userNotes;
 
     if (defaultTea.isEqual(tea) === false) {
       // customizedTeaList: {storageKey: "", content: []}
@@ -239,19 +271,15 @@ export default class CreateTea extends Component {
 
     let saveBtnOnPressEvent;
     let navbarTitle;
-    let brewSteps;
-    let userNotes;
+    let brewSteps = this.props.brewSteps;
+    let userNotes = this.props.userNotes;
 
     if (this.props.isEditing) {
       saveBtnOnPressEvent = this._updateTea;
       navbarTitle = 'Edit tea note';
-      brewSteps = this.state.tea.brewSteps;
-      userNotes = this.state.tea.userNotes;
     } else {
       saveBtnOnPressEvent = this._saveTea;
       navbarTitle = 'Create tea note';
-      brewSteps = this.props.brewSteps;
-      userNotes = this.props.userNotes;
     }
 
     return(
@@ -333,11 +361,14 @@ export default class CreateTea extends Component {
                 </View>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
                   <View>
-                    <Text style={text.p}>{brewSteps}</Text>
+                    <Text style={text.p}>{this.state.tea.brewSteps}</Text>
                   </View>
                   <TouchableOpacity onPress={() => {
-                      this.props.navigator.push({ name: 'AddNote' });
-                      this.props.updateEditingNoteType('brewSteps');
+                      if (userNotes !== '') {
+                        this._openBrewStepsEditingView();
+                      } else {
+                        this._openBrewStepsCreatingView();
+                      }
                     }}>
                     <Text style={[text.p, {color: color.aqua}]}>+ add a new step</Text>
                   </TouchableOpacity>
@@ -350,10 +381,13 @@ export default class CreateTea extends Component {
                   <Text style={text.sectionTitle}>Notes</Text>
                 </View>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
-                  <Text style={[text.p]}>{userNotes}</Text>
+                  <Text style={[text.p]}>{this.state.tea.userNotes}</Text>
                   <TouchableOpacity onPress={() => {
-                      this.props.navigator.push({ name: 'AddNote' });
-                      this.props.updateEditingNoteType('userNotes');
+                      if (userNotes !== '') {
+                        this._openUserNotesEditingView();
+                      } else {
+                        this._openUserNotesCreatingView();
+                      }
                     }}>
                     <Text style={[text.p, {color: color.aqua}]}>+ add your note</Text>
                   </TouchableOpacity>
