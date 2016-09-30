@@ -198,7 +198,7 @@ export default class TeaDetail extends Component {
                 </View>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
                   <Text style={text.p}>
-                    This is content
+                    {this.props.currentSelectedTea.brewSteps}
                   </Text>
                 </View>
               </View>
@@ -210,7 +210,7 @@ export default class TeaDetail extends Component {
                 </View>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
                   <Text style={text.p}>
-                    This is your note
+                    {this.props.currentSelectedTea.userNotes}
                   </Text>
                 </View>
               </View>

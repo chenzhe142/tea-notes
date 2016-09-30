@@ -19,7 +19,6 @@ import {
   View,
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 import Button from '../components/Button.js';
 import BackBtn from '../components/BackBtn.js';
@@ -80,6 +79,8 @@ export default class CreateTea extends Component {
         temperature: '',
         time: '',
         coverImageUrl: null,
+        brewSteps: '',
+        userNotes: '',
       },
 
       customizedTeaList: this.props.storage[CUSTOMIZED_TEA_LIST_STORAGE_KEY],
@@ -180,6 +181,8 @@ export default class CreateTea extends Component {
     // TODO: info validation
 
     let tea = Object.assign({}, this.state.tea);
+    tea.brewSteps = this.props.brewSteps;
+    tea.userNotes = this.props.userNotes;
 
     if (defaultTea.isEqual(tea) === false) {
       // customizedTeaList: {storageKey: "", content: []}
@@ -236,12 +239,19 @@ export default class CreateTea extends Component {
 
     let saveBtnOnPressEvent;
     let navbarTitle;
+    let brewSteps;
+    let userNotes;
+
     if (this.props.isEditing) {
       saveBtnOnPressEvent = this._updateTea;
       navbarTitle = 'Edit note';
+      brewSteps = this.state.tea.brewSteps;
+      userNotes = this.state.tea.userNotes;
     } else {
       saveBtnOnPressEvent = this._saveTea;
       navbarTitle = 'Create note';
+      brewSteps = this.props.brewSteps;
+      userNotes = this.props.userNotes;
     }
 
     return(
@@ -317,32 +327,36 @@ export default class CreateTea extends Component {
             </View>
 
             <View>
-              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 15, backgroundColor: color.white, height: 100}]}>
+              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 15, backgroundColor: color.white}]}>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>
                   <Text style={text.sectionTitle}>How to brew</Text>
                 </View>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
-                  <TouchableOpacity>
+                  <View>
+                    <Text style={text.p}>{brewSteps}</Text>
+                  </View>
+                  <TouchableOpacity onPress={() => {
+                      this.props.navigator.push({ name: 'AddNote' });
+                      this.props.updateEditingNoteType('brewSteps');
+                    }}>
                     <Text style={[text.p, {color: color.aqua}]}>+ add a new step</Text>
                   </TouchableOpacity>
                 </View>
               </View>
             </View>
             <View>
-              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 15, backgroundColor: color.white, height: 100}]}>
+              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 15, backgroundColor: color.white}]}>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>
                   <Text style={text.sectionTitle}>Notes</Text>
                 </View>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
-                  <TouchableOpacity>
+                  <Text style={[text.p]}>{userNotes}</Text>
+                  <TouchableOpacity onPress={() => {
+                      this.props.navigator.push({ name: 'AddNote' });
+                      this.props.updateEditingNoteType('userNotes');
+                    }}>
                     <Text style={[text.p, {color: color.aqua}]}>+ add your note</Text>
                   </TouchableOpacity>
-                </View>
-                <View style={{paddingTop: 0, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
-                  <TextInput
-                    placeholder="type something"
-                    style={{height: 40, borderWidth: 1, borderColor: 'black'}}
-                    />
                 </View>
               </View>
             </View>

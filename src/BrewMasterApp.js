@@ -18,6 +18,7 @@ import TeaSelection from './scenes/TeaSelection.js';
 import TeaDetail from './scenes/TeaDetail.js';
 import TeaTimer from './scenes/TeaTimer.js';
 import UserFavorite from './scenes/UserFavorite.js';
+import AddNote from './scenes/AddNote.js';
 
 import StorageUnit from './utils/StorageUnit';
 
@@ -46,6 +47,9 @@ export default class brewMaster extends Component {
     this._updateCurrentSelectedTea = this._updateCurrentSelectedTea.bind(this);
     this._updateEditingStatus = this._updateEditingStatus.bind(this);
     this._updateStorage = this._updateStorage.bind(this);
+    this._updateEditingNoteType = this._updateEditingNoteType.bind(this);
+    this._updateBrewSteps = this._updateBrewSteps.bind(this);
+    this._updateUserNotes = this._updateUserNotes.bind(this);
 
     this.state = {
       setting: {
@@ -55,6 +59,9 @@ export default class brewMaster extends Component {
       },
       currentSelectedTea: {},
       isEditing: false,
+      noteType: '',
+      brewSteps: '',
+      userNotes: '',
     };
 
     this.storageUnit = new StorageUnit([CUSTOMIZED_TEA_LIST_STORAGE_KEY, CUSTOMIZED_SETTINGS_STORAGE_KEY], this._updateStorage);
@@ -76,6 +83,18 @@ export default class brewMaster extends Component {
 
   _updateEditingStatus(editingStatus) {
     this.setState({ isEditing: editingStatus });
+  }
+
+  _updateEditingNoteType(noteType) {
+    this.setState({ noteType });
+  }
+
+  _updateBrewSteps(brewSteps) {
+    this.setState({ brewSteps });
+  }
+
+  _updateUserNotes(userNotes) {
+    this.setState({ userNotes });
   }
 
   _renderScene(route, navigator) {
@@ -110,6 +129,9 @@ export default class brewMaster extends Component {
           isEditing={this.state.isEditing}
           currentSelectedTea={this.state.currentSelectedTea}
           updateCurrentSelectedTea={this._updateCurrentSelectedTea}
+          updateEditingNoteType={this._updateEditingNoteType}
+          brewSteps={this.state.brewSteps}
+          userNotes={this.state.userNotes}
           storageUnit={this.storageUnit}
           storage={this.state.storage}
           setting={this.state.setting} />);
@@ -124,6 +146,14 @@ export default class brewMaster extends Component {
         return (<UserFavorite
           navigator={navigator}
           updateCurrentSelectedTea={this._updateCurrentSelectedTea}
+          storage={this.state.storage} />);
+      case 'AddNote':
+        return (<AddNote
+          navigator={navigator}
+          updateCurrentSelectedTea={this._updateCurrentSelectedTea}
+          updateBrewSteps={this._updateBrewSteps}
+          updateUserNotes={this._updateUserNotes}
+          noteType={this.state.noteType}
           storage={this.state.storage} />);
       default:
         return;
