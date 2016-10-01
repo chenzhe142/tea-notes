@@ -71,6 +71,7 @@ export default class CreateTea extends Component {
     this._openBrewStepsEditingView = this._openBrewStepsEditingView.bind(this);
     this._openUserNotesCreatingView = this._openUserNotesCreatingView.bind(this);
     this._openUserNotesEditingView = this._openUserNotesCreatingView.bind(this);
+    this._clearCache = this._clearCache.bind(this);
 
     this.state = {
       isCoverImageSelected: false,
@@ -233,6 +234,7 @@ export default class CreateTea extends Component {
       this.props.storageUnit.saveItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY, JSON.stringify(customizedTeaList));
       //TODO: add notification: "create success!"
       this.props.navigator.pop();
+      this._clearCache();
     }
   }
 
@@ -242,6 +244,13 @@ export default class CreateTea extends Component {
     this.props.updateCurrentSelectedTea(tea);
     //TODO: add notification: "update success!"
     this.props.navigator.pop();
+    this._clearCache();
+  }
+
+  _clearCache() {
+    this.props.updateEditingStatus(false);
+    this.props.updateBrewSteps('');
+    this.props.updateUserNotes('');
   }
 
   render() {
@@ -298,6 +307,7 @@ export default class CreateTea extends Component {
                 color={color.white}
                 onForward={() => {
                   this.props.navigator.pop();
+                  this._clearCache();
                 }} />
             </View>
             <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>

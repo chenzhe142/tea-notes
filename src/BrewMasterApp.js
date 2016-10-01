@@ -127,6 +127,7 @@ export default class brewMaster extends Component {
           {...route}
           navigator={navigator}
           isEditing={this.state.isEditing}
+          updateEditingStatus={this._updateEditingStatus}
           currentSelectedTea={this.state.currentSelectedTea}
           updateCurrentSelectedTea={this._updateCurrentSelectedTea}
           updateEditingNoteType={this._updateEditingNoteType}
