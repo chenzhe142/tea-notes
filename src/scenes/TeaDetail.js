@@ -155,7 +155,7 @@ export default class TeaDetail extends Component {
     }
 
     let ratingStars = [];
-    let rating = 4;
+    let rating = this.props.currentSelectedTea.rating;
     for (let i = 1; i <= 5; i++) {
       if (i > rating) {
         ratingStars.push('star-o');
@@ -163,8 +163,6 @@ export default class TeaDetail extends Component {
         ratingStars.push('star');
       }
     }
-
-    console.log(ratingStars);
 
     return(
       <View style={containers.container}>

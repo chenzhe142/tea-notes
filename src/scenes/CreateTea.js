@@ -88,7 +88,7 @@ export default class CreateTea extends Component {
         coverImageUrl: null,
         brewSteps: '',
         userNotes: '',
-        ratings: 0,
+        rating: 0,
       },
 
       customizedTeaList: this.props.storage[CUSTOMIZED_TEA_LIST_STORAGE_KEY],
@@ -287,8 +287,6 @@ export default class CreateTea extends Component {
 
     let saveBtnOnPressEvent;
     let navbarTitle;
-    let brewSteps = this.props.brewSteps;
-    let userNotes = this.props.userNotes;
 
     if (this.props.isEditing) {
       saveBtnOnPressEvent = this._updateTea;
@@ -299,7 +297,7 @@ export default class CreateTea extends Component {
     }
 
     let ratingStars = [];
-    let rating = 4;
+    let rating = this.state.tea.rating;
     for (let i = 1; i <= 5; i++) {
       if (i > rating) {
         ratingStars.push('star-o');
@@ -360,7 +358,17 @@ export default class CreateTea extends Component {
 
                   <View style={[containers.row, {alignItems: 'flex-start', justifyContent: 'center'}]}>
                     {ratingStars.map((starIconName, index) => {
-                      return (<FontAwesomeIcon name={starIconName} key={index} size={20} color={color.yellow} />);
+                      return (
+                        <TouchableOpacity
+                          key={index}
+                          onPress={() => {
+                            const tea = Object.assign({}, this.state.tea);
+                            tea.rating = index + 1;
+                            this.setState({ tea });
+                          }}>
+                          <FontAwesomeIcon name={starIconName} size={20} color={color.yellow} />
+                        </TouchableOpacity>
+                      );
                     })}
                   </View>
 
@@ -397,7 +405,7 @@ export default class CreateTea extends Component {
                     <Text style={text.p}>{this.state.tea.brewSteps}</Text>
                   </View>
                   <TouchableOpacity onPress={() => {
-                      if (userNotes !== '') {
+                      if (this.state.tea.brewSteps !== '') {
                         this._openBrewStepsEditingView();
                       } else {
                         this._openBrewStepsCreatingView();
@@ -416,7 +424,7 @@ export default class CreateTea extends Component {
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
                   <Text style={[text.p]}>{this.state.tea.userNotes}</Text>
                   <TouchableOpacity onPress={() => {
-                      if (userNotes !== '') {
+                      if (this.state.tea.userNotes !== '') {
                         this._openUserNotesEditingView();
                       } else {
                         this._openUserNotesCreatingView();
