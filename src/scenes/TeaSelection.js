@@ -25,6 +25,7 @@ import TeaSelectionHeader from '../components/TeaSelectionHeader.js';
 
 import containers from '../style/containers.js';
 import color from '../style/color';
+import colorScheme from '../style/colorScheme';
 import text from '../style/text';
 
 import {
@@ -178,7 +179,7 @@ export default class TeaSelection extends Component {
     return (
       <View style={containers.container}>
         <StatusBar hidden={false} />
-        <View style={{height: STATUS_BAR_HEIGHT_IOS, backgroundColor: color.pink}}></View>
+        <View style={{height: STATUS_BAR_HEIGHT_IOS, backgroundColor: colorScheme.color5}}></View>
         <TeaSelectionHeader
           navigator={this.props.navigator}
           searchIconStatus={this.state.searchIconStatus}

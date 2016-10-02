@@ -18,6 +18,7 @@ import SlideSwitch from '../components/SlideSwitch';
 
 import text from '../style/text';
 import color from '../style/color';
+import colorScheme from '../style/colorScheme';
 import containers from '../style/containers';
 
 import { CUSTOMIZED_SETTINGS_STORAGE_KEY, DEFAULT_SETTINGS, STATUS_BAR_HEIGHT_IOS } from '../constants';
@@ -90,8 +91,8 @@ export default class Setting extends Component {
     return (
       <View style={[containers.container, {justifyContent: 'flex-start', backgroundColor: color.white}]}>
         <StatusBar hidden={false} />
-        <View style={{height: STATUS_BAR_HEIGHT_IOS, backgroundColor: color.pink}}></View>
-        <View style={{height: 40, backgroundColor: color.pink}}>
+        <View style={{height: STATUS_BAR_HEIGHT_IOS, backgroundColor: colorScheme.color5}}></View>
+        <View style={{height: 40, backgroundColor: colorScheme.color5}}>
           <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
             <View style={[containers.row, {justifyContent: 'flex-start'}]}>
               <IconButton

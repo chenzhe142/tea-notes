@@ -17,38 +17,29 @@
  * @zchen
  */
 
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
   Image,
   Text,
   TouchableOpacity,
   View
 } from 'react-native';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
+import containers from '../style/containers';
 import color from '../style/color';
 import text from '../style/text';
 
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from '../constants';
 
-const propTypes = {
-  tea: PropTypes.shape({
-    name: PropTypes.string,
-    temperature: PropTypes.string,
-    time: PropTypes.string,
-  }),
-  imageSource: PropTypes.number,
-  onPressEvent: PropTypes.func,
-};
-
 export default class ImageRow extends Component {
-
   render() {
     return (
       <View>
         <TouchableOpacity onPress={this.props.onPressEvent}>
           <Image style={styles.image} source={this.props.imageSource}>
-            <View style={[styles.container]}>
-              <Text style={[styles.title, text.shadow]}>{this.props.tea.name}</Text>
+            <View style={[containers.container, {justifyContent: 'center', alignItems: 'center'}]}>
+              <Text style={[text.title, text.shadow, {color: color.white, backgroundColor: 'rgba(0,0,0,0)'}]}>{this.props.tea.name}</Text>
             </View>
           </Image>
         </TouchableOpacity>
@@ -61,19 +52,5 @@ const styles = {
   image: {
     height: 150,
     width: SCREEN_WIDTH,
-  },
-  container: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-  },
-  title: {
-    color: '#ffffff',
-    fontFamily: 'Open Sans',
-    fontSize: 20,
-    fontWeight: '600',
-    marginBottom: 5,
-    textAlign: 'center',
-    backgroundColor: 'rgba(0,0,0,0)'
   }
 };

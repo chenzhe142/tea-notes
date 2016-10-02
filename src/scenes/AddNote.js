@@ -30,6 +30,7 @@ import { SCREEN_WIDTH, SCREEN_HEIGHT, COVERIMAGE_HEIGHT, CARD_OFFSET, CUSTOMIZED
 
 import text from '../style/text.js';
 import color from '../style/color.js';
+import colorScheme from '../style/colorScheme';
 import containers from '../style/containers.js';
 
 export default class AddNote extends Component {
@@ -73,8 +74,8 @@ export default class AddNote extends Component {
 
     return (
       <View style={containers.container}>
-        <View style={{height: STATUS_BAR_HEIGHT_IOS, backgroundColor: color.pink}}></View>
-        <View style={{height: 40, backgroundColor: color.pink}}>
+        <View style={{height: STATUS_BAR_HEIGHT_IOS, backgroundColor: colorScheme.color5}}></View>
+        <View style={{height: 40, backgroundColor: colorScheme.color5}}>
           <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
             <View style={[containers.row, {justifyContent: 'flex-start'}]}>
               <IconButton
@@ -106,6 +107,7 @@ export default class AddNote extends Component {
               <TextInput
                 placeholder="your note starts from here..."
                 multiline={true}
+                autoFocus={true}
                 value={userInput}
                 onChangeText={(userInput) => {
                   if (this.props.noteType === 'brewSteps') {

@@ -21,6 +21,7 @@ import IconButton from '../components/IconButton';
 
 import text from '../style/text';
 import color from '../style/color';
+import colorScheme from '../style/colorScheme';
 import containers from '../style/containers';
 import position from '../style/position';
 
@@ -150,8 +151,10 @@ export default class TeaDetail extends Component {
 
     //like icons
     let likeIconName = 'heart-o';
+    let likeIconColor = color.white;
     if (this.props.currentSelectedTea.isLiked) {
       likeIconName = 'heart';
+      likeIconColor = colorScheme.color5;
     }
 
     let ratingStars = [];
@@ -232,13 +235,13 @@ export default class TeaDetail extends Component {
           </View>
         </ScrollView>
         <View style={[containers.stickyFooter, {left: 0, right: 0}]}>
-          <View style={{height: 40, backgroundColor: color.pink}}>
+          <View style={{height: 40, backgroundColor: colorScheme.color1}}>
             <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
               <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
                 <IconButton
                   iconName={likeIconName}
                   size={20}
-                  color={color.white}
+                  color={likeIconColor}
                   onForward={this._toggleLike} />
               </View>
               <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>

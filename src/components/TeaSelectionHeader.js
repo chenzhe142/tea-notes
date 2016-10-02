@@ -22,6 +22,7 @@ import IconButton from '../components/IconButton.js'
 
 import containers from '../style/containers.js';
 import color from '../style/color';
+import colorScheme from '../style/colorScheme';
 import text from '../style/text';
 
 export default class TeaSelectionHeader extends Component {
@@ -45,7 +46,7 @@ export default class TeaSelectionHeader extends Component {
 
     return (
       <View>
-        <View style={{height: 40, backgroundColor: color.pink}}>
+        <View style={{height: 40, backgroundColor: colorScheme.color5}}>
           <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
             <View style={[containers.row, {justifyContent: 'flex-start'}]}>
               <IconButton
