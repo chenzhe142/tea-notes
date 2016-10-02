@@ -154,6 +154,18 @@ export default class TeaDetail extends Component {
       likeIconName = 'heart';
     }
 
+    let ratingStars = [];
+    let rating = 4;
+    for (let i = 1; i <= 5; i++) {
+      if (i > rating) {
+        ratingStars.push('star-o');
+      } else {
+        ratingStars.push('star');
+      }
+    }
+
+    console.log(ratingStars);
+
     return(
       <View style={containers.container}>
         <ScrollView>
@@ -165,24 +177,21 @@ export default class TeaDetail extends Component {
               }} />
             <View>
               <Image source={{uri: this.props.currentSelectedTea.coverImageUrl.uri}} style={styles.coverImage} />
-              <View style={styles.teaCard}>
-                <View style={styles.teaCardContainer}>
-                  <View>
+              <View>
+                <View style={[styles.teaCardContainer, {justifyContent: 'center'}]}>
+                  <View style={[containers.row, {alignItems: 'flex-end'}]}>
                     <Text style={text.title}>{this.props.currentSelectedTea.name}</Text>
                   </View>
 
-                  <View>
+                  <View style={containers.row, {alignItems: 'center', paddingBottom: 10}}>
                     <Text style={[text.p, {color: color.gray}]}>green tea - mild - low caffeine</Text>
                   </View>
 
-                  <View style={[containers.row, {alignItems: 'center', justifyContent: 'space-around', height: 50}]}>
-                    <FontAwesomeIcon name="star" size={20} color={color.yellow} />
-                    <FontAwesomeIcon name="star" size={20} color={color.yellow} />
-                    <FontAwesomeIcon name="star" size={20} color={color.yellow} />
-                    <FontAwesomeIcon name="star" size={20} color={color.yellow} />
-                    <FontAwesomeIcon name="star-o" size={20} color={color.yellow} />
+                  <View style={[containers.row, {alignItems: 'flex-start', justifyContent: 'center'}]}>
+                    {ratingStars.map((starIconName, index) => {
+                      return (<FontAwesomeIcon name={starIconName} key={index} size={20} color={color.yellow} />);
+                    })}
                   </View>
-
                 </View>
               </View>
             </View>
@@ -291,8 +300,6 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: COVERIMAGE_HEIGHT * 0.5,
     backgroundColor: color.white,
-    alignItems: 'center',
-    justifyContent: 'center',
     borderRadius: 2,
   }
 });

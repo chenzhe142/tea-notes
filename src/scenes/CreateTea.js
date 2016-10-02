@@ -20,6 +20,8 @@ import {
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+
 import Button from '../components/Button.js';
 import BackBtn from '../components/BackBtn.js';
 import WithLabel from '../components/WithLabel.js';
@@ -86,6 +88,7 @@ export default class CreateTea extends Component {
         coverImageUrl: null,
         brewSteps: '',
         userNotes: '',
+        ratings: 0,
       },
 
       customizedTeaList: this.props.storage[CUSTOMIZED_TEA_LIST_STORAGE_KEY],
@@ -295,6 +298,16 @@ export default class CreateTea extends Component {
       navbarTitle = 'Create tea note';
     }
 
+    let ratingStars = [];
+    let rating = 4;
+    for (let i = 1; i <= 5; i++) {
+      if (i > rating) {
+        ratingStars.push('star-o');
+      } else {
+        ratingStars.push('star');
+      }
+    }
+
     return(
       <View style={containers.container}>
         <View style={{height: STATUS_BAR_HEIGHT_IOS, backgroundColor: color.pink}}></View>
@@ -325,9 +338,9 @@ export default class CreateTea extends Component {
                 {teaCoverPhoto}
               </TouchableWithoutFeedback>
 
-              <View style={styles.teaCard}>
-                <View style={styles.teaCardContainer}>
-                  <View>
+              <View>
+                <View style={[styles.teaCardContainer, {justifyContent: 'center'}]}>
+                  <View style={[containers.container, {alignItems: 'center', paddingBottom: 5}]}>
                     <TextInput
                       value={this.state.tea.name}
                       placeholder={this.placeholders.name}
@@ -341,46 +354,14 @@ export default class CreateTea extends Component {
                     />
                   </View>
 
-                  <View>
+                  <View style={containers.row, {alignItems: 'center', paddingBottom: 10}}>
                     <Text style={[text.p, {color: color.gray}]}>green tea - mild - low caffeine</Text>
                   </View>
 
-                  <View style={[containers.row]}>
-                    <IconButton
-                      iconName="star"
-                      size={20}
-                      color={color.yellow}
-                      onForward={() => {
-                        console.log('star clicked');
-                      }} />
-                    <IconButton
-                      iconName="star"
-                      size={20}
-                      color={color.yellow}
-                      onForward={() => {
-                        console.log('star clicked');
-                      }} />
-                    <IconButton
-                      iconName="star"
-                      size={20}
-                      color={color.yellow}
-                      onForward={() => {
-                        console.log('star clicked');
-                      }} />
-                    <IconButton
-                      iconName="star"
-                      size={20}
-                      color={color.yellow}
-                      onForward={() => {
-                        console.log('star clicked');
-                      }} />
-                    <IconButton
-                      iconName="star-o"
-                      size={20}
-                      color={color.yellow}
-                      onForward={() => {
-                        console.log('star clicked');
-                      }} />
+                  <View style={[containers.row, {alignItems: 'flex-start', justifyContent: 'center'}]}>
+                    {ratingStars.map((starIconName, index) => {
+                      return (<FontAwesomeIcon name={starIconName} key={index} size={20} color={color.yellow} />);
+                    })}
                   </View>
 
                 </View>
@@ -461,23 +442,16 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     width: SCREEN_WIDTH,
   },
-  teaCard: {
-    alignItems: 'center',
-  },
   teaCardContainer: {
     width: SCREEN_WIDTH,
     height: COVERIMAGE_HEIGHT * 0.5,
     backgroundColor: color.white,
-    alignItems: 'center',
-    justifyContent: 'center',
     borderRadius: 2,
   },
   teaCard_title: {
-    width: SCREEN_WIDTH * 0.8,
+    width: SCREEN_WIDTH,
     textAlign: 'center',
-
-    // text input height
-    height: 40,
+    height: 20,
   },
   teaCard_data: {
     textAlign: 'left',
@@ -486,7 +460,7 @@ const styles = StyleSheet.create({
   },
   inputBox: {
     borderWidth: 0,
-    textAlignVertical: 'center',
+    textAlignVertical: 'bottom',
   },
   picker: {
     position: 'absolute',
