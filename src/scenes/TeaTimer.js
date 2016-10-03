@@ -11,19 +11,23 @@
 import React, { Component } from 'react';
 import {
   Alert,
+  AppState,
   Image,
   StatusBar,
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
+  PushNotificationIOS,
   View,
 } from 'react-native';
+import BackgroundTimer from 'react-native-background-timer';
 
 import Button from '../components/Button.js';
 import BackBtn from '../components/BackBtn.js';
 
 import text from '../style/text.js';
 import color from '../style/color.js';
+import colorScheme from '../style/colorScheme.js';
 import containers from '../style/containers.js';
 
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../constants';
@@ -61,7 +65,7 @@ export default class TeaTimer extends Component {
       });
 
       const that = this;
-      this.intervalId = setInterval(() => {
+      this.intervalId = BackgroundTimer.setInterval(() => {
         if (this.state.isTimerStarted === true) {
           if (that.state.remainTime > 1) {
             const remainTime = that.state.remainTime - 1;
@@ -69,7 +73,6 @@ export default class TeaTimer extends Component {
               remainTime: remainTime,
             });
           } else {
-            //alert
             Alert.alert(
               'Brew Master',
               `${this.props.currentSelectedTea.name} is ready!`,
@@ -83,6 +86,9 @@ export default class TeaTimer extends Component {
                 }
               }]
             );
+            PushNotificationIOS.presentLocalNotification({
+              alertBody: `${this.props.currentSelectedTea.name} is ready!`,
+            });
             this._resetTimer();
           }
         }
@@ -92,7 +98,7 @@ export default class TeaTimer extends Component {
   }
 
   _resetTimer() {
-    clearInterval(this.intervalId);
+    BackgroundTimer.clearInterval(this.intervalId);
   }
 
   render() {
@@ -109,7 +115,7 @@ export default class TeaTimer extends Component {
           </View>
         </View>
         <View style={styles.controlBtn}>
-          <Button enableButtonStyle={true} btnText={this.state.timerBtnText} style={{backgroundColor: color.green}} onForward={this._toggleTimer} />
+          <Button enableButtonStyle={true} btnText={this.state.timerBtnText} style={{backgroundColor: colorScheme.color1}} onForward={this._toggleTimer} />
         </View>
       </View>
     );
