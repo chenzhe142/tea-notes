@@ -8,14 +8,15 @@ import React, { Component, PropTypes } from 'react';
 import {
   Animated,
   Image,
+  KeyboardAvoidingView,
   Platform,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
   TextInput,
-  TouchableWithoutFeedback,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
@@ -55,7 +56,7 @@ const defaultTea = new Tea({
   name: 'Name of Tea',
   temperature: '95',
   time: '180',
-  coverImageUrl: null,
+  coverImageUrl: '',
 });
 
 export default class CreateTea extends Component {
@@ -309,8 +310,8 @@ export default class CreateTea extends Component {
 
     return(
       <View style={containers.container}>
-        <View style={{height: STATUS_BAR_HEIGHT_IOS, backgroundColor: colorScheme.color5}}></View>
-        <View style={{height: 40, backgroundColor: colorScheme.color5}}>
+        <View style={{height: STATUS_BAR_HEIGHT_IOS, backgroundColor: colorScheme.color1}}></View>
+        <View style={{height: 44, backgroundColor: colorScheme.color1}}>
           <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
             <View style={[containers.row, {justifyContent: 'flex-start'}]}>
               <IconButton
@@ -326,7 +327,7 @@ export default class CreateTea extends Component {
               <Text style={[text.title, {color: color.white}]}>{navbarTitle}</Text>
             </View>
             <View style={[containers.row, {justifyContent: 'flex-end'}]}>
-              <Button enableButtonStyle={false} btnText="save" onForward={saveBtnOnPressEvent} />
+              <Button enableButtonStyle={false} btnText="Save" onForward={saveBtnOnPressEvent} />
             </View>
           </View>
         </View>
@@ -337,7 +338,7 @@ export default class CreateTea extends Component {
                 {teaCoverPhoto}
               </TouchableWithoutFeedback>
 
-              <View>
+              <KeyboardAvoidingView>
                 <View style={[styles.teaCardContainer, {justifyContent: 'center'}]}>
                   <View style={[containers.container, {alignItems: 'center', paddingBottom: 5}]}>
                     <TextInput
@@ -374,7 +375,7 @@ export default class CreateTea extends Component {
                   </View>
 
                 </View>
-              </View>
+              </KeyboardAvoidingView>
             </View>
 
             <View>

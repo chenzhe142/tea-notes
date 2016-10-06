@@ -91,8 +91,8 @@ export default class Setting extends Component {
     return (
       <View style={[containers.container, {justifyContent: 'flex-start', backgroundColor: color.white}]}>
         <StatusBar hidden={false} />
-        <View style={{height: STATUS_BAR_HEIGHT_IOS, backgroundColor: colorScheme.color5}}></View>
-        <View style={{height: 40, backgroundColor: colorScheme.color5}}>
+        <View style={{height: STATUS_BAR_HEIGHT_IOS, backgroundColor: colorScheme.color1}}></View>
+        <View style={{height: 44, backgroundColor: colorScheme.color1}}>
           <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
             <View style={[containers.row, {justifyContent: 'flex-start'}]}>
               <IconButton

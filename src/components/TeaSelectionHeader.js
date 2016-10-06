@@ -7,16 +7,17 @@
 import React, { Component, PropTypes } from 'react';
 import {
   Animated,
-  ScrollView,
-  StyleSheet,
   ListView,
+  ScrollView,
   StatusBar,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
+import IoniconsIcon from 'react-native-vector-icons/Ionicons';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 import IconButton from '../components/IconButton.js'
 
@@ -46,7 +47,7 @@ export default class TeaSelectionHeader extends Component {
 
     return (
       <View>
-        <View style={{height: 40, backgroundColor: colorScheme.color5}}>
+        <View style={{height: 44, backgroundColor: colorScheme.color1}}>
           <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
             <View style={[containers.row, {justifyContent: 'flex-start'}]}>
               <IconButton
@@ -63,7 +64,15 @@ export default class TeaSelectionHeader extends Component {
               <Text style={[text.title, {color: color.white}]}>Tea Notes</Text>
             </View>
             <View style={[containers.row, {justifyContent: 'flex-end'}]}>
-                {searchIcon}
+              <IconButton
+                iconName="search"
+                size={20}
+                color={color.white}
+                onForward={() => {
+                  this.props.navigator.push({
+                    name: 'Setting',
+                  });
+                }} />
                 <IconButton
                   iconName="star"
                   size={20}

@@ -209,7 +209,7 @@ export default class TeaDetail extends Component {
               </View>
             </View>
             <View>
-              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 15, backgroundColor: color.white}]}>
+              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 5, backgroundColor: color.white}]}>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>
                   <Text style={text.sectionTitle}>How to brew</Text>
                 </View>
@@ -221,7 +221,7 @@ export default class TeaDetail extends Component {
               </View>
             </View>
             <View>
-              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 15, backgroundColor: color.white}]}>
+              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 5, backgroundColor: color.white}]}>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>
                   <Text style={text.sectionTitle}>Notes</Text>
                 </View>
@@ -251,7 +251,7 @@ export default class TeaDetail extends Component {
                   color={color.white}
                   onForward={this._showShareActionSheet} />
               </View>
-              <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+              <View style={[containers.row, {justifyContent: 'center', alignItems: 'center', backgroundColor: colorScheme.color5}]}>
                 <IconButton
                   iconName="coffee"
                   size={20}
@@ -276,8 +276,16 @@ export default class TeaDetail extends Component {
                   size={20}
                   color={color.white}
                   onForward={() => {
-                    this.props.storageUnit.deleteItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY, this.props.currentSelectedTea);
-                    this.props.navigator.pop();
+                    ActionSheetIOS.showActionSheetWithOptions({
+                      options: ['delete this tea note', 'cancel'],
+                      destructiveButtonIndex: 0,
+                      cancelButtonIndex: 1,
+                    }, (buttonIndex) => {
+                      if (buttonIndex === 0) {
+                        this.props.storageUnit.deleteItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY, this.props.currentSelectedTea);
+                        this.props.navigator.pop();
+                      }
+                    });
                   }} />
               </View>
             </View>

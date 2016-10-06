@@ -10,6 +10,7 @@ import {
 
 import text from '../style/text';
 import color from '../style/color';
+import colorScheme from '../style/colorScheme';
 import containers from '../style/containers';
 
 import { SCREEN_WIDTH } from '../constants';
@@ -21,7 +22,7 @@ export default class ToggleButton extends Component {
 
     if (this.props.isSelected) {
       backgroundColorStyle = {
-        backgroundColor: color.green
+        backgroundColor: colorScheme.color5
       };
     } else {
       backgroundColorStyle = {

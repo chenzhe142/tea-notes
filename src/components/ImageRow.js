@@ -21,7 +21,7 @@ import React, { Component } from 'react';
 import {
   Image,
   Text,
-  TouchableOpacity,
+  TouchableWithoutFeedback,
   View
 } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
@@ -36,13 +36,15 @@ export default class ImageRow extends Component {
   render() {
     return (
       <View>
-        <TouchableOpacity onPress={this.props.onPressEvent}>
-          <Image style={styles.image} source={this.props.imageSource}>
-            <View style={[containers.container, {justifyContent: 'center', alignItems: 'center'}]}>
-              <Text style={[text.title, text.shadow, {color: color.white, backgroundColor: 'rgba(0,0,0,0)'}]}>{this.props.tea.name}</Text>
-            </View>
-          </Image>
-        </TouchableOpacity>
+        <TouchableWithoutFeedback onPress={this.props.onPressEvent}>
+          <View style={{paddingBottom: 1}}>
+            <Image style={styles.image} source={this.props.imageSource}>
+              <View style={[containers.container, {justifyContent: 'center', alignItems: 'center'}]}>
+                <Text style={[text.title, text.shadow, {color: color.white, backgroundColor: 'rgba(0,0,0,0)'}]}>{this.props.tea.name}</Text>
+              </View>
+            </Image>
+          </View>
+        </TouchableWithoutFeedback>
       </View>
     )
   }

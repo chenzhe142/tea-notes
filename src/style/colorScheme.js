@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 const colorScheme = {
-  color1: '#ACDBC9',
+  color1: '#9FD5C0',
   color2: '#DBEBC2',
   color3: '#FDD2B5',
   color4: '#F7A7A6',

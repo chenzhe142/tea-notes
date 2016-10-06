@@ -43,6 +43,7 @@ export default class TeaTimer extends Component {
       isTimerStarted: false,
       remainTime: this.props.currentSelectedTea.time,
       timerBtnText: 'Brew!',
+      topDistance: SCREEN_HEIGHT,
     };
 
     this.intervalId = null;
@@ -69,8 +70,10 @@ export default class TeaTimer extends Component {
         if (this.state.isTimerStarted === true) {
           if (that.state.remainTime > 1) {
             const remainTime = that.state.remainTime - 1;
+            const topDistance = this.state.topDistance - 5;
             that.setState({
-              remainTime: remainTime,
+              remainTime,
+              topDistance
             });
           } else {
             Alert.alert(
@@ -90,6 +93,7 @@ export default class TeaTimer extends Component {
               alertBody: `${this.props.currentSelectedTea.name} is ready!`,
             });
             this._resetTimer();
+            this.setState({ topDistance: SCREEN_HEIGHT });
           }
         }
       }, 1000);
@@ -103,24 +107,27 @@ export default class TeaTimer extends Component {
 
   render() {
     return (
-      <View style={[containers.container, {justifyContent: 'flex-start'}]}>
+      <View style={[containers.container, {justifyContent: 'flex-start', backgroundColor: colorScheme.color1}]}>
         <StatusBar hidden={true} />
         <BackBtn navigator={this.props.navigator} onPressEvent={this._resetTimer} />
         <View>
           <View style={[containers.row, {flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around', paddingTop: 200}]}>
-            <Image style={{width: 192, height: 150}} source={require('../../public/image/tea-leaf.png')} />
-            <Text style={[text.title, {fontSize: 30, fontWeight: 'normal'}]}>{this.state.remainTime} Sec</Text>
-            <Text style={[text.p, {color: color.gray}]}>{this.props.currentSelectedTea.name}</Text>
-            <Text style={[text.p, {color: color.gray}]}>{this.props.currentSelectedTea.temperature} - {this.props.currentSelectedTea.time}</Text>
+            <Text style={[text.title, {fontSize: 30, fontWeight: 'normal', backgroundColor: 'rgba(0,0,0,0)'}]}>{this.state.remainTime} Sec</Text>
+            <Text style={[text.p, {color: color.gray, backgroundColor: 'rgba(0,0,0,0)'}]}>{this.props.currentSelectedTea.name}</Text>
+            <Text style={[text.p, {color: color.gray, backgroundColor: 'rgba(0,0,0,0)'}]}>{this.props.currentSelectedTea.temperature} - {this.props.currentSelectedTea.time}</Text>
           </View>
         </View>
         <View style={styles.controlBtn}>
-          <Button enableButtonStyle={true} btnText={this.state.timerBtnText} style={{backgroundColor: colorScheme.color1}} onForward={this._toggleTimer} />
+          <Button enableButtonStyle={true} btnText={this.state.timerBtnText} style={{backgroundColor: colorScheme.color5}} onForward={this._toggleTimer} />
+        </View>
+        <View style={[styles.progressBackground, {top: this.state.topDistance}]}>
         </View>
       </View>
     );
   }
 }
+
+// <Image style={{width: 192, height: 150}} source={require('../../public/image/tea-leaf.png')} />
 
 const styles = StyleSheet.create({
   controlBtn: {
@@ -128,5 +135,13 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: SCREEN_WIDTH * 0.3,
     right: SCREEN_WIDTH * 0.3
+  },
+  progressBackground: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: -1,
+    backgroundColor: colorScheme.color2
   }
 });

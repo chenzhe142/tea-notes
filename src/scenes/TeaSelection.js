@@ -7,15 +7,18 @@
 import React, { Component, PropTypes } from 'react';
 import {
   ListView,
+  Modal,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 
+import * as Animatable from 'react-native-animatable';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import ImageRow from '../components/ImageRow.js'
@@ -43,49 +46,24 @@ export default class TeaSelection extends Component {
   constructor(props) {
     super(props);
     this._onForward = this._onForward.bind(this);
-    this._onScroll = this._onScroll.bind(this);
     this._filterTeaList = this._filterTeaList.bind(this);
+    this._updateFilterText = this._updateFilterText.bind(this);
 
     this.offset = 0;
     this.defaultTeaList = DEFAULT_TEA_LIST;
 
     this.state = {
-      searchBarStatus: 'show',
-      searchIconStatus: 'hide',
-      teaLists: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2,}),
-      filterEnabled: false,
       filterText: '',
     };
   }
 
-  componetWillMount() {
-    const teaLists = this._generateTeaList();
-    this.setState({ teaLists });
-  }
-
   _onForward(teaObject) {
     // update parent state 'currentSelectedTea'
+    console.log('onForward event');
     this.props.updateCurrentSelectedTea(teaObject);
     this.props.navigator.push({
       name: 'TeaDetail',
     });
-  }
-
-  _onScroll(event) {
-    const currentOffset = event.nativeEvent.contentOffset.y;
-    let searchBarStatus;
-    let searchIconStatus
-
-    if (currentOffset >= 35) {
-      searchBarStatus = 'hide';
-      searchIconStatus = 'show';
-    } else {
-      searchBarStatus = 'show';
-      searchIconStatus = 'hide';
-    }
-
-    console.log(currentOffset);
-    this.setState({ searchBarStatus, searchIconStatus });
   }
 
   _generateTeaList() {
@@ -167,43 +145,110 @@ export default class TeaSelection extends Component {
     return teaLists;
   }
 
+  _updateFilterText(filterText) {
+    this.setState({ filterText });
+  }
+
   render() {
     let teaLists;
-    if (this.state.filterText.length === 0) {
-      teaLists = this._generateTeaList();
-    } else {
+    if (this.state.filterText.length > 0) {
       filterText = this.state.filterText;
       teaLists = this._filterTeaList(filterText);
+    } else {
+      teaLists = this._generateTeaList();
+    }
+
+    let navigatorHeader =
+
+      <View style={{height: 44, backgroundColor: colorScheme.color1}}>
+          <Animatable.View ref="view1" style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
+            <View style={[containers.row, {justifyContent: 'flex-start'}]}>
+              <IconButton
+                iconName="cog"
+                size={20}
+                color={color.white}
+                onForward={() => {
+                  this.props.navigator.push({
+                    name: 'Setting',
+                  });
+                }} />
+            </View>
+            <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+              <Text style={[text.title, {color: color.white}]}>Tea Notes</Text>
+            </View>
+            <View style={[containers.row, {justifyContent: 'flex-end'}]}>
+              <IconButton
+                iconName="search"
+                size={20}
+                color={color.white}
+                onForward={() => {
+                  this.refs.view1.fadeOutLeft(200).then((endState) => {
+                    this.setState({ showSearchBar: true });
+                  });
+                }} />
+                <IconButton
+                  iconName="star"
+                  size={20}
+                  color={color.white}
+                  style={{marginLeft: 20}}
+                  onForward={() => {
+                    this.props.navigator.push({
+                      name: 'UserFavorite',
+                    });
+                  }} />
+            </View>
+          </Animatable.View>
+      </View>
+
+
+
+    if (this.state.showSearchBar === true) {
+      navigatorHeader =
+        <View style={{height: 44, backgroundColor: colorScheme.color1}}>
+          <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
+            <Animatable.View ref="view2">
+              <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+                <View>
+                  <Icon name="search" size={20} color={color.white} />
+                </View>
+                <TextInput
+                  value={this.props.filterText}
+                  placeholder='search tea notes...'
+                  autoFocus={true}
+                  style={[text.title, styles.inputBox, {fontSize: 15, fontWeight: '100'}]}
+                  onChangeText={(text) => {
+                    this._updateFilterText(text);
+                  }}
+                />
+              </View>
+            </Animatable.View>
+            <View style={[containers.row, {justifyContent: 'flex-end', alignItems: 'center'}]}>
+              <TouchableOpacity onPress={() => {
+                this.refs.view2.fadeOutRight(200).then((endState) => {
+                  this.setState({ showSearchBar: false });
+                  this._updateFilterText('');
+                });
+                // this.setState({ showSearchBar: false });
+                // this._updateFilterText('');
+              }}>
+                <Text style={[text.p, {color: color.white}]}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+
+
     }
 
     return (
-      <View style={containers.container}>
+      <View style={[containers.container, {backgroundColor: colorScheme.color1}]}>
         <StatusBar hidden={false} />
-        <View style={{height: STATUS_BAR_HEIGHT_IOS, backgroundColor: colorScheme.color5}}></View>
-        <TeaSelectionHeader
-          navigator={this.props.navigator}
-          searchIconStatus={this.state.searchIconStatus}
-        />
-        <ScrollView onScroll={this._onScroll} scrollEventThrottle={16} bounces={true}>
-          <View>
-            <View>
-              <View style={styles.searchBar}>
-                <View>
-                  <TextInput
-                    value={this.tea}
-                    placeholder='search tea'
-                    onFocus={() => {
-
-                    }}
-                    style={[text.title, styles.inputBox, {fontSize: 15, fontWeight: '100'}]}
-                    onChangeText={(text) => {
-                      this.setState({ filterText: text });
-                    }}
-                  />
-                </View>
-              </View>
-            </View>
+        <View style={{height: STATUS_BAR_HEIGHT_IOS, backgroundColor: colorScheme.color1}}></View>
+        <View>{navigatorHeader}</View>
+        <ScrollView bounces={true}>
+          <View style={{backgroundColor: color.white}}>
             <ListView
+              enableEmptySections={true}
               dataSource={teaLists}
               renderRow={(teaObject) =>
                 <ImageRow
@@ -216,6 +261,7 @@ export default class TeaSelection extends Component {
         </ScrollView>
         <View style={[containers.stickyFooter, {alignItems: 'center'}]}>
           <TouchableOpacity
+            style={{backgroundColor: 'rgba(0,0,0,0)'}}
             onPress={() => {
               this.props.navigator.push({
                 name: 'CreateTea',
@@ -240,10 +286,27 @@ const styles = StyleSheet.create({
   inputBox: {
     width: SCREEN_WIDTH * 0.8,
     // textAlign: 'center',
-    height: 25,
-    margin: 5,
+    height: 24,
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 5,
     borderWidth: 0,
     textAlignVertical: 'center',
-    backgroundColor: color.lightGray,
+    backgroundColor: 'rgba(0,0,0,0)',
   }
 });
+
+// <View>
+//   <View style={styles.searchBar}>
+//     <View>
+//       <TextInput
+//         value={this.tea}
+//         placeholder='search tea'
+//         style={[text.title, styles.inputBox, {fontSize: 15, fontWeight: '100'}]}
+//         onChangeText={(text) => {
+//           this.setState({ filterText: text });
+//         }}
+//       />
+//     </View>
+//   </View>
+// </View>

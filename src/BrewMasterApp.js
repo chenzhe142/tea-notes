@@ -44,6 +44,7 @@ export default class brewMaster extends Component {
   constructor(props) {
     super(props);
     this._renderScene = this._renderScene.bind(this);
+    this._configureScene = this._configureScene.bind(this);
     this._updateCurrentSelectedTea = this._updateCurrentSelectedTea.bind(this);
     this._updateEditingStatus = this._updateEditingStatus.bind(this);
     this._updateStorage = this._updateStorage.bind(this);
@@ -165,13 +166,22 @@ export default class brewMaster extends Component {
     }
   }
 
+  _configureScene(route) {
+    switch (route.name) {
+      case 'Setting':
+        return Navigator.SceneConfigs.FloatFromBottom;
+      case 'CreateTea':
+        return Navigator.SceneConfigs.FloatFromBottom;
+      default:
+        return Navigator.SceneConfigs.HorizontalSwipeJump;
+    }
+  }
+
   render() {
     return (
       <Navigator
         initialRoute={{ name: 'TeaSelection' }}
-        configureScene={(route) => {
-          return Navigator.SceneConfigs.FloatFromBottom;;
-        }}
+        configureScene={this._configureScene}
         renderScene={this._renderScene}
       />
 

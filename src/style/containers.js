@@ -18,7 +18,7 @@ const containers = StyleSheet.create({
     right: 20,
   },
   card: {
-    marginTop: 15,
+    marginTop: 5,
     padding: 15,
     backgroundColor: '#ffffff'
   }
