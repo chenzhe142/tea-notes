@@ -17,7 +17,6 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-
 import * as Animatable from 'react-native-animatable';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -295,18 +294,3 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0)',
   }
 });
-
-// <View>
-//   <View style={styles.searchBar}>
-//     <View>
-//       <TextInput
-//         value={this.tea}
-//         placeholder='search tea'
-//         style={[text.title, styles.inputBox, {fontSize: 15, fontWeight: '100'}]}
-//         onChangeText={(text) => {
-//           this.setState({ filterText: text });
-//         }}
-//       />
-//     </View>
-//   </View>
-// </View>

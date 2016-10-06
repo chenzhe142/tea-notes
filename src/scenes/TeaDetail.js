@@ -168,9 +168,9 @@ export default class TeaDetail extends Component {
     }
 
     return(
-      <View style={containers.container}>
+      <View style={[containers.container, {backgroundColor: color.lightGray}]}>
         <ScrollView>
-          <View style={[containers.container, {backgroundColor: color.lightGray, paddingBottom: 80, justifyContent: 'flex-start'}]}>
+          <View style={[containers.container, {paddingBottom: 80, justifyContent: 'flex-start'}]}>
             <BackBtn
               navigator={this.props.navigator}
               onPressEvent={() => {

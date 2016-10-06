@@ -20,6 +20,7 @@ import {
   PushNotificationIOS,
   View,
 } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 import BackgroundTimer from 'react-native-background-timer';
 
 import Button from '../components/Button.js';
@@ -120,8 +121,8 @@ export default class TeaTimer extends Component {
         <View style={styles.controlBtn}>
           <Button enableButtonStyle={true} btnText={this.state.timerBtnText} style={{backgroundColor: colorScheme.color5}} onForward={this._toggleTimer} />
         </View>
-        <View style={[styles.progressBackground, {top: this.state.topDistance}]}>
-        </View>
+        <Animatable.View animation="pulse" easing="ease-out" iterationCount="infinite" style={[styles.progressBackground, {top: this.state.topDistance}]}>
+        </Animatable.View>
       </View>
     );
   }

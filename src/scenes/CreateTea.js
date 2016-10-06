@@ -461,7 +461,7 @@ const styles = StyleSheet.create({
   teaCard_title: {
     width: SCREEN_WIDTH,
     textAlign: 'center',
-    height: 20,
+    height: 24,
   },
   teaCard_data: {
     textAlign: 'left',

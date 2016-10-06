@@ -40,7 +40,7 @@ export default class ImageRow extends Component {
           <View style={{paddingBottom: 1}}>
             <Image style={styles.image} source={this.props.imageSource}>
               <View style={[containers.container, {justifyContent: 'center', alignItems: 'center'}]}>
-                <Text style={[text.title, text.shadow, {color: color.white, backgroundColor: 'rgba(0,0,0,0)'}]}>{this.props.tea.name}</Text>
+                <Text style={[text.title, text.shadow, {color: color.white, fontWeight: '700', backgroundColor: 'rgba(0,0,0,0)'}]}>{this.props.tea.name}</Text>
               </View>
             </Image>
           </View>

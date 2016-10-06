@@ -85,6 +85,7 @@ export default class UserFavorite extends Component {
         </View>
         <View style={containers.container, {justifyContent: 'flex-start'}}>
           <ListView
+            enableEmptySections={true}
             dataSource={favoriteTealist}
             renderRow={(teaObject) =>
               <ImageRow
