@@ -156,6 +156,12 @@ export default class CreateTea extends Component {
           source = {uri: response.uri, isStatic: true};
         }
 
+        // get relative image path
+        // see issue: https://github.com/marcshilling/react-native-image-picker/issues/107
+        const splittedImagePath = source.uri.split('/');
+        const relativeImagePath = '~/Documents/images/' + splittedImagePath[splittedImagePath.length-1];
+        source.uri = relativeImagePath;
+
         const tea = Object.assign({}, this.state.tea);
         tea.coverImageUrl = source;
 
@@ -221,6 +227,7 @@ export default class CreateTea extends Component {
     // TODO: info validation
 
     let tea = Object.assign({}, this.state.tea);
+    tea.addedByMe = true;
 
     if (defaultTea.isEqual(tea) === false) {
       // customizedTeaList: {storageKey: "", content: []}
@@ -421,7 +428,7 @@ export default class CreateTea extends Component {
             <View>
               <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 15, backgroundColor: color.white}]}>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>
-                  <Text style={text.sectionTitle}>Notes</Text>
+                  <Text style={text.sectionTitle}>My Notes</Text>
                 </View>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
                   <Text style={[text.p]}>{this.state.tea.userNotes}</Text>

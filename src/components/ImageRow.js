@@ -34,6 +34,10 @@ import { SCREEN_WIDTH, SCREEN_HEIGHT } from '../constants';
 
 export default class ImageRow extends Component {
   render() {
+    let addedByMe;
+    if (this.props.tea.addedByMe) {
+      addedByMe = <Text>#added by me</Text>;
+    }
     return (
       <View>
         <TouchableWithoutFeedback onPress={this.props.onPressEvent}>
@@ -41,6 +45,7 @@ export default class ImageRow extends Component {
             <Image style={styles.image} source={this.props.imageSource}>
               <View style={[containers.container, {justifyContent: 'center', alignItems: 'center'}]}>
                 <Text style={[text.title, text.shadow, {color: color.white, fontWeight: '700', backgroundColor: 'rgba(0,0,0,0)'}]}>{this.props.tea.name}</Text>
+                {addedByMe}
               </View>
             </Image>
           </View>

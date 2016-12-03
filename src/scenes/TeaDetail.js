@@ -71,7 +71,7 @@ export default class TeaDetail extends Component {
   }
 
   _showShareActionSheet() {
-    //url needs to be a real one, which can be opened in browser!
+    // TODO: url needs to be a real one, which can be opened in browser!
     ActionSheetIOS.showShareActionSheetWithOptions({
       url: 'http://react-review.leanapp.cn',
       message: 'Share an awesome tea note to you!',
@@ -167,6 +167,11 @@ export default class TeaDetail extends Component {
       }
     }
 
+    let userNotes = this.props.currentSelectedTea.userNotes;
+    if (userNotes === '') {
+      userNotes = 'You don\'t have any notes now. Add your notes here!';
+    }
+
     return(
       <View style={[containers.container, {backgroundColor: color.lightGray}]}>
         <ScrollView>
@@ -227,7 +232,7 @@ export default class TeaDetail extends Component {
                 </View>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
                   <Text style={text.p}>
-                    {this.props.currentSelectedTea.userNotes}
+                    {userNotes}
                   </Text>
                 </View>
               </View>

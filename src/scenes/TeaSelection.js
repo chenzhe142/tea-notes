@@ -69,6 +69,7 @@ export default class TeaSelection extends Component {
     // 1. merge customizedTeaList and defaultTeaList
     // 2. sort based on alphabet on tea.name
     // *sanity check: make sure this.state.customizedTeaList is not empty
+    // TODO: add 'addedByMe' for customizedTeaList
     let mergedTeaList;
 
     if (this.props.storage !== undefined) {

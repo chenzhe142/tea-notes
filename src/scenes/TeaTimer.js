@@ -22,6 +22,7 @@ import {
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import BackgroundTimer from 'react-native-background-timer';
+import Sound from 'react-native-sound';
 
 import Button from '../components/Button.js';
 import BackBtn from '../components/BackBtn.js';
@@ -48,6 +49,15 @@ export default class TeaTimer extends Component {
     };
 
     this.intervalId = null;
+
+    this.timerAlarmSound = new Sound('timer-alarm.mp3', Sound.MAIN_BUNDLE, (error) => {
+      if (error) {
+        console.log('failed to load the sound', error);
+      } else { // loaded successfully
+        console.log('duration in seconds: ' + this.timerAlarmSound.getDuration() +
+            'number of channels: ' + this.timerAlarmSound.getNumberOfChannels());
+      }
+    });
   }
 
   _toggleTimer() {
@@ -77,6 +87,16 @@ export default class TeaTimer extends Component {
               topDistance
             });
           } else {
+            // Play the sound with an onEnd callback
+            this.timerAlarmSound.play((success) => {
+              if (success) {
+                console.log('successfully finished playing');
+              } else {
+                console.log('playback failed due to audio decoding errors');
+              }
+            });
+            this.timerAlarmSound.setNumberOfLoops(2);
+
             Alert.alert(
               'Brew Master',
               `${this.props.currentSelectedTea.name} is ready!`,
@@ -87,6 +107,7 @@ export default class TeaTimer extends Component {
                     remainTime: this.props.currentSelectedTea.time,
                     timerBtnText: 'Brew!'
                   });
+                  this.timerAlarmSound.stop();
                 }
               }]
             );
