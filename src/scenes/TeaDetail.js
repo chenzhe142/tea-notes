@@ -48,6 +48,11 @@ import {
 
 
 export default class TeaDetail extends Component {
+  state = {
+    displayTimeInSecond: true,
+    displayTimeInMinute: false,
+  }
+
   constructor(props) {
     super(props);
     this._onForward = this._onForward.bind(this);
@@ -62,11 +67,6 @@ export default class TeaDetail extends Component {
       }
     }
 
-    this.state = {
-      displayTime: `${this.props.currentSelectedTea.time} ${SYMBOL_SECOND}`,
-      displayTimeInSecond: true,
-      displayTimeInMinute: false,
-    };
   }
 
   _onForward() {
@@ -109,7 +109,6 @@ export default class TeaDetail extends Component {
     if (!this.state.displayTimeInSecond && this.state.displayTimeInMinute) {
       this.refs.displayTime.fadeOut();
       this.setState({
-        displayTime: `${this.props.currentSelectedTea.time} ${SYMBOL_SECOND}`,
         displayTimeInSecond: true,
         displayTimeInMinute: false,
       });
@@ -117,7 +116,6 @@ export default class TeaDetail extends Component {
     } else if (this.state.displayTimeInSecond && !this.state.displayTimeInMinute) {
       this.refs.displayTime.fadeOut();
       this.setState({
-        displayTime: convertSecondToMinuteString(secondToMinute(this.props.currentSelectedTea.time), SYMBOL_MINUTE, SYMBOL_SECOND),
         displayTimeInSecond: false,
         displayTimeInMinute: true,
       });
@@ -129,11 +127,20 @@ export default class TeaDetail extends Component {
     const temperatureOption = findSelectedSettingOption(this.settings.temperatureOptions);
     const timeOption = findSelectedSettingOption(this.settings.timeOptions);
 
+    // display temperature
     let temperature;
     if (temperatureOption === "celsius") {
       temperature = `${this.props.currentSelectedTea.temperature} ${SYMBOL_CELSIUS}`;
     } else {
       temperature = `${celsiusToFahrenheit(this.props.currentSelectedTea.temperature)} ${SYMBOL_FAHRENHEIT}`;
+    }
+
+    // display time
+    let time;
+    if (!this.state.displayTimeInMinute && this.state.displayTimeInSecond) {
+      time = `${this.props.currentSelectedTea.time} ${SYMBOL_SECOND}`;
+    } else {
+      time = convertSecondToMinuteString(secondToMinute(this.props.currentSelectedTea.time), SYMBOL_MINUTE, SYMBOL_SECOND);
     }
 
     //like icons
@@ -144,6 +151,7 @@ export default class TeaDetail extends Component {
       likeIconColor = colorScheme.color5;
     }
 
+    // rating stars
     let ratingStars = [];
     let rating = this.props.currentSelectedTea.rating;
     for (let i = 1; i <= 5; i++) {
@@ -154,6 +162,7 @@ export default class TeaDetail extends Component {
       }
     }
 
+    // user notes
     let userNotes = this.props.currentSelectedTea.userNotes;
     if (userNotes === '') {
       userNotes = 'You don\'t have any notes now. Add your notes here!';
@@ -200,7 +209,7 @@ export default class TeaDetail extends Component {
                   <TouchableWithoutFeedback onPress={this._displayTimeInDifferentUnit}>
                     <View>
                       <Animatable.Text ref="displayTime" style={[text.number, {marginLeft: 10}]}>
-                        {this.state.displayTime}
+                        {time}
                       </Animatable.Text>
                     </View>
                   </TouchableWithoutFeedback>

@@ -24,15 +24,15 @@ import containers from '../style/containers';
 import { CUSTOMIZED_SETTINGS_STORAGE_KEY, DEFAULT_SETTINGS, STATUS_BAR_HEIGHT_IOS } from '../constants';
 
 export default class Setting extends Component {
+  state = {
+    temperatureOptions: DEFAULT_SETTINGS.temperatureOptions,
+    timeOptions: DEFAULT_SETTINGS.timeOptions,
+  }
+
   constructor(props) {
     super(props);
     this._selectTemperature = this._selectTemperature.bind(this);
     this._selectTime = this._selectTime.bind(this);
-
-    this.state = {
-      temperatureOptions: DEFAULT_SETTINGS.temperatureOptions,
-      timeOptions: DEFAULT_SETTINGS.timeOptions,
-    };
   }
 
   componentWillMount() {

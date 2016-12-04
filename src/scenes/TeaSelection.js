@@ -42,18 +42,17 @@ import {
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 export default class TeaSelection extends Component {
+  state = {
+    filterText: '',
+  }
+
   constructor(props) {
     super(props);
     this._onForward = this._onForward.bind(this);
     this._filterTeaList = this._filterTeaList.bind(this);
     this._updateFilterText = this._updateFilterText.bind(this);
 
-    this.offset = 0;
     this.defaultTeaList = DEFAULT_TEA_LIST;
-
-    this.state = {
-      filterText: '',
-    };
   }
 
   _onForward(teaObject) {

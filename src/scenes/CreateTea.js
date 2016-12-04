@@ -83,6 +83,31 @@ const defaultTea = new Tea({
  */
 
 export default class CreateTea extends Component {
+
+  state = {
+    isCoverImageSelected: false,
+    showTemperaturePicker: false,
+    showTimePicker: false,
+
+    tea: {
+      id: 0,
+      name: '',
+      temperature: '',
+      time: '',
+      coverImageUrl: {
+        uri: '',
+        isStatic: true
+      },
+      brewSteps: '',
+      userNotes: '',
+      rating: 0,
+    },
+
+    customizedTeaList: this.props.storage[CUSTOMIZED_TEA_LIST_STORAGE_KEY],
+
+    screenOffset: 0,
+  }
+
   constructor(props) {
     super(props);
 
@@ -99,30 +124,6 @@ export default class CreateTea extends Component {
     this._openUserNotesCreatingView = this._openUserNotesCreatingView.bind(this);
     this._openUserNotesEditingView = this._openUserNotesCreatingView.bind(this);
     this._clearCache = this._clearCache.bind(this);
-
-    this.state = {
-      isCoverImageSelected: false,
-      showTemperaturePicker: false,
-      showTimePicker: false,
-
-      tea: {
-        id: 0,
-        name: '',
-        temperature: '',
-        time: '',
-        coverImageUrl: {
-          uri: '',
-          isStatic: true
-        },
-        brewSteps: '',
-        userNotes: '',
-        rating: 0,
-      },
-
-      customizedTeaList: this.props.storage[CUSTOMIZED_TEA_LIST_STORAGE_KEY],
-
-      screenOffset: 0,
-    };
 
     this.placeholders = {
       name: 'Name of Tea',

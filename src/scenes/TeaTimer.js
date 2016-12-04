@@ -35,18 +35,18 @@ import containers from '../style/containers.js';
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../constants';
 
 export default class TeaTimer extends Component {
+  state = {
+    isTimerStarted: false,
+    remainTime: this.props.currentSelectedTea.time,
+    timerBtnText: 'Brew!',
+    topDistance: SCREEN_HEIGHT,
+  }
+
   constructor(props) {
     super(props);
 
     this._toggleTimer = this._toggleTimer.bind(this);
     this._resetTimer = this._resetTimer.bind(this);
-
-    this.state = {
-      isTimerStarted: false,
-      remainTime: this.props.currentSelectedTea.time,
-      timerBtnText: 'Brew!',
-      topDistance: SCREEN_HEIGHT,
-    };
 
     this.intervalId = null;
 
