@@ -8,11 +8,13 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View
 } from 'react-native';
 
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import * as Animatable from 'react-native-animatable';
 
 import Button from '../components/Button';
 import BackBtn from '../components/BackBtn';
@@ -27,6 +29,8 @@ import position from '../style/position';
 
 import celsiusToFahrenheit from '../utils/celsiusToFahrenheit';
 import secondToMinute from '../utils/secondToMinute';
+import findSelectedSettingOption from '../utils/findSelectedSettingOption';
+import convertSecondToMinuteString from '../utils/convertSecondToMinuteString';
 
 import {
   SCREEN_WIDTH,
@@ -41,12 +45,15 @@ import {
   SYMBOL_MINUTE
 } from '../constants';
 
+
+
 export default class TeaDetail extends Component {
   constructor(props) {
     super(props);
     this._onForward = this._onForward.bind(this);
     this._showShareActionSheet = this._showShareActionSheet.bind(this);
     this._toggleLike = this._toggleLike.bind(this);
+    this._displayTimeInDifferentUnit = this._displayTimeInDifferentUnit.bind(this);
 
     this.settings = DEFAULT_SETTINGS;
     if (this.props.storage) {
@@ -54,20 +61,18 @@ export default class TeaDetail extends Component {
         this.settings = this.props.storage[CUSTOMIZED_SETTINGS_STORAGE_KEY].content;
       }
     }
+
+    this.state = {
+      displayTime: `${this.props.currentSelectedTea.time} ${SYMBOL_SECOND}`,
+      displayTimeInSecond: true,
+      displayTimeInMinute: false,
+    };
   }
 
   _onForward() {
     this.props.navigator.push({
       name: 'TeaTimer'
     });
-  }
-
-  _findSelectedOption(options) {
-    for (let i = 0; i < options.length; i++) {
-      if (options[i].isSelected === true) {
-        return options[i].text;
-      }
-    }
   }
 
   _showShareActionSheet() {
@@ -100,53 +105,35 @@ export default class TeaDetail extends Component {
     this.props.updateCurrentSelectedTea(tea);
   }
 
+  _displayTimeInDifferentUnit() {
+    if (!this.state.displayTimeInSecond && this.state.displayTimeInMinute) {
+      this.refs.displayTime.fadeOut();
+      this.setState({
+        displayTime: `${this.props.currentSelectedTea.time} ${SYMBOL_SECOND}`,
+        displayTimeInSecond: true,
+        displayTimeInMinute: false,
+      });
+       this.refs.displayTime.fadeIn();
+    } else if (this.state.displayTimeInSecond && !this.state.displayTimeInMinute) {
+      this.refs.displayTime.fadeOut();
+      this.setState({
+        displayTime: convertSecondToMinuteString(secondToMinute(this.props.currentSelectedTea.time), SYMBOL_MINUTE, SYMBOL_SECOND),
+        displayTimeInSecond: false,
+        displayTimeInMinute: true,
+      });
+      this.refs.displayTime.fadeIn();
+    }
+  }
+
   render() {
-    const temperatureOption = this._findSelectedOption(this.settings.temperatureOptions);
-    const timeOption = this._findSelectedOption(this.settings.timeOptions);
+    const temperatureOption = findSelectedSettingOption(this.settings.temperatureOptions);
+    const timeOption = findSelectedSettingOption(this.settings.timeOptions);
 
     let temperature;
-    let time;
-
     if (temperatureOption === "celsius") {
       temperature = `${this.props.currentSelectedTea.temperature} ${SYMBOL_CELSIUS}`;
     } else {
       temperature = `${celsiusToFahrenheit(this.props.currentSelectedTea.temperature)} ${SYMBOL_FAHRENHEIT}`;
-    }
-
-    if (timeOption === 'second') {
-      time = `${this.props.currentSelectedTea.time} ${SYMBOL_SECOND}`;
-    } else {
-      covertedTime = secondToMinute(this.props.currentSelectedTea.time);
-
-      let minutePart = {
-        text: '',
-        isAvailable: false
-      };
-      if (covertedTime.minute > 0) {
-        minutePart = {
-          text: `${covertedTime.minute} ${SYMBOL_MINUTE}`,
-          isAvailable: true
-        };
-      }
-
-      let secondPart = {
-        text: '',
-        isAvailable: false
-      };
-
-      if (covertedTime.second > 0) {
-        secondPart = {
-          text: `${covertedTime.second} ${SYMBOL_SECOND}`,
-          isAvailable: true
-        };
-      }
-
-      let space = '';
-      if (minutePart.isAvailable && secondPart.isAvailable) {
-        space = ' ';
-      }
-
-      time = `${minutePart.text}${space}${secondPart.text}`;
     }
 
     //like icons
@@ -189,7 +176,7 @@ export default class TeaDetail extends Component {
                     <Text style={text.title}>{this.props.currentSelectedTea.name}</Text>
                   </View>
 
-                  <View style={containers.row, {alignItems: 'center', paddingBottom: 10}}>
+                  <View style={containers.row, {alignItems: 'center', paddingTop: 5, paddingBottom: 10}}>
                     <Text style={[text.p, {color: color.gray}]}>green tea - mild - low caffeine</Text>
                   </View>
 
@@ -201,6 +188,7 @@ export default class TeaDetail extends Component {
                 </View>
               </View>
             </View>
+
             <View>
               <View style={[containers.row, containers.card]}>
                 <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
@@ -209,10 +197,17 @@ export default class TeaDetail extends Component {
                 </View>
                 <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
                   <IoniconsIcon name="ios-time" size={20} color={color.pink} />
-                  <Text style={[text.number, {marginLeft: 10}]}>{time}</Text>
+                  <TouchableWithoutFeedback onPress={this._displayTimeInDifferentUnit}>
+                    <View>
+                      <Animatable.Text ref="displayTime" style={[text.number, {marginLeft: 10}]}>
+                        {this.state.displayTime}
+                      </Animatable.Text>
+                    </View>
+                  </TouchableWithoutFeedback>
                 </View>
               </View>
             </View>
+
             <View>
               <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 5, backgroundColor: color.white}]}>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>
@@ -225,6 +220,7 @@ export default class TeaDetail extends Component {
                 </View>
               </View>
             </View>
+
             <View>
               <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 5, backgroundColor: color.white}]}>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>

@@ -14,7 +14,7 @@ const text = StyleSheet.create({
     number: {
       color: 'black',
       fontFamily: 'Open Sans',
-      fontSize: 25,
+      fontSize: 20,
     },
     button: {
       color: 'white',

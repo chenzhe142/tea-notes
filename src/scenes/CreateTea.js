@@ -29,13 +29,32 @@ import WithLabel from '../components/WithLabel.js';
 import ItemPicker from '../components/ItemPicker.js';
 import IconButton from '../components/IconButton';
 
-import { SCREEN_WIDTH, SCREEN_HEIGHT, COVERIMAGE_HEIGHT, CARD_OFFSET, CUSTOMIZED_TEA_LIST_STORAGE_KEY, STATUS_BAR_HEIGHT_IOS } from '../constants';
+import {
+  CARD_OFFSET,
+  COVERIMAGE_HEIGHT,
+  CUSTOMIZED_SETTINGS_STORAGE_KEY,
+  CUSTOMIZED_TEA_LIST_STORAGE_KEY,
+  DEFAULT_SETTINGS,
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+  STATUS_BAR_HEIGHT_IOS,
+  SYMBOL_CELSIUS,
+  SYMBOL_FAHRENHEIT,
+  SYMBOL_MINUTE,
+  SYMBOL_SECOND,
+} from '../constants';
 
 import text from '../style/text.js';
 import color from '../style/color.js';
 import colorScheme from '../style/colorScheme';
 import containers from '../style/containers.js';
 
+import findSelectedSettingOption from '../utils/findSelectedSettingOption';
+
+
+/**
+ * helper class
+ */
 class Tea {
   constructor({name, temperature, time, coverImageUrl}) {
     this.name = name;
@@ -58,6 +77,10 @@ const defaultTea = new Tea({
   time: '180',
   coverImageUrl: '',
 });
+
+/**
+ * class CreateTea
+ */
 
 export default class CreateTea extends Component {
   constructor(props) {
@@ -87,7 +110,10 @@ export default class CreateTea extends Component {
         name: '',
         temperature: '',
         time: '',
-        coverImageUrl: null,
+        coverImageUrl: {
+          uri: '',
+          isStatic: true
+        },
         brewSteps: '',
         userNotes: '',
         rating: 0,
@@ -98,19 +124,18 @@ export default class CreateTea extends Component {
       screenOffset: 0,
     };
 
-    this.temperature = Array.apply(null, {length: 56}).map((element, index) => {
-      return String(index + 65);
-    });
-
-    this.time = Array.apply(null, {length: 10}).map((element, index) => {
-      return String(index + 1);
-    });
-
     this.placeholders = {
       name: 'Name of Tea',
       temperature: 'temp',
       time: 'time'
     };
+
+    this.settings = DEFAULT_SETTINGS;
+    if (this.props.storage) {
+      if (this.props.storage[CUSTOMIZED_SETTINGS_STORAGE_KEY].content) {
+        this.settings = this.props.storage[CUSTOMIZED_SETTINGS_STORAGE_KEY].content;
+      }
+    }
 
   };
 
@@ -266,12 +291,37 @@ export default class CreateTea extends Component {
   }
 
   render() {
-    let teaCoverPhoto;
-    if ((this.state.isCoverImageSelected) || (this.props.isEditing)) {
-      teaCoverPhoto = <Image source={this.state.tea.coverImageUrl} style={styles.coverImage}/>;
+    // get user settings
+    const temperatureOption = findSelectedSettingOption(this.settings.temperatureOptions);
+    const timeOption = findSelectedSettingOption(this.settings.timeOptions);
+
+    let temperatureSymbol, timeSymbol;
+    let temperaturePickerValue, timePickerValue;
+
+    if (temperatureOption === "celsius") {
+      temperatureSymbol = SYMBOL_CELSIUS;
+      temperaturePickerValue = Array.apply(null, {length: 100}).map((element, index) => {
+        return String(index + 1);
+      });
     } else {
-      teaCoverPhoto = <Image source={require('../../public/image/photo_placeholder.png')} style={styles.coverImage} />;
+      temperatureSymbol = SYMBOL_FAHRENHEIT;
+      temperaturePickerValue = Array.apply(null, {length: 212}).map((element, index) => {
+        return String(index + 32);
+      });
     }
+
+    if (timeOption === 'second') {
+      timeSymbol = SYMBOL_SECOND;
+      timePickerValue = Array.apply(null, {length: 240}).map((element, index) => {
+        return String(index + 1);
+      });
+    } else {
+      timeSymbol = SYMBOL_MINUTE;
+      timePickerValue = Array.apply(null, {length: 10}).map((element, index) => {
+        return String(index + 1);
+      });
+    }
+
 
     let footer;
     if (this.state.showTemperaturePicker) {
@@ -279,7 +329,7 @@ export default class CreateTea extends Component {
                 <ItemPicker
                   selectedValue={this.state.tea.temperature}
                   onValueChangeEvent={this._updateTemperature}
-                  values={this.temperature}
+                  values={temperaturePickerValue}
                   dismissPicker={this._dismissPicker}
                   textStyle={text.p} />
               </View>;
@@ -288,7 +338,7 @@ export default class CreateTea extends Component {
                 <ItemPicker
                   selectedValue={this.state.tea.time}
                   onValueChangeEvent={this._updateTime}
-                  values={this.time}
+                  values={timePickerValue}
                   dismissPicker={this._dismissPicker}
                   textStyle={text.p} />
               </View>;
@@ -296,7 +346,6 @@ export default class CreateTea extends Component {
 
     let saveBtnOnPressEvent;
     let navbarTitle;
-
     if (this.props.isEditing) {
       saveBtnOnPressEvent = this._updateTea;
       navbarTitle = 'Edit tea note';
@@ -305,6 +354,8 @@ export default class CreateTea extends Component {
       navbarTitle = 'Create tea note';
     }
 
+
+    // update rating stars
     let ratingStars = [];
     let rating = this.state.tea.rating;
     for (let i = 1; i <= 5; i++) {
@@ -313,6 +364,14 @@ export default class CreateTea extends Component {
       } else {
         ratingStars.push('star');
       }
+    }
+
+    // load placeholder image / user selected note image
+    let teaCoverPhoto;
+    if ((this.state.isCoverImageSelected) || (this.props.isEditing)) {
+      teaCoverPhoto = <Image source={this.state.tea.coverImageUrl} style={styles.coverImage}/>;
+    } else {
+      teaCoverPhoto = <Image source={require('../../public/image/photo_placeholder.png')} style={styles.coverImage} />;
     }
 
     return(
@@ -338,6 +397,7 @@ export default class CreateTea extends Component {
             </View>
           </View>
         </View>
+
         <ScrollView>
           <View style={[containers.container, {backgroundColor: color.lightGray, paddingBottom: 60}]}>
             <View>
@@ -386,18 +446,18 @@ export default class CreateTea extends Component {
             </View>
 
             <View>
-              <View style={[containers.row, {marginTop: 15, paddingTop: 10, paddingBottom: 10, backgroundColor: color.white}]}>
-                <View>
+              <View style={[containers.row, containers.card]}>
+                <View style={{height: 34.5}}>
                   <WithLabel iconName="ios-thermometer" textStyle={text.p} showPicker={this._showTemperaturePicker}>
                     <Text style={[text.number, styles.teaCard_data]}>
-                      {this.state.tea.temperature}
+                      {`${this.state.tea.temperature} ${temperatureSymbol}`}
                     </Text>
                   </WithLabel>
                 </View>
-                <View>
+                <View style={{height: 34.5}}>
                   <WithLabel iconName="ios-time" textStyle={text.p} showPicker={this._showTimePicker}>
                     <Text style={[text.number, styles.teaCard_data]}>
-                      {this.state.tea.time}
+                      {`${this.state.tea.time} ${timeSymbol}`}
                     </Text>
                   </WithLabel>
                 </View>
@@ -405,7 +465,7 @@ export default class CreateTea extends Component {
             </View>
 
             <View>
-              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 15, backgroundColor: color.white}]}>
+              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 5, backgroundColor: color.white}]}>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>
                   <Text style={text.sectionTitle}>How to brew</Text>
                 </View>
@@ -425,8 +485,9 @@ export default class CreateTea extends Component {
                 </View>
               </View>
             </View>
+
             <View>
-              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 15, backgroundColor: color.white}]}>
+              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 5, backgroundColor: color.white}]}>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>
                   <Text style={text.sectionTitle}>My Notes</Text>
                 </View>
@@ -472,7 +533,7 @@ const styles = StyleSheet.create({
   },
   teaCard_data: {
     textAlign: 'left',
-    width: 50,
+    width: 90,
     textAlignVertical: 'center',
   },
   inputBox: {

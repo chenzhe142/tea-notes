@@ -87,6 +87,19 @@ export default class Setting extends Component {
     this.props.storageUnit.saveItem(CUSTOMIZED_SETTINGS_STORAGE_KEY, JSON.stringify(customizedSettings));
   }
 
+  /**
+   * remove "time" selection from settings
+   */
+
+    //  <View style={[containers.container, {margin: 10}]}>
+    //    <View style={{marginBottom: 5}}>
+    //      <Text style={text.subTitle}>Time</Text>
+    //    </View>
+    //    <SlideSwitch
+    //      options={this.state.timeOptions}
+    //      updateOption={this._selectTime} />
+    //  </View>
+
   render() {
     return (
       <View style={[containers.container, {justifyContent: 'flex-start', backgroundColor: color.white}]}>
@@ -118,14 +131,6 @@ export default class Setting extends Component {
             <SlideSwitch
               options={this.state.temperatureOptions}
               updateOption={this._selectTemperature} />
-          </View>
-          <View style={[containers.container, {margin: 10}]}>
-            <View style={{marginBottom: 5}}>
-              <Text style={text.subTitle}>Time</Text>
-            </View>
-            <SlideSwitch
-              options={this.state.timeOptions}
-              updateOption={this._selectTime} />
           </View>
         </View>
       </View>

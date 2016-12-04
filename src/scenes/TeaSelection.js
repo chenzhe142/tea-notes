@@ -236,7 +236,6 @@ export default class TeaSelection extends Component {
           </View>
         </View>
 
-
     }
 
     return (
@@ -258,7 +257,7 @@ export default class TeaSelection extends Component {
 
           </View>
         </ScrollView>
-        <View style={[containers.stickyFooter, {alignItems: 'center'}]}>
+        <View style={[containers.stickyFooter, {alignItems: 'center', paddingBottom: 10}]}>
           <TouchableOpacity
             style={{backgroundColor: 'rgba(0,0,0,0)'}}
             onPress={() => {
