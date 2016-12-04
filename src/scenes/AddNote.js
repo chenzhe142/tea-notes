@@ -26,7 +26,14 @@ import WithLabel from '../components/WithLabel.js';
 import ItemPicker from '../components/ItemPicker.js';
 import IconButton from '../components/IconButton';
 
-import { SCREEN_WIDTH, SCREEN_HEIGHT, COVERIMAGE_HEIGHT, CARD_OFFSET, CUSTOMIZED_TEA_LIST_STORAGE_KEY, STATUS_BAR_HEIGHT_IOS } from '../constants';
+import {
+  CARD_OFFSET,
+  COVERIMAGE_HEIGHT,
+  CUSTOMIZED_TEA_LIST_STORAGE_KEY,
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+  STATUS_BAR_HEIGHT_IOS,
+} from '../constants';
 
 import text from '../style/text.js';
 import color from '../style/color.js';
@@ -54,12 +61,14 @@ export default class AddNote extends Component {
     // TODO: validate user input?
 
     if (this.props.noteType === 'brewSteps') {
+      this.props.updateBrewSteps(this.state.brewSteps);
       if (this.state.brewSteps !== '') {
-        this.props.updateBrewSteps(this.state.brewSteps);
+        console.log('show brew steps saved modal?');
       }
     } else if (this.props.noteType === 'userNotes') {
+      this.props.updateUserNotes(this.state.userNotes);
       if (this.state.userNotes !== '') {
-        this.props.updateUserNotes(this.state.userNotes);
+        console.log('show user notes saved modal?');
       }
     }
   }

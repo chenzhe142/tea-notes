@@ -6,10 +6,11 @@
 
 import React, { Component, PropTypes } from 'react';
 import {
+  ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
-  StatusBar,
-  View
+  View,
 } from 'react-native';
 
 import BackBtn from '../components/BackBtn';
@@ -102,7 +103,7 @@ export default class Setting extends Component {
 
   render() {
     return (
-      <View style={[containers.container, {justifyContent: 'flex-start', backgroundColor: color.white}]}>
+      <View style={[containers.container, {backgroundColor: color.white}]}>
         <StatusBar hidden={false} />
         <View style={{height: STATUS_BAR_HEIGHT_IOS, backgroundColor: colorScheme.color1}}></View>
         <View style={{height: 44, backgroundColor: colorScheme.color1}}>
@@ -123,15 +124,21 @@ export default class Setting extends Component {
             </View>
           </View>
         </View>
-        <View style={containers.container, {justifyContent: 'flex-start'}}>
-          <View style={[containers.container, {margin: 10}]}>
-            <View style={{marginBottom: 5}}>
-              <Text style={text.subTitle}>Temperature</Text>
+        <ScrollView>
+          <View style={containers.container, {justifyContent: 'flex-start'}}>
+            <View style={[containers.container, {margin: 10}]}>
+              <View style={{marginBottom: 5}}>
+                <Text style={[text.subTitle, {fontSize: 16, color: color.gray}]}>Temperature</Text>
+              </View>
+              <SlideSwitch
+                options={this.state.temperatureOptions}
+                updateOption={this._selectTemperature} />
             </View>
-            <SlideSwitch
-              options={this.state.temperatureOptions}
-              updateOption={this._selectTemperature} />
           </View>
+        </ScrollView>
+        <View style={{alignItems: 'center', padding: 10}}>
+          <Text style={{fontSize: 12, color: color.midGray}}>Tea Notes - v1.0.0</Text>
+          <Text style={{fontSize: 8, color: color.midGray}}>© Zhe Chen, 2016</Text>
         </View>
       </View>
     );

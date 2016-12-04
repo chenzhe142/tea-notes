@@ -167,8 +167,18 @@ export default class TeaDetail extends Component {
 
     // user notes
     let userNotes = this.props.currentSelectedTea.userNotes;
+    let userNotesTextStyle = {};
     if (userNotes === '') {
-      userNotes = 'You don\'t have any notes now. Add your notes here!';
+      userNotes = 'You don\'t have any notes now.\nEdit to add your notes!';
+      userNotesTextStyle = { color: color.midGray, fontSize: 12, fontStyle: 'italic' };
+    }
+
+    // brew steps
+    let brewSteps = this.props.currentSelectedTea.brewSteps;
+    let brewStepsTextStyle = {};
+    if (brewSteps === '') {
+      brewSteps = 'You don\'t have any instructions of brewing this tea.\nEdit to add tea brew steps!';
+      brewStepsTextStyle = { color: color.midGray, fontSize: 12, fontStyle: 'italic' };
     }
 
     return(
@@ -231,8 +241,8 @@ export default class TeaDetail extends Component {
                   <Text style={text.sectionTitle}>How to brew</Text>
                 </View>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
-                  <Text style={text.p}>
-                    {this.props.currentSelectedTea.brewSteps}
+                  <Text style={[text.p, {color: color.gray, paddingBottom: 5}, brewStepsTextStyle]}>
+                    {brewSteps}
                   </Text>
                 </View>
               </View>
@@ -244,7 +254,7 @@ export default class TeaDetail extends Component {
                   <Text style={text.sectionTitle}>Notes</Text>
                 </View>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
-                  <Text style={text.p}>
+                  <Text style={[text.p, {color: color.gray, paddingBottom: 5}, userNotesTextStyle]}>
                     {userNotes}
                   </Text>
                 </View>
@@ -252,6 +262,8 @@ export default class TeaDetail extends Component {
             </View>
           </View>
         </ScrollView>
+
+
         <View style={[containers.stickyFooter, {left: 0, right: 0}]}>
           <View style={{height: 40, backgroundColor: colorScheme.color1}}>
             <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>

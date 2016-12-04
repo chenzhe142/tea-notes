@@ -303,18 +303,10 @@ export default class CreateTea extends Component {
       });
     }
 
-    if (timeOption === 'second') {
-      timeSymbol = SYMBOL_SECOND;
-      timePickerValue = Array.apply(null, {length: 240}).map((element, index) => {
-        return String(index + 1);
-      });
-    } else {
-      timeSymbol = SYMBOL_MINUTE;
-      timePickerValue = Array.apply(null, {length: 10}).map((element, index) => {
-        return String(index + 1);
-      });
-    }
-
+    timeSymbol = SYMBOL_SECOND;
+    timePickerValue = Array.apply(null, {length: 240}).map((element, index) => {
+      return String(index + 1);
+    });
 
     let footer;
     if (this.state.showTemperaturePicker) {
@@ -476,7 +468,7 @@ export default class CreateTea extends Component {
                 </View>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
                   <View>
-                    <Text style={text.p}>{this.state.tea.brewSteps}</Text>
+                    <Text style={[text.p, {color: color.gray, paddingBottom: 5}]}>{this.state.tea.brewSteps}</Text>
                   </View>
                   <TouchableOpacity onPress={() => {
                       if (this.state.tea.brewSteps !== '') {
@@ -485,7 +477,7 @@ export default class CreateTea extends Component {
                         this._openBrewStepsCreatingView();
                       }
                     }}>
-                    <Text style={[text.p, {color: color.aqua}]}>+ add a new step</Text>
+                    <Text style={[text.p, {color: color.aqua, fontSize: 12}]}>🖋 edit brew instructions</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -497,7 +489,7 @@ export default class CreateTea extends Component {
                   <Text style={text.sectionTitle}>My Notes</Text>
                 </View>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
-                  <Text style={[text.p]}>{this.state.tea.userNotes}</Text>
+                  <Text style={[text.p, {color: color.gray, paddingBottom: 5}]}>{this.state.tea.userNotes}</Text>
                   <TouchableOpacity onPress={() => {
                       if (this.state.tea.userNotes !== '') {
                         this._openUserNotesEditingView();
@@ -505,7 +497,7 @@ export default class CreateTea extends Component {
                         this._openUserNotesCreatingView();
                       }
                     }}>
-                    <Text style={[text.p, {color: color.aqua}]}>+ add your note</Text>
+                    <Text style={[text.p, {color: color.aqua, fontSize: 12}]}>🖋 edit your note</Text>
                   </TouchableOpacity>
                 </View>
               </View>
