@@ -79,14 +79,10 @@ export default class TeaDetail extends Component {
   }
 
   _showShareActionSheet() {
-    // TODO: url needs to be a real one, which can be opened in browser!
     ActionSheetIOS.showShareActionSheetWithOptions({
-      url: 'http://react-review.leanapp.cn',
-      message: 'Share an awesome tea note to you!',
-      subject: 'a subject to go in the email heading',
-      excludedActivityTypes: [
-        'com.apple.UIKit.activity.PostToTwitter'
-      ]
+      url: 'http://react-review.leanapp.cn/app/tea-notes',
+      message: 'Tea Notes - tea brewing tips & notes assistant',
+      subject: 'Tea Notes - tea brewing tips & notes assistant',
     },
     (error) => {
       console.log(error);

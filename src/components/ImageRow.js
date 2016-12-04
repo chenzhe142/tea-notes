@@ -31,16 +31,20 @@ import color from '../style/color';
 import colorScheme from '../style/colorScheme';
 import text from '../style/text';
 
-import { SCREEN_WIDTH, SCREEN_HEIGHT } from '../constants';
+import {
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+} from '../constants';
+
 
 export default class ImageRow extends Component {
   render() {
     let addedByMe;
     if (this.props.tea.addedByMe) {
       addedByMe =
-      <View style={{position: 'absolute', top: 8, left: 8, borderRadius: 2, backgroundColor: 'rgba(244,139,148,0.9)', height: 25, width: 105}}>
+      <View style={styles.addedByMeView}>
         <View style={[containers.container, {justifyContent: 'center', alignItems: 'center'}]}>
-          <Text style={[text.subTitle, {color: color.white, fontWeight: '400', backgroundColor: 'rgba(0,0,0,0)'}]}>Added by me</Text>
+          <Text style={[text.p, styles.addedByMeText]}>Added by me</Text>
         </View>
       </View>
     }
@@ -65,5 +69,20 @@ const styles = {
   image: {
     height: 150,
     width: SCREEN_WIDTH,
-  }
+  },
+  addedByMeView: {
+    backgroundColor: 'rgba(244,139,148,0.9)',
+    borderRadius: 4,
+    height: 22,
+    left: 8,
+    position: 'absolute',
+    top: 8,
+    width: 90,
+  },
+  addedByMeText: {
+    backgroundColor: 'rgba(0,0,0,0)',
+    color: color.white,
+    fontSize: 12,
+    fontWeight: '400',
+  },
 };
