@@ -29,6 +29,8 @@ import WithLabel from '../components/WithLabel.js';
 import ItemPicker from '../components/ItemPicker.js';
 import IconButton from '../components/IconButton';
 
+import NotificationModal from '../modals/NotificationModal.js';
+
 import {
   CARD_OFFSET,
   COVERIMAGE_HEIGHT,
@@ -106,6 +108,8 @@ export default class CreateTea extends Component {
     customizedTeaList: this.props.storage[CUSTOMIZED_TEA_LIST_STORAGE_KEY],
 
     screenOffset: 0,
+
+    notificationModalVisible: false,
   }
 
   constructor(props) {
@@ -270,7 +274,10 @@ export default class CreateTea extends Component {
       }
 
       this.props.storageUnit.saveItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY, JSON.stringify(customizedTeaList));
-      //TODO: add notification: "create success!"
+
+      //show notification modal: "note saved"
+      this.setState({ notificationModalVisible: true });
+
       this.props.navigator.pop();
       this._clearCache();
     }
@@ -280,7 +287,10 @@ export default class CreateTea extends Component {
     const tea = Object.assign({}, this.state.tea);
     this.props.storageUnit.updateItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY, tea);
     this.props.updateCurrentSelectedTea(tea);
-    //TODO: add notification: "update success!"
+
+    //show notification modal: "note saved"
+    this.setState({ notificationModalVisible: true });
+
     this.props.navigator.pop();
     this._clearCache();
   }
@@ -377,7 +387,14 @@ export default class CreateTea extends Component {
 
     return(
       <View style={containers.container}>
+
+        <NotificationModal
+          modalVisible={this.state.notificationModalVisible}
+          modalMessage={'Note saved'}
+        />
+
         <View style={{height: STATUS_BAR_HEIGHT_IOS, backgroundColor: colorScheme.color1}}></View>
+
         <View style={{height: 44, backgroundColor: colorScheme.color1}}>
           <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
             <View style={[containers.row, {justifyContent: 'flex-start'}]}>

@@ -21,6 +21,8 @@ import BackBtn from '../components/BackBtn';
 import TopBtn from '../components/TopBtn';
 import IconButton from '../components/IconButton';
 
+import NotificationModal from '../modals/NotificationModal.js';
+
 import text from '../style/text';
 import color from '../style/color';
 import colorScheme from '../style/colorScheme';
@@ -51,6 +53,7 @@ export default class TeaDetail extends Component {
   state = {
     displayTimeInSecond: true,
     displayTimeInMinute: false,
+    notificationModalVisible: false,
   }
 
   constructor(props) {
@@ -170,6 +173,11 @@ export default class TeaDetail extends Component {
 
     return(
       <View style={[containers.container, {backgroundColor: color.lightGray}]}>
+        <NotificationModal
+          modalVisible={this.state.notificationModalVisible}
+          modalMessage={'Note deleted'}
+        />
+
         <ScrollView>
           <View style={[containers.container, {paddingBottom: 80, justifyContent: 'flex-start'}]}>
             <BackBtn
@@ -293,6 +301,7 @@ export default class TeaDetail extends Component {
                     }, (buttonIndex) => {
                       if (buttonIndex === 0) {
                         this.props.storageUnit.deleteItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY, this.props.currentSelectedTea);
+                        this.setState({ notificationModalVisible: true });
                         this.props.navigator.pop();
                       }
                     });
