@@ -52,33 +52,7 @@ import colorScheme from '../style/colorScheme';
 import containers from '../style/containers.js';
 
 import findSelectedSettingOption from '../utils/findSelectedSettingOption';
-
-
-/**
- * helper class
- */
-class Tea {
-  constructor({name, temperature, time, coverImageUrl}) {
-    this.name = name;
-    this.temperature = temperature;
-    this.time = time;
-    this.coverImageUrl = coverImageUrl;
-    this.isLiked = false;
-  }
-  isEqual(anotherTea) {
-    if ((this.name === anotherTea.name) && (this.temperature === anotherTea.temperature) && (this.time === anotherTea.time)) {
-      return true;
-    }
-    return false;
-  }
-}
-
-const defaultTea = new Tea({
-  name: 'Name of Tea',
-  temperature: '95',
-  time: '180',
-  coverImageUrl: '',
-});
+import noteQualifyToBeCreated from '../utils/noteQualifyToBeCreated';
 
 /**
  * class CreateTea
@@ -94,8 +68,8 @@ export default class CreateTea extends Component {
     tea: {
       id: 0,
       name: '',
-      temperature: '',
-      time: '',
+      temperature: 80,
+      time: 60,
       coverImageUrl: {
         uri: '',
         isStatic: true
@@ -110,6 +84,7 @@ export default class CreateTea extends Component {
     screenOffset: 0,
 
     notificationModalVisible: false,
+    inputValidationNotificationModalVisible: false,
   }
 
   constructor(props) {
@@ -254,12 +229,10 @@ export default class CreateTea extends Component {
   }
 
   _saveTea() {
-    // TODO: info validation
-
     let tea = Object.assign({}, this.state.tea);
     tea.addedByMe = true;
 
-    if (defaultTea.isEqual(tea) === false) {
+    if (noteQualifyToBeCreated(tea)) {
       // customizedTeaList: {storageKey: "", content: []}
       let existingList = Object.assign({}, this.state.customizedTeaList);
 
@@ -280,6 +253,15 @@ export default class CreateTea extends Component {
 
       this.props.navigator.pop();
       this._clearCache();
+    } else {
+      console.log('please select a photo & enter the name of tea');
+
+      // show notification modal, and close after 1 second
+      this.setState({ inputValidationNotificationModalVisible: true });
+
+      setTimeout(() => {
+        this.setState({ inputValidationNotificationModalVisible: false });
+      }, 1000);
     }
   }
 
@@ -391,6 +373,11 @@ export default class CreateTea extends Component {
         <NotificationModal
           modalVisible={this.state.notificationModalVisible}
           modalMessage={'Note saved'}
+        />
+
+        <NotificationModal
+          modalVisible={this.state.inputValidationNotificationModalVisible}
+          modalMessage={'Please select a photo & enter the name of tea'}
         />
 
         <View style={{height: STATUS_BAR_HEIGHT_IOS, backgroundColor: colorScheme.color1}}></View>
