@@ -30,6 +30,8 @@ import color from '../style/color';
 import colorScheme from '../style/colorScheme';
 import text from '../style/text';
 
+import generateFilteredTeaList from '../utils/generateFilteredTeaList.js';
+
 import {
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
@@ -40,6 +42,8 @@ import {
 } from '../constants';
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
+
 
 export default class TeaSelection extends Component {
   state = {
@@ -115,31 +119,9 @@ export default class TeaSelection extends Component {
       mergedTeaList = Object.assign([], this.defaultTeaList);
     }
 
-
-    // TODO: filter function needs to be improved!
-    // 1. ignore whitespace
-    const tempList = mergedTeaList.filter((tea) => {
-      let teaMap = new Map();
-      let searchMap = new Map();
-
-      for (let char of tea.name) {
-        if (teaMap.get(char) === undefined) {
-          teaMap.set(char.toUpperCase(), true);
-        } else {
-          const count = teaMap.get(char);
-          teaMap.set(char.toUpperCase(), count + 1);
-        }
-      }
-
-      for (let char of searchText) {
-        if ((teaMap.get(char.toUpperCase()) === undefined) || (teaMap.get(char.toUpperCase() > searchMap.get()))) {
-          return;
-        }
-      }
-      return tea;
-    }).slice();
-
-    const teaLists = ds.cloneWithRows(tempList);
+    // use helper function to filter tea lists
+    const filteredTeaList = generateFilteredTeaList(searchText, mergedTeaList);
+    const teaLists = ds.cloneWithRows(filteredTeaList);
     return teaLists;
   }
 

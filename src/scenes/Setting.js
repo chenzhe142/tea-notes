@@ -137,7 +137,9 @@ export default class Setting extends Component {
           </View>
         </ScrollView>
         <View style={{alignItems: 'center', padding: 10}}>
-          <Text style={{fontSize: 12, color: color.midGray}}>Tea Notes - v1.0.0</Text>
+          <View style={{paddingBottom: 2}}>
+            <Text style={{fontSize: 12, color: color.midGray}}>Tea Notes - v1.0.0</Text>
+          </View>
           <Text style={{fontSize: 8, color: color.midGray}}>© Zhe Chen, 2016</Text>
         </View>
       </View>
