@@ -97,8 +97,18 @@ export default class StorageUnit {
   // update this.storage first, then update AsyncStorage
   updateItem(storage_key, singleObj) {
     let items = this.storage[storage_key].content;
-    if ((singleObj.id !== undefined) && (items[singleObj.id] !== undefined)) {
-      items[singleObj.id] = singleObj;
+    
+    if (singleObj.id !== undefined) {
+
+      let targetNoteIndex;
+      items.forEach((note, index) => {
+        if (note.id === singleObj.id) {
+          targetNoteIndex = index;
+        }
+      });
+
+      items[targetNoteIndex] = singleObj;
+
       this.saveToAsyncStorage(storage_key, JSON.stringify(items)).done(() => {
         this.getFromAsyncStorage(storage_key).done((response) => {
           // update this.storage
