@@ -11,12 +11,10 @@
 import React, { Component } from 'react';
 import {
   Alert,
-  AppState,
   Image,
   StatusBar,
   StyleSheet,
   Text,
-  TouchableWithoutFeedback,
   PushNotificationIOS,
   View,
 } from 'react-native';
@@ -39,7 +37,6 @@ export default class TeaTimer extends Component {
     isTimerStarted: false,
     remainTime: this.props.currentSelectedTea.time,
     timerBtnText: 'Brew!',
-    topDistance: SCREEN_HEIGHT,
   }
 
   constructor(props) {
@@ -81,10 +78,8 @@ export default class TeaTimer extends Component {
         if (this.state.isTimerStarted === true) {
           if (that.state.remainTime > 1) {
             const remainTime = that.state.remainTime - 1;
-            const topDistance = this.state.topDistance - 5;
             that.setState({
               remainTime,
-              topDistance
             });
           } else {
             // Play the sound with an onEnd callback
@@ -116,7 +111,6 @@ export default class TeaTimer extends Component {
             });
             PushNotificationIOS.setApplicationIconBadgeNumber(0);
             this._resetTimer();
-            this.setState({ topDistance: SCREEN_HEIGHT });
           }
         }
       }, 1000);
@@ -143,8 +137,6 @@ export default class TeaTimer extends Component {
         <View style={styles.controlBtn}>
           <Button enableButtonStyle={true} btnText={this.state.timerBtnText} style={{backgroundColor: colorScheme.color5}} onForward={this._toggleTimer} />
         </View>
-        <Animatable.View animation="pulse" easing="ease-out" iterationCount="infinite" style={[styles.progressBackground, {top: this.state.topDistance}]}>
-        </Animatable.View>
       </View>
     );
   }

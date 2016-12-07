@@ -6,9 +6,8 @@
  * @zchen
  */
 
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
-  AppRegistry,
   Navigator
 } from 'react-native';
 

@@ -195,10 +195,10 @@ export default class TeaDetail extends Component {
               <View>
                 <View style={[styles.teaCardContainer, {justifyContent: 'center'}]}>
                   <View style={[containers.row, {alignItems: 'flex-end'}]}>
-                    <Text style={text.title}>{this.props.currentSelectedTea.name}</Text>
+                    <Text style={[text.title, {fontWeight: '700'}]}>{this.props.currentSelectedTea.name}</Text>
                   </View>
 
-                  <View style={containers.row, {alignItems: 'center', paddingTop: 8, paddingBottom: 10}}>
+                  <View style={containers.row, {alignItems: 'center', paddingTop: 5, paddingBottom: 10}}>
                     <Text style={[text.p, {color: color.gray}]}>green tea - mild - low caffeine</Text>
                   </View>
 

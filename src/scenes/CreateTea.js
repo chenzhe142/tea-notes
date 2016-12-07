@@ -32,6 +32,7 @@ import IconButton from '../components/IconButton';
 import NotificationModal from '../modals/NotificationModal.js';
 
 import {
+  CARD_BETWEEN_DISTANCE,
   CARD_OFFSET,
   COVERIMAGE_HEIGHT,
   CUSTOMIZED_SETTINGS_STORAGE_KEY,
@@ -233,7 +234,6 @@ export default class CreateTea extends Component {
     tea.addedByMe = true;
 
     if (noteQualifyToBeCreated(tea)) {
-      // customizedTeaList: {storageKey: "", content: []}
       let existingList = Object.assign({}, this.state.customizedTeaList);
 
       let customizedTeaList;
@@ -443,15 +443,15 @@ export default class CreateTea extends Component {
             </View>
 
             <View>
-              <View style={[containers.row, containers.card]}>
-                <View style={{height: 34.5}}>
+              <View style={[containers.row, {marginTop: CARD_BETWEEN_DISTANCE, padding: 15, backgroundColor: color.white}]}>
+                <View>
                   <WithLabel iconName="ios-thermometer" textStyle={text.p} showPicker={this._showTemperaturePicker}>
                     <Text style={[text.number, styles.teaCard_data]}>
                       {`${this.state.tea.temperature} ${temperatureSymbol}`}
                     </Text>
                   </WithLabel>
                 </View>
-                <View style={{height: 34.5}}>
+                <View>
                   <WithLabel iconName="ios-time" textStyle={text.p} showPicker={this._showTimePicker}>
                     <Text style={[text.number, styles.teaCard_data]}>
                       {`${this.state.tea.time} ${timeSymbol}`}
@@ -462,7 +462,7 @@ export default class CreateTea extends Component {
             </View>
 
             <View>
-              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 5, backgroundColor: color.white}]}>
+              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: CARD_BETWEEN_DISTANCE, backgroundColor: color.white}]}>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>
                   <Text style={text.sectionTitle}>How to brew</Text>
                 </View>
@@ -484,7 +484,7 @@ export default class CreateTea extends Component {
             </View>
 
             <View>
-              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 5, backgroundColor: color.white}]}>
+              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: CARD_BETWEEN_DISTANCE, backgroundColor: color.white}]}>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>
                   <Text style={text.sectionTitle}>My Notes</Text>
                 </View>
@@ -527,6 +527,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     textAlign: 'center',
     height: 24,
+    fontWeight: '700',
   },
   teaCard_data: {
     textAlign: 'left',

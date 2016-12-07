@@ -31,12 +31,10 @@ import { SCREEN_WIDTH } from '../constants';
 
 const propTypes = {
   values: PropTypes.array,
+  dismissPicker: PropTypes.func,
 };
 
 export default class ItemPicker extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <View>
@@ -60,14 +58,6 @@ export default class ItemPicker extends Component {
         </View>
       </View>
     );
-  }
-}
-
-const styles = {
-  bar: {
-    backgroundColor: color.gray,
-    flexDirection: 'row',
-    justifyContent: 'center',
   }
 }
 

@@ -237,7 +237,7 @@ export default class TeaSelection extends Component {
         </ScrollView>
         <View style={[containers.stickyFooter, {alignItems: 'center', paddingBottom: 10}]}>
           <TouchableOpacity
-            style={{backgroundColor: 'rgba(0,0,0,0)'}}
+            style={[{backgroundColor: 'rgba(0,0,0,0)'}, text.shadow]}
             onPress={() => {
               this.props.navigator.push({
                 name: 'CreateTea',
