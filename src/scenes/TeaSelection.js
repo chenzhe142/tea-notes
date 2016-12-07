@@ -35,7 +35,6 @@ import generateFilteredTeaList from '../utils/generateFilteredTeaList.js';
 import {
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
-  COVERIMAGE_HEIGHT,
   DEFAULT_TEA_LIST,
   CUSTOMIZED_TEA_LIST_STORAGE_KEY,
   STATUS_BAR_HEIGHT_IOS
@@ -208,8 +207,6 @@ export default class TeaSelection extends Component {
                   this.setState({ showSearchBar: false });
                   this._updateFilterText('');
                 });
-                // this.setState({ showSearchBar: false });
-                // this._updateFilterText('');
               }}>
                 <Text style={[text.p, {color: color.white}]}>Cancel</Text>
               </TouchableOpacity>

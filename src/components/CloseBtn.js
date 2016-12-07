@@ -1,5 +1,5 @@
 /**
- * BackBtn.js
+ * CloseBtn.js
  *
  * Inherited from TopBtn.js
  */
@@ -10,7 +10,7 @@ import TopBtn from './TopBtn';
 
 import position from '../style/position';
 
-export default class BackBtn extends Component {
+export default class CloseBtn extends Component {
   constructor(props) {
     super(props);
     this._onBack = this._onBack.bind(this);
@@ -23,7 +23,7 @@ export default class BackBtn extends Component {
   }
   render() {
     return (
-      <TopBtn iconName="chevron-left" onPressEvent={this._onBack} style={position.topLeft} />
+      <TopBtn iconName="times" onPressEvent={this._onBack} style={position.topLeft} />
     );
   }
 }

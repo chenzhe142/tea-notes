@@ -67,7 +67,7 @@ export default class ImageRow extends Component {
 
 const styles = {
   image: {
-    height: 150,
+    height: parseInt(SCREEN_HEIGHT / 5) + 10,
     width: SCREEN_WIDTH,
   },
   addedByMeView: {

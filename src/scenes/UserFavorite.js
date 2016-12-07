@@ -13,7 +13,6 @@ import {
   View
 } from 'react-native';
 
-import BackBtn from '../components/BackBtn';
 import IconButton from '../components/IconButton';
 import SlideSwitch from '../components/SlideSwitch';
 import ImageRow from '../components/ImageRow';

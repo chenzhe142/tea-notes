@@ -25,7 +25,7 @@ import BackgroundTimer from 'react-native-background-timer';
 import Sound from 'react-native-sound';
 
 import Button from '../components/Button.js';
-import BackBtn from '../components/BackBtn.js';
+import CloseBtn from '../components/CloseBtn.js';
 
 import text from '../style/text.js';
 import color from '../style/color.js';
@@ -114,6 +114,7 @@ export default class TeaTimer extends Component {
             PushNotificationIOS.presentLocalNotification({
               alertBody: `${this.props.currentSelectedTea.name} is ready!`,
             });
+            PushNotificationIOS.setApplicationIconBadgeNumber(0);
             this._resetTimer();
             this.setState({ topDistance: SCREEN_HEIGHT });
           }
@@ -131,7 +132,7 @@ export default class TeaTimer extends Component {
     return (
       <View style={[containers.container, {justifyContent: 'flex-start', backgroundColor: colorScheme.color1}]}>
         <StatusBar hidden={true} />
-        <BackBtn navigator={this.props.navigator} onPressEvent={this._resetTimer} />
+        <CloseBtn navigator={this.props.navigator} onPressEvent={this._resetTimer} />
         <View>
           <View style={[containers.row, {flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around', paddingTop: 200}]}>
             <Text style={[text.title, {fontSize: 30, fontWeight: 'normal', backgroundColor: 'rgba(0,0,0,0)'}]}>{this.state.remainTime} Sec</Text>
@@ -149,7 +150,6 @@ export default class TeaTimer extends Component {
   }
 }
 
-// <Image style={{width: 192, height: 150}} source={require('../../public/image/tea-leaf.png')} />
 
 const styles = StyleSheet.create({
   controlBtn: {

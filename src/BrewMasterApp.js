@@ -172,6 +172,8 @@ export default class brewMaster extends Component {
         return Navigator.SceneConfigs.FloatFromBottom;
       case 'CreateTea':
         return Navigator.SceneConfigs.FloatFromBottom;
+      case 'UserFavorite':
+        return Navigator.SceneConfigs.FloatFromBottom;
       default:
         return Navigator.SceneConfigs.HorizontalSwipeJump;
     }
