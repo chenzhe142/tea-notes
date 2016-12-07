@@ -35,11 +35,20 @@ export const DEFAULT_SETTINGS = {
     id: 1,
     text: 'minute',
     isSelected: false,
-  }]
+  }],
+  teaListOptions: [{
+    id: 0,
+    text: 'show',
+    isSelected: true,
+  }, {
+    id: 1,
+    text: 'hide',
+    isSelected: false,
+  }],
 };
 
 export const CUSTOMIZED_TEA_LIST_STORAGE_KEY = '@TeaArrayStorageKey';
-
+export const DEFAULT_TEA_LIST_STORAGE_KEY = '@DefaultTeaArrayStorageKey';
 // default
 //   temperature: celsius
 //   time: second

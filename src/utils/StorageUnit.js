@@ -1,7 +1,7 @@
 /**
  * StorageUnit.js
  *
- * - a simple AsyncStorage wrapper, doing get, save, update, and delete(in the future)
+ * - a simple AsyncStorage wrapper, doing get, save, update, and delete
  */
 
 import { AsyncStorage } from 'react-native';
@@ -34,10 +34,6 @@ export default class StorageUnit {
         });
       }
     });
-    //
-    // this.fetchData.then((storage) => {
-    //   this.updateStorage_function(storage);
-    // });
   }
 
   getItem(storage_key) {
@@ -97,7 +93,7 @@ export default class StorageUnit {
   // update this.storage first, then update AsyncStorage
   updateItem(storage_key, singleObj) {
     let items = this.storage[storage_key].content;
-    
+
     if (singleObj.id !== undefined) {
 
       let targetNoteIndex;

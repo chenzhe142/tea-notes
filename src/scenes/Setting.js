@@ -28,12 +28,14 @@ export default class Setting extends Component {
   state = {
     temperatureOptions: DEFAULT_SETTINGS.temperatureOptions,
     timeOptions: DEFAULT_SETTINGS.timeOptions,
+    teaListOptions: DEFAULT_SETTINGS.teaListOptions,
   }
 
   constructor(props) {
     super(props);
     this._selectTemperature = this._selectTemperature.bind(this);
     this._selectTime = this._selectTime.bind(this);
+    this._selectTeaListOption = this._selectTeaListOption.bind(this);
   }
 
   componentWillMount() {
@@ -62,7 +64,8 @@ export default class Setting extends Component {
     this.setState({ temperatureOptions });
     const customizedSettings = {
       temperatureOptions: temperatureOptions,
-      timeOptions: this.state.timeOptions
+      timeOptions: this.state.timeOptions,
+      teaListOptions: this.state.teaListOptions,
     };
 
     this.props.storageUnit.saveItem(CUSTOMIZED_SETTINGS_STORAGE_KEY, JSON.stringify(customizedSettings));
@@ -82,7 +85,29 @@ export default class Setting extends Component {
     this.setState({ timeOptions });
     const customizedSettings = {
       temperatureOptions: this.state.temperatureOptions,
-      timeOptions: timeOptions
+      timeOptions: timeOptions,
+      teaListOptions: this.state.teaListOptions,
+    };
+
+    this.props.storageUnit.saveItem(CUSTOMIZED_SETTINGS_STORAGE_KEY, JSON.stringify(customizedSettings));
+  }
+
+  _selectTeaListOption(id) {
+    const teaListOptions = Object.assign([], this.state.teaListOptions);
+
+    for (let i = 0; i < teaListOptions.length; i++) {
+      if (i === id) {
+        teaListOptions[i].isSelected = true;
+      } else {
+        teaListOptions[i].isSelected = false;
+      }
+    }
+
+    this.setState({ teaListOptions });
+    const customizedSettings = {
+      temperatureOptions: this.state.temperatureOptions,
+      timeOptions: this.state.timeOptions,
+      teaListOptions: teaListOptions
     };
 
     this.props.storageUnit.saveItem(CUSTOMIZED_SETTINGS_STORAGE_KEY, JSON.stringify(customizedSettings));
@@ -102,6 +127,9 @@ export default class Setting extends Component {
     //  </View>
 
   render() {
+
+    console.log(this.state.teaListOptions);
+
     return (
       <View style={[containers.container, {backgroundColor: color.white}]}>
         <StatusBar hidden={false} />
@@ -133,6 +161,14 @@ export default class Setting extends Component {
               <SlideSwitch
                 options={this.state.temperatureOptions}
                 updateOption={this._selectTemperature} />
+            </View>
+            <View style={[containers.container, {margin: 10}]}>
+              <View style={{marginBottom: 5}}>
+                <Text style={[text.subTitle, {fontSize: 16, color: color.gray}]}>Built-in tea list</Text>
+              </View>
+              <SlideSwitch
+                options={this.state.teaListOptions}
+                updateOption={this._selectTeaListOption} />
             </View>
           </View>
         </ScrollView>

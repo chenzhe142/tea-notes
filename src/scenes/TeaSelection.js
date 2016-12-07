@@ -31,12 +31,16 @@ import colorScheme from '../style/colorScheme';
 import text from '../style/text';
 
 import generateFilteredTeaList from '../utils/generateFilteredTeaList.js';
+import findSelectedSettingOption from '../utils/findSelectedSettingOption';
 
 import {
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
   DEFAULT_TEA_LIST,
   CUSTOMIZED_TEA_LIST_STORAGE_KEY,
+  CUSTOMIZED_SETTINGS_STORAGE_KEY,
+  DEFAULT_SETTINGS,
+  DEFAULT_TEA_LIST_STORAGE_KEY,
   STATUS_BAR_HEIGHT_IOS
 } from '../constants';
 
@@ -56,6 +60,13 @@ export default class TeaSelection extends Component {
     this._updateFilterText = this._updateFilterText.bind(this);
 
     this.defaultTeaList = DEFAULT_TEA_LIST;
+
+    this.settings = DEFAULT_SETTINGS;
+    if (this.props.storage) {
+      if (this.props.storage[CUSTOMIZED_SETTINGS_STORAGE_KEY].content) {
+        this.settings = this.props.storage[CUSTOMIZED_SETTINGS_STORAGE_KEY].content;
+      }
+    }
   }
 
   _onForward(teaObject) {
@@ -129,6 +140,13 @@ export default class TeaSelection extends Component {
   }
 
   render() {
+    let teaListOptions = findSelectedSettingOption(this.settings.teaListOptions);
+    if (teaListOptions === 'show') {
+      this.defaultTeaList = DEFAULT_TEA_LIST;
+    } else {
+      this.defaultTeaList = [];
+    }
+
     let teaLists;
     if (this.state.filterText.length > 0) {
       filterText = this.state.filterText;
