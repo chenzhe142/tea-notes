@@ -49,41 +49,52 @@ export const DEFAULT_SETTINGS = {
 
 export const CUSTOMIZED_TEA_LIST_STORAGE_KEY = '@TeaArrayStorageKey';
 export const DEFAULT_TEA_LIST_STORAGE_KEY = '@DefaultTeaArrayStorageKey';
-// default
-//   temperature: celsius
-//   time: second
+
 export const DEFAULT_TEA_LIST = [{
   name: 'Matcha Green Tea',
   temperature: 95,
   time: 3,
+  teaType: 'matcha',
+  teaFlavor: 'pure',
+  teaCaffeineLevel: 'medium',
   coverImageUrl: {
     uri: 'https://facebook.github.io/react/img/logo_og.png'
   },
-  isLiked: false
+
 }, {
   name: 'Pu-er Tea',
   temperature: 95,
   time: 180,
+  teaType: 'black tea',
+  teaFlavor: 'pure',
+  teaCaffeineLevel: 'medium',
   coverImageUrl: {
     uri: 'https://facebook.github.io/react/img/logo_og.png'
   },
-  isLiked: false
+
 }, {
-  name: 'jin jun mei black tea',
+  name: 'jin jun mei',
   temperature: 95,
   time: 180,
+  teaType: 'black tea',
+  teaFlavor: 'pure',
+  teaCaffeineLevel: 'medium',
   coverImageUrl: {
     uri: 'https://facebook.github.io/react/img/logo_og.png'
   },
-  isLiked: false
+
 }, {
   name: 'tie guan yin',
   temperature: 95,
   time: 180,
+  teaType: 'black tea',
+  teaFlavor: 'pure',
+  teaCaffeineLevel: 'medium',
   coverImageUrl: {
-    uri: 'https://facebook.github.io/react/img/logo_og.png'
+    uri: 'https://facebook.github.io/react/img/logo_og.png',
+    isStatic: true,
   },
-  isLiked: false
+  brewSteps: '',
 }];
 
 export const DEFAULT_TEA_TYPES = [
@@ -114,4 +125,36 @@ export const DEFAULT_TEA_CAFFEINE_LEVEL = [
   "medium",
   "high",
   "highest"
+];
+
+export const TEA_TYPE = [
+  "black tea",
+  "oolong tea",
+  "green tea",
+  "white tea",
+  "pu-erh",
+  "matcha",
+  "chai",
+  "rooibos",
+  "yerba mate",
+  "iced tea",
+  "fruit",
+  "other",
+];
+
+export const TEA_FLAVOR = [
+  "pure",
+  "berry",
+  "fruity",
+  "mint",
+  "floral",
+  "dessert",
+  "other",
+];
+
+export const TEA_CAFFEINE_LEVEL = [
+  "high",
+  "medium",
+  "low",
+  "caffeine free",
 ];

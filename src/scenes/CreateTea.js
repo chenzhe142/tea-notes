@@ -45,6 +45,9 @@ import {
   SYMBOL_FAHRENHEIT,
   SYMBOL_MINUTE,
   SYMBOL_SECOND,
+  TEA_CAFFEINE_LEVEL,
+  TEA_FLAVOR,
+  TEA_TYPE,
 } from '../constants';
 
 import text from '../style/text.js';
@@ -65,12 +68,18 @@ export default class CreateTea extends Component {
     isCoverImageSelected: false,
     showTemperaturePicker: false,
     showTimePicker: false,
+    showTeaTypePicker: false,
+    showTeaFlavorPicker: false,
+    showTeaCaffeineLevelPicker: false,
 
     tea: {
       id: 0,
       name: '',
       temperature: 80,
       time: 60,
+      teaType: 'tea type',
+      teaFlavor: 'flavor',
+      teaCaffeineLevel: 'caffeine level',
       coverImageUrl: {
         uri: '',
         isStatic: true
@@ -94,9 +103,15 @@ export default class CreateTea extends Component {
     this._coverPhotoOnClick = this._coverPhotoOnClick.bind(this);
     this._showTemperaturePicker = this._showTemperaturePicker.bind(this);
     this._showTimePicker = this._showTimePicker.bind(this);
+    this._showTeaTypePicker = this._showTeaTypePicker.bind(this);
+    this._showTeaFlavorPicker = this._showTeaFlavorPicker.bind(this);
+    this._showTeaCaffeineLevelPicker = this._showTeaCaffeineLevelPicker.bind(this);
     this._dismissPicker = this._dismissPicker.bind(this);
     this._updateTemperature = this._updateTemperature.bind(this);
     this._updateTime = this._updateTime.bind(this);
+    this._updateTeaType = this._updateTeaType.bind(this);
+    this._updateTeaFlavor = this._updateTeaFlavor.bind(this);
+    this._updateTeaCaffeineLevel = this._updateTeaCaffeineLevel.bind(this);
     this._saveTea = this._saveTea.bind(this);
     this._updateTea = this._updateTea.bind(this);
     this._openBrewStepsCreatingView = this._openBrewStepsCreatingView.bind(this);
@@ -110,6 +125,10 @@ export default class CreateTea extends Component {
       temperature: 'temp',
       time: 'time'
     };
+
+    this.teaType = TEA_TYPE;
+    this.teaFlavor = TEA_FLAVOR;
+    this.teaCaffeineLevel = TEA_CAFFEINE_LEVEL;
 
     this.settings = DEFAULT_SETTINGS;
     if (this.props.storage) {
@@ -180,6 +199,9 @@ export default class CreateTea extends Component {
     this.setState({
       showTemperaturePicker: true,
       showTimePicker: false,
+      showTeaTypePicker: false,
+      showTeaFlavorPicker: false,
+      showTeaCaffeineLevelPicker: false,
     });
   }
 
@@ -187,13 +209,50 @@ export default class CreateTea extends Component {
     this.setState({
       showTemperaturePicker: false,
       showTimePicker: true,
+      showTeaTypePicker: false,
+      showTeaFlavorPicker: false,
+      showTeaCaffeineLevelPicker: false,
     });
+  }
+
+  _showTeaTypePicker() {
+    this.setState({
+      showTemperaturePicker: false,
+      showTimePicker: false,
+      showTeaTypePicker: true,
+      showTeaFlavorPicker: false,
+      showTeaCaffeineLevelPicker: false,
+    });
+  }
+
+  _showTeaFlavorPicker() {
+    this.setState({
+      showTemperaturePicker: false,
+      showTimePicker: false,
+      showTeaTypePicker: false,
+      showTeaFlavorPicker: true,
+      showTeaCaffeineLevelPicker: false,
+    });
+  }
+
+  _showTeaCaffeineLevelPicker() {
+    this.setState({
+      showTemperaturePicker: false,
+      showTimePicker: false,
+      showTeaTypePicker: false,
+      showTeaFlavorPicker: false,
+      showTeaCaffeineLevelPicker: true,
+    });
+
   }
 
   _dismissPicker() {
     this.setState({
       showTemperaturePicker: false,
       showTimePicker: false,
+      showTeaTypePicker: false,
+      showTeaFlavorPicker: false,
+      showTeaCaffeineLevelPicker: false,
     });
   }
 
@@ -226,6 +285,24 @@ export default class CreateTea extends Component {
   _updateTime(time) {
     const tea = Object.assign({}, this.state.tea);
     tea.time = time;
+    this.setState({ tea });
+  }
+
+  _updateTeaType(teaType) {
+    const tea = Object.assign({}, this.state.tea);
+    tea.teaType = teaType;
+    this.setState({ tea });
+  }
+
+  _updateTeaFlavor(teaFlavor) {
+    const tea = Object.assign({}, this.state.tea);
+    tea.teaFlavor = teaFlavor;
+    this.setState({ tea });
+  }
+
+  _updateTeaCaffeineLevel(teaCaffeineLevel) {
+    const tea = Object.assign({}, this.state.tea);
+    tea.teaCaffeineLevel = teaCaffeineLevel;
     this.setState({ tea });
   }
 
@@ -288,9 +365,7 @@ export default class CreateTea extends Component {
     const temperatureOption = findSelectedSettingOption(this.settings.temperatureOptions);
     const timeOption = findSelectedSettingOption(this.settings.timeOptions);
 
-    let temperatureSymbol, timeSymbol;
-    let temperaturePickerValue, timePickerValue;
-
+    let temperatureSymbol, temperaturePickerValue;
     if (temperatureOption === "celsius") {
       temperatureSymbol = SYMBOL_CELSIUS;
       temperaturePickerValue = Array.apply(null, {length: 100}).map((element, index) => {
@@ -303,10 +378,12 @@ export default class CreateTea extends Component {
       });
     }
 
+    let timeSymbol, timePickerValue;
     timeSymbol = SYMBOL_SECOND;
     timePickerValue = Array.apply(null, {length: 240}).map((element, index) => {
       return String(index + 1);
     });
+
 
     let footer;
     if (this.state.showTemperaturePicker) {
@@ -324,6 +401,33 @@ export default class CreateTea extends Component {
                   selectedValue={this.state.tea.time}
                   onValueChangeEvent={this._updateTime}
                   values={timePickerValue}
+                  dismissPicker={this._dismissPicker}
+                  textStyle={text.p} />
+              </View>;
+    } else if (this.state.showTeaTypePicker) {
+      footer = <View style={styles.picker}>
+                <ItemPicker
+                  selectedValue={this.state.tea.teaType}
+                  onValueChangeEvent={this._updateTeaType}
+                  values={this.teaType}
+                  dismissPicker={this._dismissPicker}
+                  textStyle={text.p} />
+              </View>;
+    } else if (this.state.showTeaFlavorPicker) {
+      footer = <View style={styles.picker}>
+                <ItemPicker
+                  selectedValue={this.state.tea.teaFlavor}
+                  onValueChangeEvent={this._updateTeaFlavor}
+                  values={this.teaFlavor}
+                  dismissPicker={this._dismissPicker}
+                  textStyle={text.p} />
+              </View>;
+    } else if (this.state.showTeaCaffeineLevelPicker) {
+      footer = <View style={styles.picker}>
+                <ItemPicker
+                  selectedValue={this.state.tea.teaCaffeineLevel}
+                  onValueChangeEvent={this._updateTeaCaffeineLevel}
+                  values={this.teaCaffeineLevel}
                   dismissPicker={this._dismissPicker}
                   textStyle={text.p} />
               </View>;
@@ -403,8 +507,8 @@ export default class CreateTea extends Component {
               </TouchableWithoutFeedback>
 
               <KeyboardAvoidingView>
-                <View style={[styles.teaCardContainer, {justifyContent: 'center'}]}>
-                  <View style={[containers.container, {alignItems: 'center', paddingBottom: 5}]}>
+                <View style={[styles.teaCardContainer, {justifyContent: 'center', paddingTop: 15}]}>
+                  <View style={[containers.container, {alignItems: 'center'}]}>
                     <TextInput
                       value={this.state.tea.name}
                       placeholder={this.placeholders.name}
@@ -418,8 +522,22 @@ export default class CreateTea extends Component {
                     />
                   </View>
 
-                  <View style={containers.row, {alignItems: 'center', paddingBottom: 10}}>
-                    <Text style={[text.p, {color: color.gray}]}>green tea - mild - low caffeine</Text>
+                  <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+                    <TouchableOpacity onPress={this._showTeaTypePicker}>
+                      <Text style={[text.p, {color: color.gray}]}>{this.state.tea.teaType}</Text>
+                    </TouchableOpacity>
+                    <View>
+                      <Text style={[text.p, {color: color.gray, marginLeft: 5, marginRight: 5}]}>-</Text>
+                    </View>
+                    <TouchableOpacity onPress={this._showTeaFlavorPicker}>
+                      <Text style={[text.p, {color: color.gray}]}>{this.state.tea.teaFlavor}</Text>
+                    </TouchableOpacity>
+                    <View>
+                      <Text style={[text.p, {color: color.gray, marginLeft: 5, marginRight: 5}]}>-</Text>
+                    </View>
+                    <TouchableOpacity onPress={this._showTeaCaffeineLevelPicker}>
+                      <Text style={[text.p, {color: color.gray}]}>{this.state.tea.teaCaffeineLevel}</Text>
+                    </TouchableOpacity>
                   </View>
 
                   <View style={[containers.row, {alignItems: 'flex-start', justifyContent: 'center'}]}>

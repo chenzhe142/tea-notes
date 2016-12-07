@@ -22,7 +22,11 @@ import color from '../style/color';
 import colorScheme from '../style/colorScheme';
 import containers from '../style/containers';
 
-import { CUSTOMIZED_SETTINGS_STORAGE_KEY, DEFAULT_SETTINGS, STATUS_BAR_HEIGHT_IOS } from '../constants';
+import {
+  CUSTOMIZED_SETTINGS_STORAGE_KEY,
+  DEFAULT_SETTINGS,
+  STATUS_BAR_HEIGHT_IOS
+} from '../constants';
 
 export default class Setting extends Component {
   state = {
@@ -152,8 +156,8 @@ export default class Setting extends Component {
             </View>
           </View>
         </View>
-        <ScrollView>
-          <View style={containers.container, {justifyContent: 'flex-start'}}>
+        <ScrollView bounces={false}>
+          <View>
             <View style={[containers.container, {margin: 10}]}>
               <View style={{marginBottom: 5}}>
                 <Text style={[text.subTitle, {fontSize: 16, color: color.gray}]}>Temperature</Text>

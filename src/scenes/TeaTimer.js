@@ -30,7 +30,16 @@ import color from '../style/color.js';
 import colorScheme from '../style/colorScheme.js';
 import containers from '../style/containers.js';
 
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../constants';
+import findSelectedSettingOption from '../utils/findSelectedSettingOption';
+
+import {
+  SCREEN_WIDTH,
+  SYMBOL_CELSIUS,
+  SYMBOL_FAHRENHEIT,
+  SYMBOL_SECOND,
+  DEFAULT_SETTINGS,
+  CUSTOMIZED_SETTINGS_STORAGE_KEY,
+} from '../constants';
 
 export default class TeaTimer extends Component {
   state = {
@@ -55,6 +64,13 @@ export default class TeaTimer extends Component {
             'number of channels: ' + this.timerAlarmSound.getNumberOfChannels());
       }
     });
+
+    this.settings = DEFAULT_SETTINGS;
+    if (this.props.storage) {
+      if (this.props.storage[CUSTOMIZED_SETTINGS_STORAGE_KEY].content) {
+        this.settings = this.props.storage[CUSTOMIZED_SETTINGS_STORAGE_KEY].content;
+      }
+    }
   }
 
   _toggleTimer() {
@@ -82,6 +98,9 @@ export default class TeaTimer extends Component {
               remainTime,
             });
           } else {
+            that.setState({
+              remainTime: 0,
+            });
             // Play the sound with an onEnd callback
             this.timerAlarmSound.play((success) => {
               if (success) {
@@ -93,7 +112,7 @@ export default class TeaTimer extends Component {
             this.timerAlarmSound.setNumberOfLoops(2);
 
             Alert.alert(
-              'Brew Master',
+              'Tea Notes',
               `${this.props.currentSelectedTea.name} is ready!`,
               [{
                 text: 'OK', onPress: () => {
@@ -123,15 +142,32 @@ export default class TeaTimer extends Component {
   }
 
   render() {
+    const temperatureOption = findSelectedSettingOption(this.settings.temperatureOptions);
+    const timeOption = findSelectedSettingOption(this.settings.timeOptions);
+
+    let temperatureSymbol;
+    if (temperatureOption === 'celsius') {
+      temperatureSymbol = SYMBOL_CELSIUS;
+    } else {
+      temperatureSymbol = SYMBOL_FAHRENHEIT;
+    }
+    let displayTemperature = `${this.props.currentSelectedTea.temperature} ${temperatureSymbol}`
+
+    let timeSymbol = SYMBOL_SECOND;
+    let displayTime = `${this.props.currentSelectedTea.time} ${timeSymbol}`;
+
     return (
       <View style={[containers.container, {justifyContent: 'flex-start', backgroundColor: colorScheme.color1}]}>
         <StatusBar hidden={false} />
         <CloseBtn navigator={this.props.navigator} onPressEvent={this._resetTimer} />
         <View>
           <View style={[containers.row, {flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around', paddingTop: 200}]}>
-            <Text style={[text.title, {fontSize: 30, fontWeight: 'normal', backgroundColor: 'rgba(0,0,0,0)'}]}>{this.state.remainTime} Sec</Text>
-            <Text style={[text.p, {color: color.gray, backgroundColor: 'rgba(0,0,0,0)'}]}>{this.props.currentSelectedTea.name}</Text>
-            <Text style={[text.p, {color: color.gray, backgroundColor: 'rgba(0,0,0,0)'}]}>{this.props.currentSelectedTea.temperature} - {this.props.currentSelectedTea.time}</Text>
+            <Text style={[text.title, {fontSize: 40, fontWeight: 'normal', backgroundColor: 'rgba(0,0,0,0)'}]}>{this.state.remainTime} Sec</Text>
+          </View>
+          <View style={[containers.row, {flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around'}]}>
+            <Text style={[text.p, {fontSize: 18, color: color.gray, fontWeight: '700', backgroundColor: 'rgba(0,0,0,0)'}]}>{this.props.currentSelectedTea.name}</Text>
+            <Text style={[text.p, {color: color.gray, backgroundColor: 'rgba(0,0,0,0)'}]}>{displayTemperature}</Text>
+            <Text style={[text.p, {color: color.gray, backgroundColor: 'rgba(0,0,0,0)'}]}>{displayTime}</Text>
           </View>
         </View>
         <View style={styles.controlBtn}>

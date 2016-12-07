@@ -163,7 +163,7 @@ export default class TeaDetail extends Component {
     // user notes
     let userNotes = this.props.currentSelectedTea.userNotes;
     let userNotesTextStyle = {};
-    if (userNotes === '') {
+    if ((userNotes === '') && (this.props.currentSelectedTea.addedByMe)) {
       userNotes = 'You don\'t have any notes now.\nEdit to add your notes!';
       userNotesTextStyle = { color: color.midGray, fontSize: 12, fontStyle: 'italic' };
     }
@@ -171,10 +171,143 @@ export default class TeaDetail extends Component {
     // brew steps
     let brewSteps = this.props.currentSelectedTea.brewSteps;
     let brewStepsTextStyle = {};
-    if (brewSteps === '') {
+    if ((brewSteps === '') && (this.props.currentSelectedTea.addedByMe)) {
       brewSteps = 'You don\'t have any instructions of brewing this tea.\nEdit to add tea brew steps!';
       brewStepsTextStyle = { color: color.midGray, fontSize: 12, fontStyle: 'italic' };
     }
+
+    // notes section
+    let notesSections;
+    if (this.props.currentSelectedTea.addedByMe) {
+      notesSections = <View>
+      <View>
+        <View style={[containers.container, {justifyContent: 'flex-start', marginTop: CARD_BETWEEN_DISTANCE, backgroundColor: color.white}]}>
+          <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>
+            <Text style={text.sectionTitle}>How to brew</Text>
+          </View>
+          <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
+            <Text style={[text.p, {color: color.gray, paddingBottom: 5}, brewStepsTextStyle]}>
+              {brewSteps}
+            </Text>
+          </View>
+        </View>
+      </View>
+
+      <View>
+        <View style={[containers.container, {justifyContent: 'flex-start', marginTop: CARD_BETWEEN_DISTANCE, backgroundColor: color.white}]}>
+          <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>
+            <Text style={text.sectionTitle}>Notes</Text>
+          </View>
+          <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
+            <Text style={[text.p, {color: color.gray, paddingBottom: 5}, userNotesTextStyle]}>
+              {userNotes}
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>;
+  } else {
+    notesSections =
+    <View>
+      <View style={[containers.container, {justifyContent: 'flex-start', marginTop: CARD_BETWEEN_DISTANCE, backgroundColor: color.white}]}>
+        <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>
+          <Text style={text.sectionTitle}>How to brew</Text>
+        </View>
+        <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
+          <Text style={[text.p, {color: color.gray, paddingBottom: 5}, brewStepsTextStyle]}>
+            {brewSteps}
+          </Text>
+        </View>
+      </View>
+    </View>
+
+  }
+
+    // tab bar -
+    // 1. built-in tea note: no like & edit & delete, 2 buttons
+    // 2. user-created tea note: can edit & delete, 5 buttons
+    let tabbar;
+    if (this.props.currentSelectedTea.addedByMe) {
+      tabbar = <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
+        <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+          <IconButtonWithLabel
+            labelText="favorite"
+            iconName={likeIconName}
+            size={20}
+            color={likeIconColor}
+            onForward={this._toggleLike} />
+        </View>
+        <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+          <IconButtonWithLabel
+            labelText="edit"
+            iconName="pencil-square-o"
+            size={20}
+            color={color.white}
+            onForward={() => {
+              this.props.updateEditingStatus(true);
+              this.props.navigator.push({
+                name: 'CreateTea'
+              });
+            }} />
+        </View>
+        <View style={[containers.row, {justifyContent: 'center', alignItems: 'center', backgroundColor: colorScheme.color5}]}>
+          <IconButtonWithLabel
+            labelText="timer"
+            iconName="coffee"
+            size={20}
+            color={color.white}
+            onForward={this._onForward} />
+        </View>
+        <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+          <IconButtonWithLabel
+            labelText="share"
+            iconName="share-square-o"
+            size={20}
+            color={color.white}
+            onForward={this._showShareActionSheet} />
+        </View>
+        <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+          <IconButtonWithLabel
+            labelText="delete"
+            iconName="trash-o"
+            size={20}
+            color={color.white}
+            onForward={() => {
+              ActionSheetIOS.showActionSheetWithOptions({
+                options: ['delete this tea note', 'cancel'],
+                destructiveButtonIndex: 0,
+                cancelButtonIndex: 1,
+              }, (buttonIndex) => {
+                if (buttonIndex === 0) {
+                  this.props.storageUnit.deleteItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY, this.props.currentSelectedTea);
+                  this.setState({ notificationModalVisible: true });
+                  this.props.navigator.pop();
+                }
+              });
+            }} />
+        </View>
+      </View>
+    } else {
+      tabbar = <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
+        <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+          <IconButtonWithLabel
+            labelText="timer"
+            iconName="coffee"
+            size={20}
+            color={color.white}
+            onForward={this._onForward} />
+        </View>
+        <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+          <IconButtonWithLabel
+            labelText="share"
+            iconName="share-square-o"
+            size={20}
+            color={color.white}
+            onForward={this._showShareActionSheet} />
+        </View>
+      </View>
+    }
+
 
     return(
       <View style={[containers.container, {backgroundColor: color.lightGray}]}>
@@ -193,13 +326,17 @@ export default class TeaDetail extends Component {
             <View>
               <Image source={{uri: this.props.currentSelectedTea.coverImageUrl.uri}} style={styles.coverImage} />
               <View>
-                <View style={[styles.teaCardContainer, {justifyContent: 'center'}]}>
+                <View style={[styles.teaCardContainer, {justifyContent: 'center', paddingTop: 15}]}>
                   <View style={[containers.row, {alignItems: 'flex-end'}]}>
                     <Text style={[text.title, {fontWeight: '700'}]}>{this.props.currentSelectedTea.name}</Text>
                   </View>
 
-                  <View style={containers.row, {alignItems: 'center', paddingTop: 5, paddingBottom: 10}}>
-                    <Text style={[text.p, {color: color.gray}]}>green tea - mild - low caffeine</Text>
+                  <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+                    <Text style={[text.p, {color: color.gray}]}>{this.props.currentSelectedTea.teaType}</Text>
+                    <Text style={[text.p, {color: color.gray, marginLeft: 5, marginRight: 5}]}>-</Text>
+                    <Text style={[text.p, {color: color.gray}]}>{this.props.currentSelectedTea.teaFlavor}</Text>
+                    <Text style={[text.p, {color: color.gray, marginLeft: 5, marginRight: 5}]}>-</Text>
+                    <Text style={[text.p, {color: color.gray}]}>{this.props.currentSelectedTea.teaCaffeineLevel}</Text>
                   </View>
 
                   <View style={[containers.row, {alignItems: 'flex-start', justifyContent: 'center'}]}>
@@ -229,97 +366,13 @@ export default class TeaDetail extends Component {
                 </View>
               </View>
             </View>
-
-            <View>
-              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: CARD_BETWEEN_DISTANCE, backgroundColor: color.white}]}>
-                <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>
-                  <Text style={text.sectionTitle}>How to brew</Text>
-                </View>
-                <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
-                  <Text style={[text.p, {color: color.gray, paddingBottom: 5}, brewStepsTextStyle]}>
-                    {brewSteps}
-                  </Text>
-                </View>
-              </View>
-            </View>
-
-            <View>
-              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: CARD_BETWEEN_DISTANCE, backgroundColor: color.white}]}>
-                <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>
-                  <Text style={text.sectionTitle}>Notes</Text>
-                </View>
-                <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
-                  <Text style={[text.p, {color: color.gray, paddingBottom: 5}, userNotesTextStyle]}>
-                    {userNotes}
-                  </Text>
-                </View>
-              </View>
-            </View>
+            {notesSections}
           </View>
         </ScrollView>
 
-
         <View style={[containers.stickyFooter, {left: 0, right: 0}]}>
           <View style={{height: 40, backgroundColor: colorScheme.color1}}>
-            <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
-              <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
-                <IconButtonWithLabel
-                  labelText="like"
-                  iconName={likeIconName}
-                  size={20}
-                  color={likeIconColor}
-                  onForward={this._toggleLike} />
-              </View>
-              <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
-                <IconButtonWithLabel
-                  labelText="share"
-                  iconName="share-square-o"
-                  size={20}
-                  color={color.white}
-                  onForward={this._showShareActionSheet} />
-              </View>
-              <View style={[containers.row, {justifyContent: 'center', alignItems: 'center', backgroundColor: colorScheme.color5}]}>
-                <IconButtonWithLabel
-                  labelText="timer"
-                  iconName="coffee"
-                  size={20}
-                  color={color.white}
-                  onForward={this._onForward} />
-              </View>
-              <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
-                <IconButtonWithLabel
-                  labelText="edit"
-                  iconName="pencil-square-o"
-                  size={20}
-                  color={color.white}
-                  onForward={() => {
-                    this.props.updateEditingStatus(true);
-                    this.props.navigator.push({
-                      name: 'CreateTea'
-                    });
-                  }} />
-              </View>
-              <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
-                <IconButtonWithLabel
-                  labelText="delete"
-                  iconName="trash-o"
-                  size={20}
-                  color={color.white}
-                  onForward={() => {
-                    ActionSheetIOS.showActionSheetWithOptions({
-                      options: ['delete this tea note', 'cancel'],
-                      destructiveButtonIndex: 0,
-                      cancelButtonIndex: 1,
-                    }, (buttonIndex) => {
-                      if (buttonIndex === 0) {
-                        this.props.storageUnit.deleteItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY, this.props.currentSelectedTea);
-                        this.setState({ notificationModalVisible: true });
-                        this.props.navigator.pop();
-                      }
-                    });
-                  }} />
-              </View>
-            </View>
+            {tabbar}
           </View>
         </View>
       </View>
