@@ -8,13 +8,11 @@ import React, { Component, PropTypes } from 'react';
 import {
   ListView,
   StatusBar,
-  StyleSheet,
   Text,
   View
 } from 'react-native';
 
 import IconButton from '../components/IconButton';
-import SlideSwitch from '../components/SlideSwitch';
 import ImageRow from '../components/ImageRow';
 
 import text from '../style/text';
@@ -22,7 +20,10 @@ import color from '../style/color';
 import colorScheme from '../style/colorScheme';
 import containers from '../style/containers';
 
-import { STATUS_BAR_HEIGHT_IOS, CUSTOMIZED_TEA_LIST_STORAGE_KEY } from '../constants';
+import {
+  STATUS_BAR_HEIGHT_IOS,
+  CUSTOMIZED_TEA_LIST_STORAGE_KEY
+} from '../constants';
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -67,6 +68,11 @@ export default class UserFavorite extends Component {
         <View style={{height: 44, backgroundColor: colorScheme.color1}}>
           <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
             <View style={[containers.row, {justifyContent: 'flex-start'}]}>
+            </View>
+            <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+              <Text style={[text.title, {color: color.white}]}>My Favorite</Text>
+            </View>
+            <View style={[containers.row, {justifyContent: 'flex-end'}]}>
               <IconButton
                 iconName="times"
                 size={20}
@@ -74,11 +80,6 @@ export default class UserFavorite extends Component {
                 onForward={() => {
                   this.props.navigator.pop();
                 }} />
-            </View>
-            <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
-              <Text style={[text.title, {color: color.white}]}>My Favorite</Text>
-            </View>
-            <View style={[containers.row, {justifyContent: 'flex-end'}]}>
             </View>
           </View>
         </View>

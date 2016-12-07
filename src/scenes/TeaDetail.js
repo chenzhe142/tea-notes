@@ -2,12 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import {
   ActionSheetIOS,
   Image,
-  ListView,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   View
 } from 'react-native';

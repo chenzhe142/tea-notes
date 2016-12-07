@@ -11,7 +11,6 @@
 import React, { Component } from 'react';
 import {
   Alert,
-  Image,
   StatusBar,
   StyleSheet,
   Text,

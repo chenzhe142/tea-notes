@@ -6,16 +6,9 @@
 
 import React, { Component, PropTypes } from 'react';
 import {
-  Animated,
-  Image,
-  Platform,
   ScrollView,
-  StatusBar,
-  StyleSheet,
   Text,
   TextInput,
-  TouchableWithoutFeedback,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
@@ -27,11 +20,7 @@ import ItemPicker from '../components/ItemPicker.js';
 import IconButton from '../components/IconButton';
 
 import {
-  CARD_OFFSET,
-  COVERIMAGE_HEIGHT,
-  CUSTOMIZED_TEA_LIST_STORAGE_KEY,
   SCREEN_HEIGHT,
-  SCREEN_WIDTH,
   STATUS_BAR_HEIGHT_IOS,
 } from '../constants';
 

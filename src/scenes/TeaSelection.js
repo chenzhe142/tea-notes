@@ -7,14 +7,12 @@
 import React, { Component, PropTypes } from 'react';
 import {
   ListView,
-  Modal,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';

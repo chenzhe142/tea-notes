@@ -6,12 +6,10 @@
 
 import React, { Component, PropTypes } from 'react';
 import {
-  Animated,
   Image,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
   TextInput,

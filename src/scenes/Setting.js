@@ -8,7 +8,6 @@ import React, { Component, PropTypes } from 'react';
 import {
   ScrollView,
   StatusBar,
-  StyleSheet,
   Text,
   View,
 } from 'react-native';
