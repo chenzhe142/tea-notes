@@ -131,7 +131,7 @@ export default class TeaTimer extends Component {
   render() {
     return (
       <View style={[containers.container, {justifyContent: 'flex-start', backgroundColor: colorScheme.color1}]}>
-        <StatusBar hidden={true} />
+        <StatusBar hidden={false} />
         <CloseBtn navigator={this.props.navigator} onPressEvent={this._resetTimer} />
         <View>
           <View style={[containers.row, {flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around', paddingTop: 200}]}>

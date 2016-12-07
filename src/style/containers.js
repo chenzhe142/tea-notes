@@ -17,11 +17,6 @@ const containers = StyleSheet.create({
     left: 20,
     right: 20,
   },
-  card: {
-    marginTop: 5,
-    padding: 15,
-    backgroundColor: '#ffffff'
-  }
 });
 
 export default containers;

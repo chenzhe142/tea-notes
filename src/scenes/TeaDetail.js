@@ -16,10 +16,9 @@ import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import * as Animatable from 'react-native-animatable';
 
-import Button from '../components/Button';
 import BackBtn from '../components/BackBtn';
-import TopBtn from '../components/TopBtn';
 import IconButton from '../components/IconButton';
+import IconButtonWithLabel from '../components/IconButtonWithLabel';
 
 import NotificationModal from '../modals/NotificationModal.js';
 
@@ -35,16 +34,16 @@ import findSelectedSettingOption from '../utils/findSelectedSettingOption';
 import convertSecondToMinuteString from '../utils/convertSecondToMinuteString';
 
 import {
-  SCREEN_WIDTH,
-  SCREEN_HEIGHT,
+  CARD_BETWEEN_DISTANCE,
   COVERIMAGE_HEIGHT,
   CUSTOMIZED_SETTINGS_STORAGE_KEY,
   CUSTOMIZED_TEA_LIST_STORAGE_KEY,
   DEFAULT_SETTINGS,
+  SCREEN_WIDTH,
   SYMBOL_CELSIUS,
   SYMBOL_FAHRENHEIT,
+  SYMBOL_MINUTE,
   SYMBOL_SECOND,
-  SYMBOL_MINUTE
 } from '../constants';
 
 
@@ -199,7 +198,7 @@ export default class TeaDetail extends Component {
                     <Text style={text.title}>{this.props.currentSelectedTea.name}</Text>
                   </View>
 
-                  <View style={containers.row, {alignItems: 'center', paddingTop: 5, paddingBottom: 10}}>
+                  <View style={containers.row, {alignItems: 'center', paddingTop: 8, paddingBottom: 10}}>
                     <Text style={[text.p, {color: color.gray}]}>green tea - mild - low caffeine</Text>
                   </View>
 
@@ -213,7 +212,7 @@ export default class TeaDetail extends Component {
             </View>
 
             <View>
-              <View style={[containers.row, containers.card]}>
+              <View style={[containers.row, {marginTop: CARD_BETWEEN_DISTANCE, padding: 15, backgroundColor: color.white}]}>
                 <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
                   <IoniconsIcon name="ios-thermometer" size={20} color={color.pink} />
                   <Text style={[text.number, {marginLeft: 10}]}>{temperature}</Text>
@@ -232,7 +231,7 @@ export default class TeaDetail extends Component {
             </View>
 
             <View>
-              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 5, backgroundColor: color.white}]}>
+              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: CARD_BETWEEN_DISTANCE, backgroundColor: color.white}]}>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>
                   <Text style={text.sectionTitle}>How to brew</Text>
                 </View>
@@ -245,7 +244,7 @@ export default class TeaDetail extends Component {
             </View>
 
             <View>
-              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: 5, backgroundColor: color.white}]}>
+              <View style={[containers.container, {justifyContent: 'flex-start', marginTop: CARD_BETWEEN_DISTANCE, backgroundColor: color.white}]}>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>
                   <Text style={text.sectionTitle}>Notes</Text>
                 </View>
@@ -264,28 +263,32 @@ export default class TeaDetail extends Component {
           <View style={{height: 40, backgroundColor: colorScheme.color1}}>
             <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
               <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
-                <IconButton
+                <IconButtonWithLabel
+                  labelText="like"
                   iconName={likeIconName}
                   size={20}
                   color={likeIconColor}
                   onForward={this._toggleLike} />
               </View>
               <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
-                <IconButton
+                <IconButtonWithLabel
+                  labelText="share"
                   iconName="share-square-o"
                   size={20}
                   color={color.white}
                   onForward={this._showShareActionSheet} />
               </View>
               <View style={[containers.row, {justifyContent: 'center', alignItems: 'center', backgroundColor: colorScheme.color5}]}>
-                <IconButton
+                <IconButtonWithLabel
+                  labelText="timer"
                   iconName="coffee"
                   size={20}
                   color={color.white}
                   onForward={this._onForward} />
               </View>
               <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
-                <IconButton
+                <IconButtonWithLabel
+                  labelText="edit"
                   iconName="pencil-square-o"
                   size={20}
                   color={color.white}
@@ -297,7 +300,8 @@ export default class TeaDetail extends Component {
                   }} />
               </View>
               <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
-                <IconButton
+                <IconButtonWithLabel
+                  labelText="delete"
                   iconName="trash-o"
                   size={20}
                   color={color.white}
@@ -328,9 +332,6 @@ const styles = StyleSheet.create({
     height: COVERIMAGE_HEIGHT,
     resizeMode: 'cover',
     width: SCREEN_WIDTH,
-  },
-  teaCard: {
-    alignItems: 'center',
   },
   teaCardContainer: {
     width: SCREEN_WIDTH,

@@ -40,6 +40,11 @@ const text = StyleSheet.create({
       },
       shadowColor: 'black',
       shadowOpacity: 1
+    },
+    labelText: {
+      color: 'white',
+      fontFamily: 'Open Sans',
+      fontSize: 9,
     }
   });
 
