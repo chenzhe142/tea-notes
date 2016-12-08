@@ -18,7 +18,6 @@
 import React, { Component, PropTypes } from 'react';
 import {
   View,
-  TouchableOpacity,
   Text,
   StyleSheet
 } from 'react-native';
@@ -31,7 +30,6 @@ const propTypes = {
   iconName: PropTypes.string,
   size: PropTypes.number,
   color: PropTypes.string,
-  onForward: PropTypes.func,
   labelText: PropTypes.string,
 };
 
@@ -41,12 +39,11 @@ export default class IconButtonWithLabel extends Component {
   }
   render() {
     return (
-      <TouchableOpacity
-        style={[styles.button, this.props.style]}
-        onPress={this.props.onForward}>
+      <View
+        style={[styles.button, this.props.style]}>
         <Icon name={this.props.iconName} size={this.props.size} color={this.props.color} />
         <Text style={text.labelText}>{this.props.labelText}</Text>
-      </TouchableOpacity>
+      </View>
     );
   }
 }
@@ -59,8 +56,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     borderRadius: 2,
     flexDirection: 'column',
-    height: 44,
+    height: 48,
     justifyContent: 'center',
-    marginBottom: 10,
   },
 });

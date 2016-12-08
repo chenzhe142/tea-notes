@@ -26,7 +26,7 @@ export default class NotificationModal extends Component {
         >
         <View style={styles.container}>
           <View style={styles.innerContainer}>
-            <Text style={[text.p, {fontSize: 12, color: '#fff'}]}>{this.props.modalMessage}</Text>
+            <Text style={[text.p, {fontSize: 16, color: '#fff'}]}>{this.props.modalMessage}</Text>
           </View>
         </View>
       </Modal>

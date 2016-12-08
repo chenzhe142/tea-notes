@@ -15,7 +15,7 @@ export default class TopBtn extends Component {
       <View style={[this.props.style, {backgroundColor: 'rgba(0,0,0,0)'}]}>
         <TouchableOpacity onPress={this.props.onPressEvent}>
           <View>
-            <Icon name={this.props.iconName} size={20} color={color.white} style={text.shadow} />
+            <Icon name={this.props.iconName} size={25} color={color.white} style={text.shadow} />
           </View>
         </TouchableOpacity>
       </View>

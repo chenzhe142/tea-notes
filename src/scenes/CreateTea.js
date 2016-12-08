@@ -481,7 +481,7 @@ export default class CreateTea extends Component {
             <View style={[containers.row, {justifyContent: 'flex-start'}]}>
               <IconButton
                 iconName="times"
-                size={20}
+                size={25}
                 color={color.white}
                 onForward={() => {
                   this.props.navigator.pop();
@@ -492,7 +492,11 @@ export default class CreateTea extends Component {
               <Text style={[text.title, {color: color.white}]}>{navbarTitle}</Text>
             </View>
             <View style={[containers.row, {justifyContent: 'flex-end'}]}>
-              <Button enableButtonStyle={false} btnText="Save" onForward={saveBtnOnPressEvent} />
+              <Button
+                enableButtonStyle={false}
+                btnText="Save"
+                textStyle={{fontWeight: 'normal'}}
+                onForward={saveBtnOnPressEvent} />
             </View>
           </View>
         </View>

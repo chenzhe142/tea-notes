@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
+  TouchableOpacity,
   View
 } from 'react-native';
 
@@ -226,83 +227,93 @@ export default class TeaDetail extends Component {
     // 2. user-created tea note: can edit & delete, 5 buttons
     let tabbar;
     if (this.props.currentSelectedTea.addedByMe) {
-      tabbar = <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
-        <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+      tabbar =
+      <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
+        <TouchableOpacity
+          style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}
+          onPress={this._toggleLike}>
           <IconButtonWithLabel
             labelText="favorite"
             iconName={likeIconName}
             size={20}
             color={likeIconColor}
             onForward={this._toggleLike} />
-        </View>
-        <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}
+          onPress={() => {
+            this.props.updateEditingStatus(true);
+            this.props.navigator.push({
+              name: 'CreateTea'
+            });
+          }}>
           <IconButtonWithLabel
             labelText="edit"
             iconName="pencil-square-o"
             size={20}
-            color={color.white}
-            onForward={() => {
-              this.props.updateEditingStatus(true);
-              this.props.navigator.push({
-                name: 'CreateTea'
-              });
-            }} />
-        </View>
-        <View style={[containers.row, {justifyContent: 'center', alignItems: 'center', backgroundColor: colorScheme.color5}]}>
+            color={color.white} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[containers.row, {justifyContent: 'center', alignItems: 'center', backgroundColor: colorScheme.color5}]}
+          onPress={this._onForward}>
           <IconButtonWithLabel
             labelText="timer"
             iconName="coffee"
             size={20}
-            color={color.white}
-            onForward={this._onForward} />
-        </View>
-        <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+            color={color.white} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}
+          onPress={this._showShareActionSheet}>
           <IconButtonWithLabel
             labelText="share"
             iconName="share-square-o"
             size={20}
-            color={color.white}
-            onForward={this._showShareActionSheet} />
-        </View>
-        <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+            color={color.white} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}
+          onPress={() => {
+            ActionSheetIOS.showActionSheetWithOptions({
+              options: ['delete this tea note', 'cancel'],
+              destructiveButtonIndex: 0,
+              cancelButtonIndex: 1,
+            }, (buttonIndex) => {
+              if (buttonIndex === 0) {
+                this.props.storageUnit.deleteItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY, this.props.currentSelectedTea);
+                this.setState({ notificationModalVisible: true });
+                this.props.navigator.pop();
+              }
+            });
+          }}>
           <IconButtonWithLabel
             labelText="delete"
             iconName="trash-o"
             size={20}
-            color={color.white}
-            onForward={() => {
-              ActionSheetIOS.showActionSheetWithOptions({
-                options: ['delete this tea note', 'cancel'],
-                destructiveButtonIndex: 0,
-                cancelButtonIndex: 1,
-              }, (buttonIndex) => {
-                if (buttonIndex === 0) {
-                  this.props.storageUnit.deleteItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY, this.props.currentSelectedTea);
-                  this.setState({ notificationModalVisible: true });
-                  this.props.navigator.pop();
-                }
-              });
-            }} />
-        </View>
+            color={color.white} />
+        </TouchableOpacity>
       </View>
     } else {
-      tabbar = <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
-        <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+      tabbar =
+      <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
+        <TouchableOpacity
+          style={[containers.row, {justifyContent: 'center', alignItems: 'center', backgroundColor: colorScheme.color5}]}
+          onPress={this._onForward}>
           <IconButtonWithLabel
             labelText="timer"
             iconName="coffee"
             size={20}
-            color={color.white}
-            onForward={this._onForward} />
-        </View>
-        <View style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}>
+            color={color.white} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}
+          onPress={this._showShareActionSheet}>
           <IconButtonWithLabel
             labelText="share"
             iconName="share-square-o"
             size={20}
-            color={color.white}
-            onForward={this._showShareActionSheet} />
-        </View>
+            color={color.white} />
+        </TouchableOpacity>
       </View>
     }
 
@@ -369,7 +380,7 @@ export default class TeaDetail extends Component {
         </ScrollView>
 
         <View style={[containers.stickyFooter, {left: 0, right: 0}]}>
-          <View style={{height: 40, backgroundColor: colorScheme.color1}}>
+          <View style={{height: 49, backgroundColor: colorScheme.color1}}>
             {tabbar}
           </View>
         </View>

@@ -44,7 +44,7 @@ const text = StyleSheet.create({
     labelText: {
       color: 'white',
       fontFamily: 'Open Sans',
-      fontSize: 9,
+      fontSize: 10,
     }
   });
 

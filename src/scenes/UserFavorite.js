@@ -75,7 +75,7 @@ export default class UserFavorite extends Component {
             <View style={[containers.row, {justifyContent: 'flex-end'}]}>
               <IconButton
                 iconName="times"
-                size={20}
+                size={25}
                 color={color.white}
                 onForward={() => {
                   this.props.navigator.pop();

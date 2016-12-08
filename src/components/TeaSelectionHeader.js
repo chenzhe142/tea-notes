@@ -36,7 +36,7 @@ export default class TeaSelectionHeader extends Component {
     if (this.props.searchIconStatus === 'show') {
       searchIcon = <IconButton
         iconName="search"
-        size={20}
+        size={25}
         color={color.white}
         onForward={() => {
           this.props.navigator.push({
@@ -52,7 +52,7 @@ export default class TeaSelectionHeader extends Component {
             <View style={[containers.row, {justifyContent: 'flex-start'}]}>
               <IconButton
                 iconName="cog"
-                size={20}
+                size={25}
                 color={color.white}
                 onForward={() => {
                   this.props.navigator.push({
@@ -66,7 +66,7 @@ export default class TeaSelectionHeader extends Component {
             <View style={[containers.row, {justifyContent: 'flex-end'}]}>
               <IconButton
                 iconName="search"
-                size={20}
+                size={25}
                 color={color.white}
                 onForward={() => {
                   this.props.navigator.push({
@@ -75,7 +75,7 @@ export default class TeaSelectionHeader extends Component {
                 }} />
                 <IconButton
                   iconName="star"
-                  size={20}
+                  size={25}
                   color={color.white}
                   style={{marginLeft: 20}}
                   onForward={() => {

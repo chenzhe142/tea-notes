@@ -160,7 +160,7 @@ export default class TeaSelection extends Component {
             <View style={[containers.row, {justifyContent: 'flex-start'}]}>
               <IconButton
                 iconName="cog"
-                size={20}
+                size={22}
                 color={color.white}
                 onForward={() => {
                   this.props.navigator.push({

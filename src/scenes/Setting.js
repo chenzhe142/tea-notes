@@ -142,7 +142,7 @@ export default class Setting extends Component {
             <View style={[containers.row, {justifyContent: 'flex-start'}]}>
               <IconButton
                 iconName="times"
-                size={20}
+                size={25}
                 color={color.white}
                 onForward={() => {
                   this.props.navigator.pop();
