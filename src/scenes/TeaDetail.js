@@ -297,7 +297,7 @@ export default class TeaDetail extends Component {
       tabbar =
       <View style={[containers.row, {justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}]}>
         <TouchableOpacity
-          style={[containers.row, {justifyContent: 'center', alignItems: 'center', backgroundColor: colorScheme.color5}]}
+          style={[containers.row, {justifyContent: 'center', alignItems: 'center'}]}
           onPress={this._onForward}>
           <IconButtonWithLabel
             labelText="timer"

@@ -51,7 +51,7 @@ export default class ImageRow extends Component {
     return (
       <View>
         <TouchableWithoutFeedback onPress={this.props.onPressEvent}>
-          <View style={{paddingBottom: 1}}>
+          <View style={{borderBottomWidth: 0}}>
             <Image style={styles.image} source={this.props.imageSource}>
               {addedByMe}
               <View style={[containers.container, {justifyContent: 'center', alignItems: 'center'}]}>
