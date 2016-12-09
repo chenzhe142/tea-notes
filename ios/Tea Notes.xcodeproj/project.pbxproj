@@ -51,6 +51,7 @@
 		EA45D1031D890DE100F63782 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA45D1021D890DCD00F63782 /* libRNVectorIcons.a */; };
 		EA7495B01DF172FD0066133A /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA7495AD1DF172D20066133A /* libRNSound.a */; };
 		EA7495DD1DF29BAF0066133A /* timer-alarm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EA7495DC1DF29BAF0066133A /* timer-alarm.mp3 */; };
+		EA7A6B261DFA9B1F0053F333 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EA7A6B251DFA9B1F0053F333 /* icon.png */; };
 		EAB4A1A81DA215B00078D0B1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EAB4A1A71DA215B00078D0B1 /* GoogleService-Info.plist */; };
 		EAB4A1CF1DA2187A0078D0B1 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EAB4A1CE1DA2185C0078D0B1 /* libRCTPushNotification.a */; };
 		EAB4A2041DA4CB920078D0B1 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EAB4A2031DA4CB7E0078D0B1 /* libART.a */; };
@@ -247,6 +248,7 @@
 		EA45D0FD1D890DCD00F63782 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		EA7495991DF172D20066133A /* RNSound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
 		EA7495DC1DF29BAF0066133A /* timer-alarm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "timer-alarm.mp3"; sourceTree = "<group>"; };
+		EA7A6B251DFA9B1F0053F333 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		EAB4A1831DA1CB4A0078D0B1 /* Tea Notes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Tea Notes.entitlements"; path = "brewMaster/Tea Notes.entitlements"; sourceTree = "<group>"; };
 		EAB4A1A71DA215B00078D0B1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EAB4A1C91DA2185C0078D0B1 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
@@ -374,6 +376,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
+				EA7A6B251DFA9B1F0053F333 /* icon.png */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = brewMaster;
@@ -861,6 +864,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA7A6B261DFA9B1F0053F333 /* icon.png in Resources */,
 				EA065F9F1D6EB472002EE3BF /* OpenSans-Regular.ttf in Resources */,
 				EA065FA01D6EB472002EE3BF /* OpenSans-Semibold.ttf in Resources */,
 				EA7495DD1DF29BAF0066133A /* timer-alarm.mp3 in Resources */,
@@ -1045,6 +1049,7 @@
 			baseConfigurationReference = 9AA530C0F8D343ABEBE4EEB9 /* Pods-brewMaster.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "brewMaster/Tea Notes.entitlements";
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 7KVC28S6XS;
@@ -1078,6 +1083,7 @@
 			baseConfigurationReference = 042B52E7F0B7C4B44947C0F2 /* Pods-brewMaster.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "brewMaster/Tea Notes.entitlements";
 				DEVELOPMENT_TEAM = 7KVC28S6XS;
 				HEADER_SEARCH_PATHS = (

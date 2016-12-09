@@ -179,7 +179,7 @@ export default class Setting extends Component {
           <View style={{paddingBottom: 2}}>
             <Text style={{fontSize: 12, color: color.midGray}}>Tea Notes - v1.0.0</Text>
           </View>
-          <Text style={{fontSize: 8, color: color.midGray}}>© Zhe Chen, 2016</Text>
+          <Text style={{fontSize: 8, color: color.midGray}}>Icon made by Freepik from www.flaticon.com</Text>
         </View>
       </View>
     );
