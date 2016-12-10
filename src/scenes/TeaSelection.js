@@ -58,13 +58,6 @@ export default class TeaSelection extends Component {
     this._updateFilterText = this._updateFilterText.bind(this);
 
     this.defaultTeaList = DEFAULT_TEA_LIST;
-
-    this.settings = DEFAULT_SETTINGS;
-    if (this.props.storage) {
-      if (this.props.storage[CUSTOMIZED_SETTINGS_STORAGE_KEY].content) {
-        this.settings = this.props.storage[CUSTOMIZED_SETTINGS_STORAGE_KEY].content;
-      }
-    }
   }
 
   _onForward(teaObject) {
@@ -138,16 +131,19 @@ export default class TeaSelection extends Component {
   }
 
   render() {
+    this.settings = DEFAULT_SETTINGS;
+    if (this.props.storage) {
+      if (this.props.storage[CUSTOMIZED_SETTINGS_STORAGE_KEY].content) {
+        this.settings = this.props.storage[CUSTOMIZED_SETTINGS_STORAGE_KEY].content;
+      }
+    }
+    
     let teaListOptions = findSelectedSettingOption(this.settings.teaListOptions);
     if (teaListOptions === 'show') {
       this.defaultTeaList = DEFAULT_TEA_LIST;
     } else {
       this.defaultTeaList = [];
     }
-
-    console.log('check selection tea list options');
-    console.log(teaListOptions);
-    console.log(this.settings.teaListOptions);
 
     let teaLists;
     if (this.state.filterText.length > 0) {

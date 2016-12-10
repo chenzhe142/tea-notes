@@ -48,6 +48,7 @@ export default class Setting extends Component {
         this.setState({
           temperatureOptions: settings.temperatureOptions,
           timeOptions: settings.timeOptions,
+          teaListOptions: settings.teaListOptions,
         });
       }
     }
