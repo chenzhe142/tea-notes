@@ -47,7 +47,7 @@ export default class Setting extends Component {
         const settings = this.props.storage[CUSTOMIZED_SETTINGS_STORAGE_KEY].content;
         this.setState({
           temperatureOptions: settings.temperatureOptions,
-          timeOptions: settings.timeOptions
+          timeOptions: settings.timeOptions,
         });
       }
     }
@@ -130,9 +130,6 @@ export default class Setting extends Component {
     //  </View>
 
   render() {
-
-    console.log(this.state.teaListOptions);
-
     return (
       <View style={[containers.container, {backgroundColor: color.white}]}>
         <StatusBar hidden={false} />

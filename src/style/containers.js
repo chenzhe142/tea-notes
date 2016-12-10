@@ -14,8 +14,6 @@ const containers = StyleSheet.create({
   stickyFooter: {
     position: 'absolute',
     bottom: 0,
-    left: 20,
-    right: 20,
   },
 });
 

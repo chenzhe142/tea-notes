@@ -584,7 +584,7 @@ export default class CreateTea extends Component {
             <View>
               <View style={[containers.container, {justifyContent: 'flex-start', marginTop: CARD_BETWEEN_DISTANCE, backgroundColor: color.white}]}>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15, borderBottomWidth: 1, borderBottomColor: color.lightGray}}>
-                  <Text style={text.sectionTitle}>How to brew</Text>
+                  <Text style={text.sectionTitle}>How to prepare</Text>
                 </View>
                 <View style={{paddingTop: 10, marginLeft: 15, paddingBottom: 10, marginRight: 15}}>
                   <View>

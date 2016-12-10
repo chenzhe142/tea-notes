@@ -145,6 +145,10 @@ export default class TeaSelection extends Component {
       this.defaultTeaList = [];
     }
 
+    console.log('check selection tea list options');
+    console.log(teaListOptions);
+    console.log(this.settings.teaListOptions);
+
     let teaLists;
     if (this.state.filterText.length > 0) {
       filterText = this.state.filterText;
@@ -251,7 +255,7 @@ export default class TeaSelection extends Component {
 
           </View>
         </ScrollView>
-        <View style={[containers.stickyFooter, {alignItems: 'center', paddingBottom: 10}]}>
+        <View style={[containers.stickyFooter, {alignItems: 'center', paddingBottom: 10, left: (SCREEN_WIDTH-40)/2, right: (SCREEN_WIDTH-40)/2}]}>
           <TouchableOpacity
             style={[{backgroundColor: 'rgba(0,0,0,0)'}, text.shadow]}
             onPress={() => {

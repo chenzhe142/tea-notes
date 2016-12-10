@@ -39,21 +39,32 @@ import {
 
 export default class ImageRow extends Component {
   render() {
-    let addedByMe;
+    let tag;
     if (this.props.tea.addedByMe) {
-      addedByMe =
+      tag =
       <View style={styles.addedByMeView}>
         <View style={[containers.container, {justifyContent: 'center', alignItems: 'center'}]}>
-          <Text style={[text.p, styles.addedByMeText]}>Added by me</Text>
+          <Text style={[text.p, styles.tagText]}>Added by me</Text>
         </View>
       </View>
     }
+    // } else if (this.props.tea.staffPick) {
+    //   tag =
+    //   <View style={styles.staffPickView}>
+    //     <View style={[containers.container, {justifyContent: 'center', alignItems: 'center'}]}>
+    //       <Text style={[text.p, styles.tagText]}>Staff pick</Text>
+    //     </View>
+    //   </View>
+    // }
+
+
+
     return (
       <View>
         <TouchableWithoutFeedback onPress={this.props.onPressEvent}>
-          <View style={{borderBottomWidth: 0}}>
+          <View style={{borderBottomWidth: 1, borderBottomColor: 'white'}}>
             <Image style={styles.image} source={this.props.imageSource}>
-              {addedByMe}
+              {tag}
               <View style={[containers.container, {justifyContent: 'center', alignItems: 'center'}]}>
                 <Text style={[text.title, text.shadow, {color: color.white, fontWeight: '700', backgroundColor: 'rgba(0,0,0,0)'}]}>{this.props.tea.name}</Text>
               </View>
@@ -79,7 +90,16 @@ const styles = {
     top: 8,
     width: 90,
   },
-  addedByMeText: {
+  staffPickView: {
+    backgroundColor: 'rgba(102,153,255,0.9)',
+    borderRadius: 4,
+    height: 22,
+    left: 8,
+    position: 'absolute',
+    top: 8,
+    width: 90,
+  },
+  tagText: {
     backgroundColor: 'rgba(0,0,0,0)',
     color: color.white,
     fontSize: 12,

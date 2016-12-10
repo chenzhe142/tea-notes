@@ -51,51 +51,83 @@ export const CUSTOMIZED_TEA_LIST_STORAGE_KEY = '@TeaArrayStorageKey';
 export const DEFAULT_TEA_LIST_STORAGE_KEY = '@DefaultTeaArrayStorageKey';
 
 export const DEFAULT_TEA_LIST = [{
-  name: 'Matcha Green Tea',
-  temperature: 95,
-  time: 3,
-  teaType: 'matcha',
-  teaFlavor: 'pure',
-  teaCaffeineLevel: 'medium',
-  coverImageUrl: {
-    uri: 'https://facebook.github.io/react/img/logo_og.png'
-  },
-
-}, {
-  name: 'Pu-er Tea',
-  temperature: 95,
+  name: 'Pu-erh Tea (raw)',
+  temperature: 100,
   time: 180,
   teaType: 'black tea',
   teaFlavor: 'pure',
   teaCaffeineLevel: 'medium',
   coverImageUrl: {
-    uri: 'https://facebook.github.io/react/img/logo_og.png'
+    uri: 'placeholder'
   },
-
+  brewSteps: '*Teapot is recommended for Pu-erh preparation.\n\n1. Preheat the teapot/cup with hot water.\n2. Put 1 teaspoon (5 gram) raw Pu-erh tea chuck into teapot.\n3. Pour in boiling water and quickly dispose tea water. It helps to get better tea flavor and taste.\n4. Fill the container with boiling water.\n5. Let it infuse for 1 minute.\n6. For best flavor, enjoy Pu-erh tea when hot .\n\nTaste & Aroma:\n- Strong, bitter taste.\n- Rich and sweet after taste.\n\nTea liquid color: bright yellow\n\nOrigin: Yunnan Province, China.',
+  staffPick: true,
 }, {
-  name: 'jin jun mei',
+  name: 'Tie guan yin',
   temperature: 95,
-  time: 180,
-  teaType: 'black tea',
+  time: 120,
+  teaType: 'oolong tea',
   teaFlavor: 'pure',
   teaCaffeineLevel: 'medium',
   coverImageUrl: {
-    uri: 'https://facebook.github.io/react/img/logo_og.png'
-  },
-
-}, {
-  name: 'tie guan yin',
-  temperature: 95,
-  time: 180,
-  teaType: 'black tea',
-  teaFlavor: 'pure',
-  teaCaffeineLevel: 'medium',
-  coverImageUrl: {
-    uri: 'https://facebook.github.io/react/img/logo_og.png',
+    uri: 'tie-guan-yin',
     isStatic: true,
   },
-  brewSteps: '',
-}];
+  brewSteps: '1. Preheat the teapot/cup with hot water. \n2. Put 2 teaspoons of tea leaves into the teapot/cup.\n3. Fill the container with 95ºC (205ºF) water.\n4. Let it infuse for 2 minutes (increase / decrease the time based on your preference).\n5. Enjoy!\n\nTaste & Aroma:\n- Flowery & warm taste.\n- Refreshing orchid aroma.\n\nTea liquid color: golden yellow, light brown.\n\nOrigin: Fujian Province, China.',
+  staffPick: true,
+},{
+  name: 'Lapsang Souchong',
+  temperature: 90,
+  time: 120,
+  teaType: 'black tea',
+  teaFlavor: 'pure',
+  teaCaffeineLevel: 'high',
+  coverImageUrl: {
+    uri: 'placeholder',
+    isStatic: true,
+  },
+  brewSteps: 'Lapsang Souchong is the arliest and one of the most expensive black tea in the world.\n\n1. Preheat the teapot/cup with hot water. \n2. Put 1 teaspoon (5 gram) of tea leaves into the teapot/cup.\n3. Fill the container with 90ºC (194ºF) water.\n4. Let it infuse for 30 seconds.\n5. First 4 infusions should last less than 45 seconds. Later, it can be extended to 60 seconds.\n\nTaste & Aroma:\n- Sweet, smooth and longan taste.\n- Smokey pine aroma.\n\nTea liquid color: light red & brown.\n\nOrigin: Fujian Province, China.',
+  staffPick: true,
+}, {
+  name: 'Bi Luo Chun green tea',
+  temperature: 80,
+  time: 60,
+  teaType: 'green tea',
+  teaFlavor: 'pure',
+  teaCaffeineLevel: 'high',
+  coverImageUrl: {
+    uri: 'placeholder',
+    isStatic: true,
+  },
+  brewSteps: '*Tall glass cups (7 oz) are recommended for preparing Bi Luo Chun.\n\n1. Preheat the glass with hot water. \n2. Fill the glass cup with 200 ml (6.5 oz), 80ºC (176ºF) water.\n2. Put 1 teaspoon (5 gram) tea leaves into water.\n3. Wait until see tea leaves floating to the bottom of cup.\n4. For best taste, have a sip when enjoying your tea.\n\nTaste & Aroma:\n- Sweet, smooth and mint-like taste.\n- Fruity & floral aroma.\n\nTea liquid color: clear, light yellow\n\nOrigin: Jiangsu Province, China.',
+  staffPick: true,
+}, {
+  name: 'Dragon Well',
+  temperature: 80,
+  time: 45,
+  teaType: 'green tea',
+  teaFlavor: 'pure',
+  teaCaffeineLevel: 'medium',
+  coverImageUrl: {
+    uri: 'dragon-well',
+    isStatic: true,
+  },
+  brewSteps: '*Tall glass cups (7 oz) are recommended for preparing Dragon Well.\n\n1. Fill the glass cup with 200 ml (6.5 oz), 80ºC (176ºF) water.\n2. Put 1 teaspoon (5 gram) tea leaves into water.\n3. Wait until you see tea leaves are extended, floating up and down in the water.\n5. No need to filter tea leaves out of the tea liquid.\n6. Remain tea leaves in the water. Enjoy your tea!\n\nTaste & Aroma:\n- Fresh, gentle, orchid and sweet taste\n\nTea liquid color: light and clear yellow.\n\nOrigin: Zhejiang Province, China.',
+  staffPick: true,
+}, {
+  name: 'Baihao Silver Needle white tea',
+  temperature: 95,
+  time: 180,
+  teaType: 'white tea',
+  teaFlavor: 'pure',
+  teaCaffeineLevel: 'medium',
+  coverImageUrl: {
+    uri: 'placeholder',
+    isStatic: true,
+  },
+  brewSteps: '1. Preheat the teapot/cup with hot water. \n2. Put 1 teaspoon (5 gram) of tea leaves into the teapot/cup.\n3. Fill the container with 5 oz, 95ºC (205ºF) water.\n4. Let it infuse for 3 minutes (increase / decrease the time based on your preference).\n5. Enjoy!\n\nTaste & Aroma:\n- Fresh taste and aroma.\n\nTea liquid color: clear green, light yellow.\n\nOrigin: Fujian Province, China.',
+  staffPick: true,
+},];
 
 export const DEFAULT_TEA_TYPES = [
   "green",
@@ -110,6 +142,7 @@ export const DEFAULT_TEA_TYPES = [
 export const DEFAULT_TEA_FLAVORS = [
   "pure-traditional",
   "blooming",
+  "smokey",
   "mint",
   "light",
   "mild",
