@@ -3,6 +3,9 @@ Source code for Tea Notes app. Built with React Native.
 
 You can download the app [here](https://itunes.apple.com/us/app/tea-notes/id1185062818).
 
+## app demo
+![tea notes app demo gif](http://g.recordit.co/a7Jj2Tj25y.gif)
+
 ## about this repo
 This is my first React Native project, and it is called `Tea Notes`. 
 
