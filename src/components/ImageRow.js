@@ -10,9 +10,9 @@
  * this selected tea.
  *
  * ## PropTypes
- *  @param tea: {name, temperature,time}
- *  @param imageSource: `require(path-to-image)`
- *  @param onPressEvent
+ *  @param {object} tea {name, temperature,time}
+ *  @param {string} imageSource `require(path-to-image)`
+ *  @param {function} onPressEvent
  *
  * @zchen
  */
