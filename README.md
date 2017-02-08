@@ -31,3 +31,4 @@ react-native run-ios
 
 If `npm error` pops up, try running `npm install` to install missing dependencies.
 
+feel free to shoot me an email if you have any questions. ;)
