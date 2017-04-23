@@ -6,7 +6,7 @@ You can download the app [here](https://itunes.apple.com/us/app/tea-notes/id1185
 Official website: http://react-review.leanapp.cn/app/tea-notes
 
 ## app demo
-![tea notes app demo gif](http://g.recordit.co/a7Jj2Tj25y.gif)
+![tea notes app demo gif](https://github.com/chenzhe142/tea-notes/blob/master/tea-notes-demo.gif)
 
 ## about this repo
 This is my first React Native project, and it is called `Tea Notes`. 
