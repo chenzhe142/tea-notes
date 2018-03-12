@@ -18,8 +18,15 @@ import {
   View,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import BackgroundTimer from 'react-native-background-timer';
-import Sound from 'react-native-sound';
+
+const Sound = {
+  MAIN_BUNDLE: '',
+};
+
+const BackgroundTimer = {
+  setInterval: () => {},
+  clearInterval: () => {},
+};
 
 import Button from '../components/Button.js';
 import CloseBtn from '../components/CloseBtn.js';

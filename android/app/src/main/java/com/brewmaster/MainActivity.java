@@ -1,6 +1,11 @@
 package com.brewmaster;
 
 import com.facebook.react.ReactActivity;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.horcrux.svg.SvgPackage;
+import com.zmxv.RNSound.RNSoundPackage;
+import com.imagepicker.ImagePickerPackage;
+import com.ocetnik.timer.BackgroundTimerPackage;
 
 public class MainActivity extends ReactActivity {
 
