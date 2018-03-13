@@ -7,9 +7,7 @@
  */
 
 import React, { Component } from 'react';
-import {
-  Navigator
-} from 'react-native';
+import { Navigator } from 'react-native-deprecated-custom-components';
 
 import Setting from './scenes/Setting.js';
 import CreateTea from './scenes/CreateTea.js';

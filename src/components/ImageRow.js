@@ -19,7 +19,7 @@
 
 import React, { Component } from 'react';
 import {
-  Image,
+  ImageBackground,
   Text,
   TouchableWithoutFeedback,
   View
@@ -63,12 +63,12 @@ export default class ImageRow extends Component {
       <View>
         <TouchableWithoutFeedback onPress={this.props.onPressEvent}>
           <View style={{borderBottomWidth: 1, borderBottomColor: 'white'}}>
-            <Image style={styles.image} source={this.props.imageSource}>
+            <ImageBackground style={styles.image} source={this.props.imageSource}>
               {tag}
               <View style={[containers.container, {justifyContent: 'center', alignItems: 'center'}]}>
                 <Text style={[text.title, text.shadow, {color: color.white, fontWeight: '700', backgroundColor: 'rgba(0,0,0,0)'}]}>{this.props.tea.name}</Text>
               </View>
-            </Image>
+            </ImageBackground>
           </View>
         </TouchableWithoutFeedback>
       </View>
