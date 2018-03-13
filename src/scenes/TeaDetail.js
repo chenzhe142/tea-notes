@@ -57,10 +57,6 @@ export default class TeaDetail extends Component {
 
   constructor(props) {
     super(props);
-    this._onForward = this._onForward.bind(this);
-    this._showShareActionSheet = this._showShareActionSheet.bind(this);
-    this._toggleLike = this._toggleLike.bind(this);
-    this._displayTimeInDifferentUnit = this._displayTimeInDifferentUnit.bind(this);
 
     this.settings = DEFAULT_SETTINGS;
     if (this.props.storage) {
@@ -71,13 +67,13 @@ export default class TeaDetail extends Component {
 
   }
 
-  _onForward() {
+  _onForward = () => {
     this.props.navigator.push({
       name: 'TeaTimer'
     });
   }
 
-  _showShareActionSheet() {
+  _showShareActionSheet = () => {
     ActionSheetIOS.showShareActionSheetWithOptions({
       url: 'http://react-review.leanapp.cn/app/tea-notes',
       message: 'Tea Notes - tea brewing tips & notes assistant',
@@ -96,14 +92,14 @@ export default class TeaDetail extends Component {
     });
   }
 
-  _toggleLike() {
+  _toggleLike = () => {
     let tea = Object.assign({}, this.props.currentSelectedTea);
     tea.isLiked = !tea.isLiked;
     this.props.storageUnit.updateItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY, tea);
     this.props.updateCurrentSelectedTea(tea);
   }
 
-  _displayTimeInDifferentUnit() {
+  _displayTimeInDifferentUnit = () => {
     if (!this.state.displayTimeInSecond && this.state.displayTimeInMinute) {
       this.refs.displayTime.fadeOut();
       this.setState({

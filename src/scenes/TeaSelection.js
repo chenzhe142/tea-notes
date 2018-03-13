@@ -54,14 +54,10 @@ export default class TeaSelection extends Component {
 
   constructor(props) {
     super(props);
-    this._onForward = this._onForward.bind(this);
-    this._filterTeaList = this._filterTeaList.bind(this);
-    this._updateFilterText = this._updateFilterText.bind(this);
-
     this.defaultTeaList = DEFAULT_TEA_LIST;
   }
 
-  _onForward(teaObject) {
+  _onForward = (teaObject) => {
     // update parent state 'currentSelectedTea'
     console.log('onForward event');
     this.props.updateCurrentSelectedTea(teaObject);
@@ -70,7 +66,7 @@ export default class TeaSelection extends Component {
     });
   }
 
-  _generateTeaList() {
+  _generateTeaList = () => {
     // 1. merge customizedTeaList and defaultTeaList
     // 2. sort based on alphabet on tea.name
     // *sanity check: make sure this.state.customizedTeaList is not empty
@@ -102,7 +98,7 @@ export default class TeaSelection extends Component {
     return teaLists;
   }
 
-  _filterTeaList(searchText) {
+  _filterTeaList = (searchText) => {
     if (searchText.length <= 0) {
       const teaLists = this._generateTeaList();
       this.setState({ teaLists });
@@ -127,7 +123,7 @@ export default class TeaSelection extends Component {
     return teaLists;
   }
 
-  _updateFilterText(filterText) {
+  _updateFilterText = (filterText) => {
     this.setState({ filterText });
   }
 
@@ -252,7 +248,15 @@ export default class TeaSelection extends Component {
 
           </View>
         </ScrollView>
-        <View style={[containers.stickyFooter, {alignItems: 'center', paddingBottom: 10, left: (SCREEN_WIDTH-40)/2, right: (SCREEN_WIDTH-40)/2}]}>
+        <View style={[
+          containers.stickyFooter, 
+          {
+            alignItems: 'center', 
+            paddingBottom: 10, 
+            left: (SCREEN_WIDTH-40)/2, 
+            right: (SCREEN_WIDTH-40)/2,
+          }]}
+        >
           <TouchableOpacity
             style={[{backgroundColor: 'rgba(0,0,0,0)'}, text.shadow]}
             onPress={() => {
@@ -277,8 +281,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   inputBox: {
-    width: SCREEN_WIDTH * 0.8,
-    // textAlign: 'center',
+    width: SCREEN_WIDTH * 0.7,
     height: 24,
     marginTop: 10,
     marginBottom: 10,

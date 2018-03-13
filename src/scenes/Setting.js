@@ -35,13 +35,6 @@ export default class Setting extends Component {
     teaListOptions: DEFAULT_SETTINGS.teaListOptions,
   }
 
-  constructor(props) {
-    super(props);
-    this._selectTemperature = this._selectTemperature.bind(this);
-    this._selectTime = this._selectTime.bind(this);
-    this._selectTeaListOption = this._selectTeaListOption.bind(this);
-  }
-
   componentWillMount() {
     if (this.props.storage !== undefined) {
       if (this.props.storage[CUSTOMIZED_SETTINGS_STORAGE_KEY].content !== undefined) {
@@ -55,7 +48,7 @@ export default class Setting extends Component {
     }
   }
 
-  _selectTemperature(id) {
+  _selectTemperature = (id) => {
     const temperatureOptions = Object.assign([], this.state.temperatureOptions);
 
     for (let i = 0; i < temperatureOptions.length; i++) {
@@ -76,7 +69,7 @@ export default class Setting extends Component {
     this.props.storageUnit.saveItem(CUSTOMIZED_SETTINGS_STORAGE_KEY, JSON.stringify(customizedSettings));
   }
 
-  _selectTime(id) {
+  _selectTime = (id) => {
     const timeOptions = Object.assign([], this.state.timeOptions);
 
     for (let i = 0; i < timeOptions.length; i++) {
@@ -97,7 +90,7 @@ export default class Setting extends Component {
     this.props.storageUnit.saveItem(CUSTOMIZED_SETTINGS_STORAGE_KEY, JSON.stringify(customizedSettings));
   }
 
-  _selectTeaListOption(id) {
+  _selectTeaListOption = (id) => {
     const teaListOptions = Object.assign([], this.state.teaListOptions);
 
     for (let i = 0; i < teaListOptions.length; i++) {

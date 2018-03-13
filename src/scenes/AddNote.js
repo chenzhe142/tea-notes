@@ -33,7 +33,6 @@ import containers from '../style/containers.js';
 export default class AddNote extends Component {
   constructor(props) {
     super(props);
-    this._saveNote = this._saveNote.bind(this);
     this.state = {
       brewSteps: '',
       userNotes: '',
@@ -47,7 +46,7 @@ export default class AddNote extends Component {
     });
   }
 
-  _saveNote() {
+  _saveNote = () => {
     // TODO: validate user input?
 
     if (this.props.noteType === 'brewSteps') {
