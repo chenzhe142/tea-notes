@@ -123,7 +123,7 @@ export default class TeaSelection extends Component {
     return teaLists;
   }
 
-  _updateFilterText(filterText) {
+  _updateFilterText = (filterText) => {
     this.setState({ filterText });
   }
 
@@ -248,7 +248,15 @@ export default class TeaSelection extends Component {
 
           </View>
         </ScrollView>
-        <View style={[containers.stickyFooter, {alignItems: 'center', paddingBottom: 10, left: (SCREEN_WIDTH-40)/2, right: (SCREEN_WIDTH-40)/2}]}>
+        <View style={[
+          containers.stickyFooter, 
+          {
+            alignItems: 'center', 
+            paddingBottom: 10, 
+            left: (SCREEN_WIDTH-40)/2, 
+            right: (SCREEN_WIDTH-40)/2,
+          }]}
+        >
           <TouchableOpacity
             style={[{backgroundColor: 'rgba(0,0,0,0)'}, text.shadow]}
             onPress={() => {

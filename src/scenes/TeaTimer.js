@@ -57,9 +57,6 @@ export default class TeaTimer extends Component {
   constructor(props) {
     super(props);
 
-    this._toggleTimer = this._toggleTimer.bind(this);
-    this._resetTimer = this._resetTimer.bind(this);
-
     this.intervalId = null;
 
     this.timerAlarmSound = new Sound('timer-alarm.mp3', Sound.MAIN_BUNDLE, (error) => {
@@ -79,7 +76,7 @@ export default class TeaTimer extends Component {
     }
   }
 
-  _toggleTimer() {
+  _toggleTimer = () => {
     if (this.state.isTimerStarted === true) {
       this.setState({
         isTimerStarted: false,
@@ -143,7 +140,7 @@ export default class TeaTimer extends Component {
     }
   }
 
-  _resetTimer() {
+  _resetTimer = () => {
     BackgroundTimer.clearInterval(this.intervalId);
   }
 

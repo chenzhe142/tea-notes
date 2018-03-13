@@ -29,12 +29,7 @@ import {
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 export default class UserFavorite extends Component {
-  constructor(props) {
-    super(props);
-    this._getFavoriteTeaList = this._getFavoriteTeaList.bind(this);
-  }
-
-  _onForward(teaObject) {
+  _onForward = (teaObject) => {
     // update parent state 'currentSelectedTea'
     this.props.updateCurrentSelectedTea(teaObject);
     this.props.navigator.push({
@@ -42,7 +37,7 @@ export default class UserFavorite extends Component {
     });
   }
 
-  _getFavoriteTeaList() {
+  _getFavoriteTeaList = () => {
     let favoriteTealist = [];
 
     if (this.props.storage[CUSTOMIZED_TEA_LIST_STORAGE_KEY]) {
