@@ -98,27 +98,6 @@ export default class CreateTea extends Component {
 
   constructor(props) {
     super(props);
-
-    this._coverPhotoOnClick = this._coverPhotoOnClick.bind(this);
-    this._showTemperaturePicker = this._showTemperaturePicker.bind(this);
-    this._showTimePicker = this._showTimePicker.bind(this);
-    this._showTeaTypePicker = this._showTeaTypePicker.bind(this);
-    this._showTeaFlavorPicker = this._showTeaFlavorPicker.bind(this);
-    this._showTeaCaffeineLevelPicker = this._showTeaCaffeineLevelPicker.bind(this);
-    this._dismissPicker = this._dismissPicker.bind(this);
-    this._updateTemperature = this._updateTemperature.bind(this);
-    this._updateTime = this._updateTime.bind(this);
-    this._updateTeaType = this._updateTeaType.bind(this);
-    this._updateTeaFlavor = this._updateTeaFlavor.bind(this);
-    this._updateTeaCaffeineLevel = this._updateTeaCaffeineLevel.bind(this);
-    this._saveTea = this._saveTea.bind(this);
-    this._updateTea = this._updateTea.bind(this);
-    this._openBrewStepsCreatingView = this._openBrewStepsCreatingView.bind(this);
-    this._openBrewStepsEditingView = this._openBrewStepsEditingView.bind(this);
-    this._openUserNotesCreatingView = this._openUserNotesCreatingView.bind(this);
-    this._openUserNotesEditingView = this._openUserNotesCreatingView.bind(this);
-    this._clearCache = this._clearCache.bind(this);
-
     this.placeholders = {
       name: 'Name of Tea',
       temperature: 'temp',
@@ -156,7 +135,7 @@ export default class CreateTea extends Component {
     this.setState({ tea });
   }
 
-  _coverPhotoOnClick() {
+  _coverPhotoOnClick = () => {
     const options = {
       title: 'Select Tea photo',
       storageOptions: {
@@ -175,9 +154,15 @@ export default class CreateTea extends Component {
         // or a reference to the platform specific asset location
         let source;
         if (Platform.OS === 'ios') {
-          source = {uri: response.uri.replace('file://', ''), isStatic: true};
+          source = {
+            uri: response.uri.replace('file://', ''), 
+            isStatic: true,
+          };
         } else {
-          source = {uri: response.uri, isStatic: true};
+          source = {
+            uri: response.uri, 
+            isStatic: true,
+          };
         }
 
         // get relative image path
@@ -194,7 +179,7 @@ export default class CreateTea extends Component {
     });
   }
 
-  _showTemperaturePicker() {
+  _showTemperaturePicker = () => {
     this.setState({
       showTemperaturePicker: true,
       showTimePicker: false,
@@ -204,7 +189,7 @@ export default class CreateTea extends Component {
     });
   }
 
-  _showTimePicker() {
+  _showTimePicker = () => {
     this.setState({
       showTemperaturePicker: false,
       showTimePicker: true,
@@ -214,7 +199,7 @@ export default class CreateTea extends Component {
     });
   }
 
-  _showTeaTypePicker() {
+  _showTeaTypePicker = () => {
     this.setState({
       showTemperaturePicker: false,
       showTimePicker: false,
@@ -224,7 +209,7 @@ export default class CreateTea extends Component {
     });
   }
 
-  _showTeaFlavorPicker() {
+  _showTeaFlavorPicker = () => {
     this.setState({
       showTemperaturePicker: false,
       showTimePicker: false,
@@ -234,7 +219,7 @@ export default class CreateTea extends Component {
     });
   }
 
-  _showTeaCaffeineLevelPicker() {
+  _showTeaCaffeineLevelPicker = () => {
     this.setState({
       showTemperaturePicker: false,
       showTimePicker: false,
@@ -245,7 +230,7 @@ export default class CreateTea extends Component {
 
   }
 
-  _dismissPicker() {
+  _dismissPicker = () => {
     this.setState({
       showTemperaturePicker: false,
       showTimePicker: false,
@@ -255,57 +240,57 @@ export default class CreateTea extends Component {
     });
   }
 
-  _openBrewStepsCreatingView() {
+  _openBrewStepsCreatingView = () => {
     this.props.navigator.push({ name: 'AddNote' });
     this.props.updateEditingNoteType('brewSteps');
   }
 
-  _openBrewStepsEditingView() {
+  _openBrewStepsEditingView = () => {
     this.props.navigator.push({ name: 'AddNote' });
     this.props.updateEditingNoteType('brewSteps');
   }
 
-  _openUserNotesCreatingView() {
+  _openUserNotesCreatingView = () => {
     this.props.navigator.push({ name: 'AddNote' });
     this.props.updateEditingNoteType('userNotes');
   }
 
-  _openUserNotesEditingView() {
+  _openUserNotesEditingView = () => {
     this.props.navigator.push({ name: 'AddNote' });
     this.props.updateEditingNoteType('userNotes');
   }
 
-  _updateTemperature(temperature) {
+  _updateTemperature = (temperature) => {
     const tea = Object.assign({}, this.state.tea);
     tea.temperature = temperature;
     this.setState({ tea });
   }
 
-  _updateTime(time) {
+  _updateTime = (time) => {
     const tea = Object.assign({}, this.state.tea);
     tea.time = time;
     this.setState({ tea });
   }
 
-  _updateTeaType(teaType) {
+  _updateTeaType = (teaType) => {
     const tea = Object.assign({}, this.state.tea);
     tea.teaType = teaType;
     this.setState({ tea });
   }
 
-  _updateTeaFlavor(teaFlavor) {
+  _updateTeaFlavor = (teaFlavor) => {
     const tea = Object.assign({}, this.state.tea);
     tea.teaFlavor = teaFlavor;
     this.setState({ tea });
   }
 
-  _updateTeaCaffeineLevel(teaCaffeineLevel) {
+  _updateTeaCaffeineLevel = (teaCaffeineLevel) => {
     const tea = Object.assign({}, this.state.tea);
     tea.teaCaffeineLevel = teaCaffeineLevel;
     this.setState({ tea });
   }
 
-  _saveTea() {
+  _saveTea = () => {
     let tea = Object.assign({}, this.state.tea);
     tea.addedByMe = true;
 
@@ -341,7 +326,7 @@ export default class CreateTea extends Component {
     }
   }
 
-  _updateTea() {
+  _updateTea = () => {
     const tea = Object.assign({}, this.state.tea);
     this.props.storageUnit.updateItem(CUSTOMIZED_TEA_LIST_STORAGE_KEY, tea);
     this.props.updateCurrentSelectedTea(tea);
@@ -353,7 +338,7 @@ export default class CreateTea extends Component {
     this._clearCache();
   }
 
-  _clearCache() {
+  _clearCache = () => {
     this.props.updateEditingStatus(false);
     this.props.updateBrewSteps('');
     this.props.updateUserNotes('');
